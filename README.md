@@ -1,2 +1,3 @@
 # BlaEngine
-Chess engine to improve yourself
+
+Chess engine to improve someone, somehow.
