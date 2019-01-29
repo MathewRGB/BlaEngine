@@ -25,11 +25,6 @@ Invoke CMake for the release with compiler flags for optimisation
 
     $ cmake -DCMAKE_BUILD_TYPE=Release ..
 
-Invoke CMake for compiling the executables for client and server (default = off).
-Two executables will be compiled in the build folder. To get help just run those executables with --help flag.
-
-    $ cmake -DTERAKI_EXEC_BUILD=ON ..
-
 Note: at this point you might get CMake errors about various missing packages. Everytime such an error is encountered, install the missing package using your operating system's package manager, then repeat step 3. For example:
 
 Then build the project (for the release)
