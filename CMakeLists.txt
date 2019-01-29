@@ -28,14 +28,10 @@ message( STATUS "Processor: ${CMAKE_SYSTEM_PROCESSOR}" )
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "/usr/local/lib/cmake")
 
-option(BLAENGINE_EXEC_BUILD 
-"Enable to compile the client and server executable." OFF)
-
 #-------------------------------------------------------------------------------
 # Compiler options
 #-------------------------------------------------------------------------------
-
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(GENERAL_COMPILER_FLAGS "\
@@ -53,7 +49,7 @@ set(GENERAL_COMPILER_FLAGS "\
 -Wformat=2 \
 -Wmissing-format-attribute \
 -Wformat-nonliteral \
--std=c++11")
+-std=c++17")
 
 set(CMAKE_CXX_FLAGS_DEBUG "\
 -g \
@@ -110,14 +106,14 @@ add_definitions(-DBLAENGINE_VERSION_MINOR=${BLAENGINE_VERSION_MINOR})
 #add_library(libblaengine SHARED
 #    source/core.cpp)
 
-target_link_libraries(libblaengine
-    ${GTEST_LIBRARIES}
-    pthread)
+#target_link_libraries(libblaengine
+#    ${GTEST_LIBRARIES}
+#    pthread)
 
-set_target_properties(libblaengine
-    PROPERTIES SUFFIX ".so")
-set_target_properties(libblaengine 
-    PROPERTIES PREFIX "")
+#set_target_properties(libblaengine
+#    PROPERTIES SUFFIX ".so")
+#set_target_properties(libblaengine 
+#    PROPERTIES PREFIX "")
 
 #-------------------------------------------------------------------------------
 # Documentation build
@@ -163,7 +159,7 @@ add_executable(runTests
     tests/test_main.cpp)
 
 target_link_libraries(runTests 
-    libblaengine 
+    #libblaengine 
     ${GTEST_LIBRARIES} 
     pthread 
     ${OpenCV_LIBS})
@@ -171,6 +167,6 @@ target_link_libraries(runTests
 add_test(main_tests runTests)
 
 # copy all relevant data we need for our application and tests
-file( COPY ${CMAKE_SOURCE_DIR}/scripts
-      DESTINATION .)
+#file( COPY ${CMAKE_SOURCE_DIR}/scripts
+#      DESTINATION .)
  
