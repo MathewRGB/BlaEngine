@@ -158,11 +158,13 @@ enable_testing()
 add_executable(runTests
     tests/test_main.cpp)
 
+add_executable(main_uci_dummy_test
+    tests/main_uci_dummy_test.cpp)
+
 target_link_libraries(runTests 
     #libblaengine 
     ${GTEST_LIBRARIES} 
-    pthread 
-    ${OpenCV_LIBS})
+    pthread)
 
 add_test(main_tests runTests)
 
