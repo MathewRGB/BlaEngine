@@ -1,8 +1,3 @@
-// test_whatever.cpp
-//
-// Created on: Jan 27, 2019
-//     Author: Mathias Kuhlmey
-
 #include "helper_for_tests.h"
 
 // dummy test

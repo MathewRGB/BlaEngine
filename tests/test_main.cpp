@@ -1,8 +1,3 @@
-// test_main.cpp
-//
-// Created on: Jan 27, 2019
-//     Author: Mathias Kuhlmey
-
 #include <iostream>
 #include "gtest/gtest.h"
 
