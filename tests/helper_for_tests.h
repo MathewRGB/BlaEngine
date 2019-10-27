@@ -1,8 +1,3 @@
-// helper_for_tests.h
-//
-// Created on: Jan 27, 2019
-//     Author: Mathias Kuhlmey
-
 #ifndef HELPER_FOR_TESTS_H_
 #define HELPER_FOR_TESTS_H_
 
