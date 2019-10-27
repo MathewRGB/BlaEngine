@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
+int main()
 {
 	string Line; //to read the command given by the GUI
 	int flag =1; //to change the value of chess squares from 'a' to 'h'
