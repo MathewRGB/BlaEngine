@@ -151,20 +151,20 @@ endif(BUILD_DOCUMENTATION)
 #-------------------------------------------------------------------------------
 #
 if(CMAKE_BUILD_TYPE MATCHES "^(Release)$")
-    message("Release mode no tests compiled!")
+    message(STATUS "Release mode no tests compiled!")
     return()
 endif()
 
 # Locate GTest
-message("Debug mode tests will be compiled!")
+message(STATUS "Debug mode tests will be compiled!")
 enable_testing()
  
 # Link runTests with what we want to test and the GTest and pthread library
 add_executable(runTests
     tests/test_main.cpp)
 
-add_executable(main_uci_dummy_test
-    tests/main_uci_dummy_test.cpp)
+add_executable(uci_dummy_engine
+    tests/uci_dummy_engine.cpp)
 
 target_link_libraries(runTests 
     #libblaengine 
