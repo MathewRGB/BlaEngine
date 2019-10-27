@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	while( getline( cin, Line ) ) {
 		if ( Line == "uci" ) {
 			cout << "id name Dummy_BlaEngine" << endl;
-			cout << "id author XXX" << endl;
+			cout << "id author Mathias" << endl;
 			cout << "uciok" << endl;
 		} else if ( Line == "quit" ) {
 			cout << "Bye Bye" << endl;
