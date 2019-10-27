@@ -3,7 +3,8 @@ FROM ubuntu:bionic
 ARG DEBIAN_FRONTEND=noninteractive
 
 # misc
-RUN apt-get update && apt-get install -y \ 
+RUN apt-get update && apt-get install -y \
+    build-essential      \
     wget                 \
     git                  \
     cmake                \
@@ -26,11 +27,11 @@ RUN cd /usr/src/gtest ; cmake . ; make
 RUN mv /usr/src/gtest/*.a /usr/lib/
 
 # cmake build
-ADD . /code/blaengine
-RUN cd /code/blaengine/ && rm -rf build && mkdir build && cd build && cmake .. && make
+ADD . /blaengine
+RUN cd /blaengine/ && rm -rf build && mkdir build && cd build && cmake .. && make
 
 # run tests
-RUN cd /code/blaengine/build && ./runTests
+RUN cd /blaengine/build && ./runTests
 
 # doxygen
-RUN cd /code/blaengine/docs && doxygen Doxyfile.in 
+RUN cd /blaengine/docs && doxygen Doxyfile.in 

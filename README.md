@@ -5,9 +5,9 @@ Chess engine to improve someone, somehow.
 
 ## Manual Build
 
-### Linux
-
 This project uses CMake as its build engine. Follow the steps to build the system manually.
+
+### Linux
 
 Create a temporary build directory:
 
@@ -39,11 +39,11 @@ Then run unit tests
 
     $ ./runTests
 
-For running live tests
+For running disabled tests
 
     $ ./runTests --gtest_also_run_disabled_tests
 
-To help just type
+To get help just type
 
     $ ./runTests --help
 
@@ -53,3 +53,9 @@ If you like to generate the doxygen documentation inside the build folder just t
 
 The website will be created into the docs folder. In the docs folder there is also a readme.md that
 describes how to build the doxygen documentation manually.
+
+## Docker build
+
+There is also a Dockerfile that can be used for comiling the project and running all unittests.
+
+    docker build -t blaengine .

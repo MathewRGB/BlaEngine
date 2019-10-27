@@ -1,29 +1,31 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(BlaEngineVS)
+project(BlaEngine VERSION 0.0.0)
 
-set (BLAENGINE_VERSION_MAJOR 0.2)
-set (BLAENGINE_VERSION_MINOR 0.2)
-
-include(ExternalProject)
+#-------------------------------------------------------------------------------
+# Required preconditions
+#-------------------------------------------------------------------------------
+#
+file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
+if(EXISTS "${LOC_PATH}")
+    message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file).\
+        Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
+endif()
 
 #-------------------------------------------------------------------------------
 # CMAKE Options
 #-------------------------------------------------------------------------------
-
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(MACOSX TRUE)
+#
+if(NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
+    message(WARNING "No different architecture than x86_64 are currently supported.")
 endif()
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    set(LINUX TRUE)
-    if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "armv7l")
-      set(ARM TRUE)
-    endif()
+if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    message(WARNING "No cross-compiling supported yet (only Linux).")
 endif()
 
-message( STATUS "System: ${CMAKE_SYSTEM_NAME}" )
-message( STATUS "Processor: ${CMAKE_SYSTEM_PROCESSOR}" )
+message(STATUS "System: ${CMAKE_SYSTEM_NAME}" )
+message(STATUS "Processor: ${CMAKE_SYSTEM_PROCESSOR}" )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "/usr/local/lib/cmake")
@@ -31,6 +33,7 @@ list(APPEND CMAKE_MODULE_PATH "/usr/local/lib/cmake")
 #-------------------------------------------------------------------------------
 # Compiler options
 #-------------------------------------------------------------------------------
+#
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -58,6 +61,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "\
 ${GENERAL_COMPILER_FLAGS} \
 -DVERBOSE \
 -DDEBUG")
+
 set(CMAKE_CXX_FLAGS_RELEASE "\
 -g \
 -O3 \
@@ -78,7 +82,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 #-------------------------------------------------------------------------------
 # BLAENGINE system version information
 #-------------------------------------------------------------------------------
-
+#
 # Get the current working branch
 execute_process(
     COMMAND git rev-parse --abbrev-ref HEAD
@@ -101,7 +105,7 @@ add_definitions(-DBLAENGINE_VERSION_MINOR=${BLAENGINE_VERSION_MINOR})
 #-------------------------------------------------------------------------------
 # Output targets
 #-------------------------------------------------------------------------------
-
+#
 # the system public api
 #add_library(libblaengine SHARED
 #    source/core.cpp)
@@ -118,7 +122,7 @@ add_definitions(-DBLAENGINE_VERSION_MINOR=${BLAENGINE_VERSION_MINOR})
 #-------------------------------------------------------------------------------
 # Documentation build
 #-------------------------------------------------------------------------------
-## add a target to generate API documentation with Doxygen
+#
 find_package (Doxygen)
 option(BUILD_DOCUMENTATION "Create and install the HTML based \
 API documentation (requires Doxygen)" ${DOXYGEN_FOUND})
@@ -145,6 +149,7 @@ endif(BUILD_DOCUMENTATION)
 #-------------------------------------------------------------------------------
 # Unit Tests
 #-------------------------------------------------------------------------------
+#
 if(CMAKE_BUILD_TYPE MATCHES "^(Release)$")
     message("Release mode no tests compiled!")
     return()
@@ -167,8 +172,3 @@ target_link_libraries(runTests
     pthread)
 
 add_test(main_tests runTests)
-
-# copy all relevant data we need for our application and tests
-#file( COPY ${CMAKE_SOURCE_DIR}/scripts
-#      DESTINATION .)
- 
