@@ -434,33 +434,33 @@ Examples:
 
 This is how the communication when the engine boots can look like:
 
-GUI     engine
+<pre>GUI        ENGINE</pre>
 
-// tell the engine to switch to UCI mode
-uci
+tell the engine to switch to UCI mode
+>uci
 
-// engine identify  
-      id name Shredder
-		id author Stefan MK
+engine identify
+>             id name Shredder
+>             id author Stefan MK
 
 // engine sends the options it can change
 // the engine can change the hash size from 1 to 128 MB
-		option name Hash type spin default 1 min 1 max 128
+>             option name Hash type spin default 1 min 1 max 128
 
 // the engine supports Nalimov endgame tablebases
-		option name NalimovPath type string default <empty>
-		option name NalimovCache type spin default 1 min 1 max 32
+>     		    option name NalimovPath type string default <empty>
+>		          option name NalimovCache type spin default 1 min 1 max 32
 
 // the engine can switch off Nullmove and set the playing style
-	   option name Nullmove type check default true
-  		option name Style type combo default Normal var Solid var Normal var Risky
+>	            option name Nullmove type check default true
+>       		  option name Style type combo default Normal var Solid var Normal var Risky
 
 // the engine has sent all parameters and is ready
-		uciok
+		    uciok
 
 // Note: here the GUI can already send a "quit" command if it just wants to find out
-//       details about the engine, so the engine should not initialize its internal
-//       parameters before here.
+// details about the engine, so the engine should not initialize its internal
+// parameters before here.
 // now the GUI sets some values in the engine
 // set hash to 32 MB
 setoption name Hash value 32
@@ -474,7 +474,7 @@ setoption name NalimovPath value d:\tb;c\tb
 isready
 
 // engine has finished setting up the internal values
-		readyok
+		    readyok
 
 // now we are ready to go
 
@@ -514,7 +514,7 @@ stop
 // the engine has finished searching and is sending the bestmove command
 // which is needed for every "go" command sent to tell the GUI
 // that the engine is ready again
-		bestmove g1f3 ponder d8f6
+		    bestmove g1f3 ponder d8f6
 
 
 
