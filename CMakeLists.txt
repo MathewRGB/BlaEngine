@@ -106,18 +106,23 @@ add_definitions(-DBLAENGINE_VERSION_MINOR=${BLAENGINE_VERSION_MINOR})
 # Output targets
 #-------------------------------------------------------------------------------
 #
-# the system public api
-#add_library(libblaengine SHARED
-#    source/core.cpp)
+add_library(libblaengine SHARED
+    source/blaengine.cpp)
 
-#target_link_libraries(libblaengine
-#    ${GTEST_LIBRARIES}
-#    pthread)
+target_link_libraries(libblaengine
+    ${GTEST_LIBRARIES}
+    pthread)
 
-#set_target_properties(libblaengine
-#    PROPERTIES SUFFIX ".so")
-#set_target_properties(libblaengine 
-#    PROPERTIES PREFIX "")
+set_target_properties(libblaengine
+    PROPERTIES SUFFIX ".so")
+
+add_executable(BlaEngine
+    source/main.cpp
+    source/blaengine.cpp
+    source/communication/uci.cpp)
+
+target_link_libraries(BlaEngine 
+    libblaengine)
 
 #-------------------------------------------------------------------------------
 # Documentation build
