@@ -99,8 +99,7 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 add_definitions(-DBLAENGINE_BUILD_COMMIT_STRING="${GIT_COMMIT_HASH}")
-add_definitions(-DBLAENGINE_VERSION_MAJOR=${BLAENGINE_VERSION_MAJOR})
-add_definitions(-DBLAENGINE_VERSION_MINOR=${BLAENGINE_VERSION_MINOR})
+ADD_DEFINITIONS( -D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
 
 #-------------------------------------------------------------------------------
 # Output targets

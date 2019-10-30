@@ -1,9 +1,11 @@
 #include "helper_for_tests.h"
+#include "blaengine.h"
 
-// dummy test
-TEST(Whatever, whatevertest)
+using namespace blaengine;
+
+TEST(BlaEngineInfo, test_info_content)
 {
-  float value = 0;
+  auto blaengineInfo = new BlaEngineInfo;
 
-  ASSERT_TRUE(value == 0);
+  ASSERT_FALSE(blaengineInfo->version == "unversioned");
 }

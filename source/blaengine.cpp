@@ -8,8 +8,8 @@ BlaEngine::BlaEngine() {}
 
 BlaEngine::~BlaEngine() {}
 
-void BlaEngine::GetEngineInfo() {}
-
 void BlaEngine::StartEngine() {}
+
+BlaEngineInfo BlaEngine::GetEngineInfo() {}
 
 }  // namespace blaengine

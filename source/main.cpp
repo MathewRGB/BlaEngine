@@ -2,7 +2,7 @@
 
 using BlaEngine = blaengine::BlaEngine;
 
-int main(int argc, char **argv)
+int main()
 {
   auto blaengine = new BlaEngine();
 
