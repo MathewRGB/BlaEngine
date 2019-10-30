@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
 
-#include "test_whatever.cpp"
+#include "test_blaengine.cpp"
 
 // This is the main entry point for our google-test files. gtest.h has to be
 // included and additionally all .cpp files you want to be tested.

@@ -7,5 +7,7 @@ TEST(BlaEngineInfo, test_info_content)
 {
   auto blaengineInfo = new BlaEngineInfo;
 
+  ASSERT_TRUE(blaengineInfo->name == ENGINE_NAME);
+  ASSERT_TRUE(blaengineInfo->author == AUTHOR);
   ASSERT_FALSE(blaengineInfo->version == "unversioned");
 }
