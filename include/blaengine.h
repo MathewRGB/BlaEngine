@@ -9,6 +9,8 @@
 #else
     #define VERSION "unversioned"
 #endif
+#define ENGINE_NAME "BlaEngine"
+#define AUTHOR "Mathias Kuhlmey"
 
 using namespace std;
 
@@ -21,9 +23,9 @@ namespace blaengine {
 ///
 struct BlaEngineInfo
 {
-  string const name = "BlaEngine";
-  string const author = "Mathias Kuhlmey";
-  string version = VERSION;
+  string const name = ENGINE_NAME;
+  string const author = AUTHOR;
+  string const version = VERSION;
 };
 
 ///
