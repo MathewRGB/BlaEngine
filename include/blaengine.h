@@ -5,9 +5,9 @@
 #include <string>
 
 #ifdef _PROJECT_VERSION
-    #define VERSION _PROJECT_VERSION
+#define VERSION _PROJECT_VERSION
 #else
-    #define VERSION "unversioned"
+#define VERSION "unversioned"
 #endif
 #define ENGINE_NAME "BlaEngine"
 #define AUTHOR "Mathias Kuhlmey"
@@ -21,8 +21,7 @@ namespace blaengine {
 /// application. There are just defined the bases classes as pointer. The
 /// constructor of TeraClient should instantiate those modules.
 ///
-struct BlaEngineInfo
-{
+struct BlaEngineInfo {
   string const name = ENGINE_NAME;
   string const author = AUTHOR;
   string const version = VERSION;
@@ -31,7 +30,7 @@ struct BlaEngineInfo
 ///
 ///@brief
 /// This is the core class for instantiating a BlaEngine object. Initializing
-/// the communication and calcualtion unit. It is also possible to control the 
+/// the communication and calcualtion unit. It is also possible to control the
 /// engine from this point.
 ///
 class BlaEngine {
