@@ -171,7 +171,7 @@ add_executable(uci_dummy_engine
     tests/uci_dummy_engine.cpp)
 
 target_link_libraries(runTests 
-    #libblaengine 
+    libblaengine 
     ${GTEST_LIBRARIES} 
     pthread)
 

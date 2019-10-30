@@ -5,9 +5,21 @@ using namespace blaengine;
 
 TEST(BlaEngineInfo, test_info_content)
 {
-  auto blaengineInfo = new BlaEngineInfo;
+  auto blaengineInfo = BlaEngineInfo();
 
-  ASSERT_TRUE(blaengineInfo->name == ENGINE_NAME);
-  ASSERT_TRUE(blaengineInfo->author == AUTHOR);
-  ASSERT_FALSE(blaengineInfo->version == "unversioned");
+  ASSERT_TRUE(blaengineInfo.name == ENGINE_NAME);
+  ASSERT_TRUE(blaengineInfo.author == AUTHOR);
+  ASSERT_FALSE(blaengineInfo.version == "unversioned");
+}
+
+TEST(BlaEngine, test_get_info)
+{
+  auto blaengine = new BlaEngine();
+  auto blaengineInfo = blaengine->GetEngineInfo();
+
+  ASSERT_TRUE(blaengineInfo.name == ENGINE_NAME);
+  ASSERT_TRUE(blaengineInfo.author == AUTHOR);
+  ASSERT_FALSE(blaengineInfo.version == "unversioned");
+
+  blaengine->~BlaEngine();
 }

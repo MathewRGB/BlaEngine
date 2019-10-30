@@ -10,6 +10,8 @@ BlaEngine::~BlaEngine() {}
 
 void BlaEngine::StartEngine() {}
 
-BlaEngineInfo BlaEngine::GetEngineInfo() {}
+BlaEngineInfo BlaEngine::GetEngineInfo() {
+  return BlaEngineInfo();
+}
 
 }  // namespace blaengine
