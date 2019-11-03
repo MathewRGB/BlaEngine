@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     doxygen-gui          \ 
     graphviz
 
+# we need g++7
+RUN g++ -v
+
 # install rapid json
 RUN git clone https://github.com/Tencent/rapidjson.git && \
     cd rapidjson && mkdir build && cd build && \
