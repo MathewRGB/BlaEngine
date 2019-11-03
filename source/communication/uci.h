@@ -2,8 +2,9 @@
 #define UCI_H_
 
 #include <iostream>
-#include <map>
 #include <string>
+#include <map>
+#include <functional>
 
 #include "blaengine.h"
 
@@ -25,8 +26,8 @@ class Uci {
 
 };
 
-map<string, void*> uci_function_map = {
-  {"uci", (void*)Uci::UciInit}
+map<string, function<void()>> uci_function_map = {
+  {"uci", Uci::UciInit}
 };
 
 }  // namespace blaengine::communication
