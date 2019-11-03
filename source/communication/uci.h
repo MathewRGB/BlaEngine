@@ -1,10 +1,11 @@
 #ifndef UCI_H_
 #define UCI_H_
 
-#include <iostream>
-#include <string>
-#include <map>
 #include <functional>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <string>
 
 #include "blaengine.h"
 
@@ -14,20 +15,24 @@ namespace blaengine::communication {
 
 class Uci {
  public:
-  void operator()() const;
+  Uci(shared_ptr<BlaEngine> engine);
 
-  static void UciInit();
+  void operator()();
 
-  static void Quit();
+  void uciInit();
 
-  static void Stop();
+  void quit();
 
-  static void IsReady();
+  void stop();
 
-};
+  void isReady();
 
-map<string, function<void()>> uci_function_map = {
-  {"uci", Uci::UciInit}
+ private:
+  void listen();
+
+  void translateInput(string input);
+
+  shared_ptr<BlaEngine> engine;
 };
 
 }  // namespace blaengine::communication

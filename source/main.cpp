@@ -6,7 +6,7 @@ int main()
 {
   auto blaengine = new BlaEngine();
 
-  blaengine->StartEngine();
+  blaengine->startEngine();
   blaengine->~BlaEngine();
 
   return 0;

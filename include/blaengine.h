@@ -52,7 +52,14 @@ class BlaEngine {
   /// Starting the engine by starting the communication module, which is UCI as
   /// default, as well as starting the calculation unit.
   ///
-  void StartEngine();
+  void startEngine();
+
+  ///
+  ///@brief
+  /// Shuts the engine completely down, means also destructing all connected 
+  /// objects and references
+  ///
+  void shutdownEngine();
 
   ///
   ///@brief
@@ -60,7 +67,7 @@ class BlaEngine {
   /// so on as BlaEngineInfo object.
   ///@return BlaEngineInfo
   ///
-  BlaEngineInfo GetEngineInfo();
+  BlaEngineInfo getEngineInfo();
 };
 
 }  // namespace blaengine

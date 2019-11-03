@@ -6,8 +6,10 @@ BlaEngine::BlaEngine() {}
 
 BlaEngine::~BlaEngine() {}
 
-void BlaEngine::StartEngine() {}
+void BlaEngine::startEngine() {}
 
-BlaEngineInfo BlaEngine::GetEngineInfo() { return BlaEngineInfo(); }
+void BlaEngine::shutdownEngine() {}
+
+BlaEngineInfo BlaEngine::getEngineInfo() { return BlaEngineInfo(); }
 
 }  // namespace blaengine

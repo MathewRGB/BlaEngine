@@ -15,7 +15,7 @@ TEST(BlaEngineInfo, test_info_content)
 TEST(BlaEngine, test_get_info)
 {
   auto blaengine = new BlaEngine();
-  auto blaengineInfo = blaengine->GetEngineInfo();
+  auto blaengineInfo = blaengine->getEngineInfo();
 
   ASSERT_TRUE(blaengineInfo.name == ENGINE_NAME);
   ASSERT_TRUE(blaengineInfo.author == AUTHOR);
