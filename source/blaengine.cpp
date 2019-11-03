@@ -1,6 +1,5 @@
 #include "blaengine.h"
 
-using namespace blaengine;
 
 namespace blaengine {
 
