@@ -2,7 +2,9 @@
 
 namespace blaengine {
 
-BlaEngine::BlaEngine() {}
+BlaEngine::BlaEngine() {
+  
+}
 
 BlaEngine::~BlaEngine() {}
 

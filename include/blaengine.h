@@ -68,6 +68,9 @@ class BlaEngine {
   ///@return BlaEngineInfo
   ///
   BlaEngineInfo getEngineInfo();
+
+  //private:
+    //Uci::Uci uci_module;
 };
 
 }  // namespace blaengine

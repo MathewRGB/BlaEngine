@@ -6,7 +6,7 @@
 namespace blaengine::communication {
 
 Uci::Uci(shared_ptr<BlaEngine> engine) { 
-  this->engine = engine; 
+  this->engine = engine;
 }
 
 void Uci::operator()() { 
@@ -26,7 +26,7 @@ void Uci::listenOnInput() {
   cout.setf(ios::unitbuf);
 
   while (!quitted) {
-    getline(cin, input);
+    getline(std::cin, input);
     this->translateInput(input);
   }
 }
