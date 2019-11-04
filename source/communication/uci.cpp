@@ -10,7 +10,7 @@ Uci::Uci(shared_ptr<BlaEngine> engine) {
 }
 
 void Uci::operator()() { 
-  this->listen();
+  this->listenOnInput();
 }
 
 void Uci::translateInput(string input) {
@@ -21,24 +21,29 @@ void Uci::translateInput(string input) {
   }
 }
 
-void Uci::listen() {
+void Uci::listenOnInput() {
   string input;
   cout.setf(ios::unitbuf);
 
-  while (getline(cin, input)) {
+  while (!quitted) {
+    getline(cin, input);
     this->translateInput(input);
   }
 }
 
 void Uci::uciInit() { 
   auto engine_info = this->engine->getEngineInfo();
-  cout << "id name" + engine_info.name + "_v" + engine_info.version << endl;
-  cout << "id author" + engine_info.author << endl;
+  cout << "id name " + engine_info.name + "-v" + engine_info.version << endl;
+  cout << "id author " + engine_info.author << endl;
   cout << "uciok" << endl;
 }
 
 void Uci::quit() {
   this->engine->shutdownEngine();
+  this->quitted = true;
+
+  auto engine_info = this->engine->getEngineInfo();
+  cout << engine_info.name + " says byebye" << endl;
 }
 
 }  // namespace blaengine::communication

@@ -106,7 +106,8 @@ ADD_DEFINITIONS( -D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
 #-------------------------------------------------------------------------------
 #
 add_library(libblaengine SHARED
-    source/blaengine.cpp)
+    source/blaengine.cpp
+    source/communication/uci.cpp)
 
 target_link_libraries(libblaengine
     ${GTEST_LIBRARIES}
