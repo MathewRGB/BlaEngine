@@ -33,12 +33,11 @@ TEST(Uci, test_quit) {
   mock_cin.str("quit");
 
   sleep(1);
-  string result_cout;
-  getline(mock_cout, result_cout);
+  string result_string;
+  getline(mock_cout, result_string);
 
-  
   teardown_std_mock_io();
   uci_com_thread.join();
 
-  ASSERT_TRUE(result_cout == "BlaEngine says byebye");
+  ASSERT_TRUE(result_string.find("byebye") != string::npos);
 }
