@@ -18,8 +18,10 @@ void Uci::translateInput(string input) {
     this->uciInit();
   } else if (input == "quit") {
     this->quit();
-  } else if (input == "isready"){
+  } else if (input == "isready") {
     this->isReady();
+  } else if (input.substr(0, 3) == "go ") {
+    this->go(input);
   }
 }
 
@@ -50,6 +52,15 @@ void Uci::quit() {
 
 void Uci::isReady() {
   cout << "readyok" << endl;
+}
+
+void Uci::go(string command_line) {
+  string bestmove = this->engine->getBestMove();
+  if (command_line.substr(0, 11) == "go infinite") {
+    cout << "info currmove " << bestmove << endl; 
+  } else {
+    cout << "bestmove " << bestmove << endl;
+  }
 }
 
 }  // namespace blaengine::communication

@@ -61,6 +61,12 @@ class BlaEngine {
 
   ///
   ///@brief
+  /// ...
+  ///
+  string getBestMove();
+
+  ///
+  ///@brief
   /// Get basic information about the engine like name of the engine, author and
   /// so on as BlaEngineInfo object.
   ///@return BlaEngineInfo

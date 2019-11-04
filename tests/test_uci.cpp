@@ -92,3 +92,47 @@ TEST(Uci, test_isready) {
   ASSERT_EQ(result_string[0], "readyok");
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
 }
+
+TEST(Uci, test_go_move) {
+  setup_std_mock_io();
+
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+
+  thread uci_com_thread(uci_module);
+
+  mock_cin.str("go \nquit");
+
+  sleep(1);
+  string result_string[2];
+  getline(mock_cout, result_string[0]);
+  getline(mock_cout, result_string[1]);
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  ASSERT_NE(result_string[0].find("bestmove"), string::npos);
+  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+}
+
+TEST(Uci, test_go_thinking_info) {
+  setup_std_mock_io();
+
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+
+  thread uci_com_thread(uci_module);
+
+  mock_cin.str("go infinite\nquit");
+
+  sleep(1);
+  string result_string[2];
+  getline(mock_cout, result_string[0]);
+  getline(mock_cout, result_string[1]);
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  ASSERT_NE(result_string[0].find("info currmove"), string::npos);
+  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+}

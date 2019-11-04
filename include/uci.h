@@ -27,6 +27,8 @@ class Uci {
 
   void isReady();
 
+  void go(string command_line);
+
   void listenOnInput();
  private:
 
