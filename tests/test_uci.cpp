@@ -6,6 +6,10 @@
 using namespace blaengine;
 using namespace blaengine::communication;
 
+
+void setup_std_mock_io();
+void teardown_std_mock_io();
+
 std::stringstream mock_cin, mock_cout;
 std::streambuf *cin_backup, *cout_backup;
 
@@ -39,7 +43,7 @@ TEST(Uci, test_quit_call) {
   teardown_std_mock_io();
   uci_com_thread.join();
 
-  ASSERT_TRUE(result_string.find("byebye") != string::npos);
+  ASSERT_NE(result_string.find("byebye"), string::npos);
 }
 
 TEST(Uci, test_uci_call) {
@@ -61,7 +65,7 @@ TEST(Uci, test_uci_call) {
   teardown_std_mock_io();
   uci_com_thread.join();
 
-  ASSERT_TRUE(result_string_name.find("id name") != string::npos);
-  ASSERT_TRUE(result_string_author.find("id author") != string::npos);
-  ASSERT_TRUE(result_string_uciok.find("uciok") != string::npos);
+  ASSERT_NE(result_string_name.find("id name"), string::npos);
+  ASSERT_NE(result_string_author.find("id author"), string::npos);
+  ASSERT_NE(result_string_uciok.find("uciok"), string::npos);
 }
