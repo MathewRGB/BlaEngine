@@ -22,6 +22,8 @@ void Uci::translateInput(string input) {
     this->isReady();
   } else if (input.substr(0, 3) == "go ") {
     this->go(input);
+  } else if (input.substr(0, 9) == "position ") {
+    this->position(input);
   }
 }
 
@@ -52,6 +54,12 @@ void Uci::quit() {
 
 void Uci::isReady() {
   cout << "readyok" << endl;
+}
+
+void Uci::position(string command_line) {
+  // TODO UciToFenPosition
+  //position fen ... moves ...
+  //position startpos moves e2e4 e7e5
 }
 
 void Uci::go(string command_line) {
