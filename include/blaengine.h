@@ -17,9 +17,8 @@ using namespace std;
 namespace blaengine {
 ///
 ///@brief
-/// This struct is for storing all classes that are relevant for our client
-/// application. There are just defined the bases classes as pointer. The
-/// constructor of TeraClient should instantiate those modules.
+/// This struct is for storing all basic information that has to be communicated
+/// somewhere like version, author, project name etc. 
 ///
 struct BlaEngineInfo {
   string const name = ENGINE_NAME;
@@ -29,9 +28,8 @@ struct BlaEngineInfo {
 
 ///
 ///@brief
-/// This is the core class for instantiating a BlaEngine object. Initializing
-/// the communication and calcualtion unit. It is also possible to control the
-/// engine from this point.
+/// This is a class for instantiating a BlaEngine object. This class basically 
+/// represents the core object for conatenating all modules of the engine. 
 ///
 class BlaEngine {
  public:
@@ -68,9 +66,6 @@ class BlaEngine {
   ///@return BlaEngineInfo
   ///
   BlaEngineInfo getEngineInfo();
-
-  //private:
-    //Uci::Uci uci_module;
 };
 
 }  // namespace blaengine

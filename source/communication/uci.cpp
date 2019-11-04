@@ -33,7 +33,7 @@ void Uci::listenOnInput() {
 
 void Uci::uciInit() { 
   auto engine_info = this->engine->getEngineInfo();
-  cout << "id name " + engine_info.name + "-v" + engine_info.version << endl;
+  cout << "id name " + engine_info.name + "-" + engine_info.version << endl;
   cout << "id author " + engine_info.author << endl;
   cout << "uciok" << endl;
 }
