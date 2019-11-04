@@ -41,3 +41,28 @@ TEST(Uci, test_quit) {
 
   ASSERT_TRUE(result_string.find("byebye") != string::npos);
 }
+
+TEST(Uci, test_quit2) {
+  setup_std_mock_io();
+
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+
+  thread uci_com_thread(uci_module);
+
+  mock_cin.str("uci\nquit");
+
+  sleep(1);
+  string result_string_name, result_string_author, result_string_uciok;
+  getline(mock_cout, result_string_name);
+  getline(mock_cout, result_string_author);
+  getline(mock_cout, result_string_uciok);
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  ASSERT_TRUE(result_string_name.find("id name") != string::npos);
+  ASSERT_TRUE(result_string_author.find("id author") != string::npos);
+  ASSERT_TRUE(result_string_uciok.find("uciok") != string::npos);
+
+}
