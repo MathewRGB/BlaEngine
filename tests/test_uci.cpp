@@ -22,7 +22,7 @@ void teardown_std_mock_io() {
    std::cout.rdbuf(cout_backup);
 }
 
-TEST(Uci, test_quit) {
+TEST(Uci, test_quit_call) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
@@ -42,7 +42,7 @@ TEST(Uci, test_quit) {
   ASSERT_TRUE(result_string.find("byebye") != string::npos);
 }
 
-TEST(Uci, test_quit2) {
+TEST(Uci, test_uci_call) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
@@ -64,5 +64,4 @@ TEST(Uci, test_quit2) {
   ASSERT_TRUE(result_string_name.find("id name") != string::npos);
   ASSERT_TRUE(result_string_author.find("id author") != string::npos);
   ASSERT_TRUE(result_string_uciok.find("uciok") != string::npos);
-
 }
