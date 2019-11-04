@@ -18,6 +18,8 @@ void Uci::translateInput(string input) {
     this->uciInit();
   } else if (input == "quit") {
     this->quit();
+  } else if (input == "isready"){
+    this->isReady();
   }
 }
 
@@ -44,6 +46,10 @@ void Uci::quit() {
 
   auto engine_info = this->engine->getEngineInfo();
   cout << engine_info.name + " says byebye" << endl;
+}
+
+void Uci::isReady() {
+  cout << "readyok" << endl;
 }
 
 }  // namespace blaengine::communication
