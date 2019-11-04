@@ -57,6 +57,8 @@ void Uci::isReady() {
 void Uci::go(string command_line) {
   string bestmove = this->engine->getBestMove();
   if (command_line.substr(0, 11) == "go infinite") {
+    // TODO this has to be implemented later in a way that the engine itsself
+    // invokes this output
     cout << "info currmove " << bestmove << endl; 
   } else {
     cout << "bestmove " << bestmove << endl;
