@@ -6,12 +6,17 @@ BlaEngine::BlaEngine() {
   
 }
 
-BlaEngine::~BlaEngine() {}
+BlaEngine::~BlaEngine() {
+}
 
 void BlaEngine::startEngine() {}
 
-void BlaEngine::shutdownEngine() {}
+void BlaEngine::shutdownEngine() {
+  this->~BlaEngine();
+}
 
-BlaEngineInfo BlaEngine::getEngineInfo() { return BlaEngineInfo(); }
+BlaEngineInfo BlaEngine::getEngineInfo() { 
+  return BlaEngineInfo(); 
+}
 
 }  // namespace blaengine
