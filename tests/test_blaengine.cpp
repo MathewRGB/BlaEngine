@@ -7,9 +7,9 @@ TEST(BlaEngineInfo, test_info_content)
 {
   auto blaengineInfo = BlaEngineInfo();
 
-  ASSERT_TRUE(blaengineInfo.name == ENGINE_NAME);
-  ASSERT_TRUE(blaengineInfo.author == AUTHOR);
-  ASSERT_FALSE(blaengineInfo.version == "unversioned");
+  ASSERT_EQ(blaengineInfo.name, ENGINE_NAME);
+  ASSERT_EQ(blaengineInfo.author, AUTHOR);
+  ASSERT_NE(blaengineInfo.version, "unversioned");
 }
 
 TEST(BlaEngine, test_get_info)
@@ -17,9 +17,9 @@ TEST(BlaEngine, test_get_info)
   auto blaengine = new BlaEngine();
   auto blaengineInfo = blaengine->getEngineInfo();
 
-  ASSERT_TRUE(blaengineInfo.name == ENGINE_NAME);
-  ASSERT_TRUE(blaengineInfo.author == AUTHOR);
-  ASSERT_FALSE(blaengineInfo.version == "unversioned");
+  ASSERT_EQ(blaengineInfo.name, ENGINE_NAME);
+  ASSERT_EQ(blaengineInfo.author, AUTHOR);
+  ASSERT_NE(blaengineInfo.version, "unversioned");
 
   blaengine->~BlaEngine();
 }
