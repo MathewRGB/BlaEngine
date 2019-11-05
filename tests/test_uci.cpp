@@ -12,6 +12,7 @@ void teardown_std_mock_io();
 std::stringstream mock_cin, mock_cout;
 std::streambuf *cin_backup, *cout_backup;
 
+
 void setup_std_mock_io() {
   cin_backup = std::cin.rdbuf();
   cout_backup = std::cout.rdbuf();
