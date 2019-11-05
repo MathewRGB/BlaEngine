@@ -3,14 +3,18 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+
+#define FIELD_NUMBER 64
+#define CASTLING_NUMBER 4
 
 using namespace std;
 
 namespace blaengine::calculation {
 
 struct Board {
-  char fields[64];
-  char casteling[4];
+  char fields[FIELD_NUMBER] = {0};
+  char castling[CASTLING_NUMBER] = {0};
 };
 
 enum class Pieces : char {
@@ -25,13 +29,11 @@ enum class Pieces : char {
   white_knight = 'N',
   black_knight = 'n',
   white_pawn = 'P',
-  black_pawn = 'p'
+  black_pawn = 'p',
+  left_piece = 0
 };
 
-enum NextTurn { 
-  white = 0,
-  black = 1
-};
+enum class NextTurn : ushort { white, black };
 
 struct GameState {
   Board board;
@@ -44,7 +46,8 @@ class Calculator {
  public:
   Calculator();
 
- private:
+  void setCurrentGameState(string fen_string, vector<string> pgn_moves);
+
   GameState current_game_state;
 };
 

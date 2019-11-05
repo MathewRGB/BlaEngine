@@ -107,7 +107,8 @@ ADD_DEFINITIONS( -D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
 #
 add_library(libblaengine SHARED
     source/blaengine.cpp
-    source/communication/uci.cpp)
+    source/communication/uci.cpp
+    source/calculation/calculator.cpp)
 
 target_link_libraries(libblaengine
     ${GTEST_LIBRARIES}
@@ -117,9 +118,7 @@ set_target_properties(libblaengine
     PROPERTIES SUFFIX ".so")
 
 add_executable(BlaEngine
-    source/main.cpp
-    source/blaengine.cpp
-    source/communication/uci.cpp)
+    source/main.cpp)
 
 target_link_libraries(BlaEngine 
     libblaengine)

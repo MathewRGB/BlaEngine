@@ -3,6 +3,7 @@
 
 #include "test_blaengine.cpp"
 #include "test_uci.cpp"
+#include "test_calculator.cpp"
 
 using namespace std;
 
