@@ -14,11 +14,11 @@ void Uci::operator()() {
 }
 
 void Uci::translateInput(string input) {
-  if (input == "uci") {
+  if (input.substr(0, 3) == "uci") {
     this->uciInit();
-  } else if (input == "quit") {
+  } else if (input.substr(0, 4) == "quit") {
     this->quit();
-  } else if (input == "isready") {
+  } else if (input.substr(0, 7) == "isready") {
     this->isReady();
   } else if (input.substr(0, 3) == "go ") {
     this->go(input);
