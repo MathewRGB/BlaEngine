@@ -61,7 +61,20 @@ class BlaEngine {
 
   ///
   ///@brief
-  /// ...
+  /// This method communicates the current game state by a given FEN-string
+  /// (Forsyth–Edwards Notation) and a given string out of moves
+  /// @param fen
+  /// Forsyth–Edwards Notation as string
+  /// @param moves
+  /// string of additional moves like (g7g6 a2a3 ..)
+  ///
+  void setGameState(string fen, string moves);
+
+  ///
+  ///@brief
+  /// Tells the calculation unit to get the best move dependent on the currently
+  /// known game state. This means that an initial game state has to be set 
+  /// at least.
   ///
   string getBestMove();
 
