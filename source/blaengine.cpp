@@ -6,7 +6,7 @@ int dummy_counter = 1;
 
 
 BlaEngine::BlaEngine() {
-  
+  this->engine_calculator = Calculator();
 }
 
 BlaEngine::~BlaEngine() {
@@ -16,6 +16,10 @@ void BlaEngine::startEngine() {}
 
 void BlaEngine::shutdownEngine() {
   this->~BlaEngine();
+}
+
+void BlaEngine::setGameState(string fen, vector<string> moves){
+  this->engine_calculator.setCurrentGameState(fen, moves);
 }
 
 string BlaEngine::getBestMove() {

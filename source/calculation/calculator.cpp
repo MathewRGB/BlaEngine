@@ -10,18 +10,17 @@ Calculator::Calculator() {
   current_game_state.black_half_moves = 0;
 }
 
-void Calculator::setCurrentGameState(string fen_string,
-                                     vector<string> pgn_moves) {
+void Calculator::setCurrentGameState(string fen, vector<string> moves) {
   for (int fen_idx = 0, board_idx = 0; fen_idx < FIELD_NUMBER;
        fen_idx++, board_idx++) {
-    if (fen_string[fen_idx] == '/') {
+    if (fen[fen_idx] == '/') {
       board_idx--;
       continue;
-    } else if (isdigit(fen_string[fen_idx])) {
-      board_idx += fen_string[fen_idx] - '0' - 1;
+    } else if (isdigit(fen[fen_idx])) {
+      board_idx += fen[fen_idx] - '0' - 1;
       continue;
     }
-    current_game_state.board.fields[board_idx] = fen_string[fen_idx];
+    current_game_state.board.fields[board_idx] = fen[fen_idx];
   }
 }
 

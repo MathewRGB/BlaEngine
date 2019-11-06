@@ -46,7 +46,7 @@ class Calculator {
  public:
   Calculator();
 
-  void setCurrentGameState(string fen_string, vector<string> pgn_moves);
+  void setCurrentGameState(string fen, vector<string> moves);
 
   GameState current_game_state;
 };

@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include "source/calculation/calculator.h"
 
 #ifdef _PROJECT_VERSION
 #define VERSION _PROJECT_VERSION
@@ -13,12 +15,13 @@
 #define AUTHOR "Mathias Kuhlmey"
 
 using namespace std;
+using namespace blaengine::calculation;
 
 namespace blaengine {
 ///
 ///@brief
 /// This struct is for storing all basic information that has to be communicated
-/// somewhere like version, author, project name etc. 
+/// somewhere like version, author, project name etc.
 ///
 struct BlaEngineInfo {
   string const name = ENGINE_NAME;
@@ -28,8 +31,9 @@ struct BlaEngineInfo {
 
 ///
 ///@brief
-/// This is a class for instantiating a BlaEngine object. This class basically 
-/// represents the core object for conatenating all modules of the engine. 
+/// This class is for instantiating a BlaEngine object. It basically represents
+/// the core object for concatenating and communicating with all modules of the
+/// engine.
 ///
 class BlaEngine {
  public:
@@ -54,7 +58,7 @@ class BlaEngine {
 
   ///
   ///@brief
-  /// Shuts the engine completely down, means also destructing all connected 
+  /// Shuts the engine completely down, means also destructing all connected
   /// objects and references
   ///
   void shutdownEngine();
@@ -66,14 +70,14 @@ class BlaEngine {
   /// @param fen
   /// Forsyth–Edwards Notation as string
   /// @param moves
-  /// string of additional moves like (g7g6 a2a3 ..)
+  /// vector<string> of additional moves like [g7g6, a2a3, ..]
   ///
-  void setGameState(string fen, string moves);
+  void setGameState(string fen, vector<string> moves);
 
   ///
   ///@brief
   /// Tells the calculation unit to get the best move dependent on the currently
-  /// known game state. This means that an initial game state has to be set 
+  /// known game state. This means that an initial game state has to be set
   /// at least.
   ///
   string getBestMove();
@@ -85,6 +89,9 @@ class BlaEngine {
   ///@return BlaEngineInfo
   ///
   BlaEngineInfo getEngineInfo();
+
+ private:
+  Calculator engine_calculator;
 };
 
 }  // namespace blaengine

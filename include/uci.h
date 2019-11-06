@@ -32,8 +32,10 @@ class Uci {
   void go(string command_line);
 
   void listenOnInput();
- private:
 
+  tuple<string, vector<string>> extractGameState(string command_line);
+
+ private:
   void translateInput(string input);
 
   shared_ptr<BlaEngine> engine;
