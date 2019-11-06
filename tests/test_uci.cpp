@@ -3,6 +3,8 @@
 #include "helper_for_tests.h"
 #include "uci.h"
 
+#define RND_DELAY 1.5
+
 using namespace blaengine;
 using namespace blaengine::communication;
 
@@ -36,7 +38,7 @@ TEST(Uci, test_quit_call) {
 
   mock_cin.str("quit");
 
-  sleep(1);
+  sleep(RND_DELAY);
   string result_string;
   getline(mock_cout, result_string);
 
@@ -56,7 +58,7 @@ TEST(Uci, test_uci_call) {
 
   mock_cin.str("uci\nquit");
 
-  sleep(1);
+  sleep(RND_DELAY);
   string result_string[4];
 
   for (int i = 0; i < 4; i++) {
@@ -82,7 +84,7 @@ TEST(Uci, test_isready) {
 
   mock_cin.str("isready\nquit");
 
-  sleep(1);
+  sleep(RND_DELAY);
   string result_string[2];
   getline(mock_cout, result_string[0]);
   getline(mock_cout, result_string[1]);
@@ -104,7 +106,7 @@ TEST(Uci, test_go_move) {
 
   mock_cin.str("go \nquit");
 
-  sleep(1);
+  sleep(RND_DELAY);
   string result_string[2];
   getline(mock_cout, result_string[0]);
   getline(mock_cout, result_string[1]);
@@ -126,7 +128,7 @@ TEST(Uci, test_go_thinking_info) {
 
   mock_cin.str("go infinite\nquit");
 
-  sleep(1);
+  sleep(RND_DELAY);
   string result_string[2];
   getline(mock_cout, result_string[0]);
   getline(mock_cout, result_string[1]);
@@ -136,4 +138,11 @@ TEST(Uci, test_go_thinking_info) {
 
   ASSERT_NE(result_string[0].find("info currmove"), string::npos);
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
+}
+
+TEST(Uci, test_extract_game_state) {
+  auto test_string = "position startpos moves g7g6 h7h6";
+  auto gs_tuple = Uci::extractGameState(test_string);
+
+  ASSERT_EQ(get<0>(gs_tuple), "startpos");
 }

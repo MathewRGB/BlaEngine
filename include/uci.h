@@ -15,6 +15,7 @@ namespace blaengine::communication {
 
 class Uci {
  public:
+  Uci(){};
   Uci(shared_ptr<BlaEngine> engine);
 
   void operator()();
@@ -33,7 +34,7 @@ class Uci {
 
   void listenOnInput();
 
-  tuple<string, vector<string>> extractGameState(string command_line);
+  static tuple<string, vector<string>> extractGameState(string command_line);
 
  private:
   void translateInput(string input);

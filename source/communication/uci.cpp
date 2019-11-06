@@ -53,12 +53,12 @@ void Uci::isReady() {
 }
 
 tuple<string, vector<string>> Uci::extractGameState(string command_line) {
-  string position_fen = command_line.substr(0, command_line.find(" moves "));
-  string fen = position_fen.substr(position_fen.find("position "),
-                                   position_fen.length());
-  string moves_extraction = command_line.substr(command_line.find(" moves "),
-                                                command_line.length());
-  vector<string> moves = vector<string>();
+  string position_fen = command_line.substr(0, command_line.find(" moves"));
+  string fen = position_fen.substr(9, position_fen.length());
+  string moves_extraction = 
+    command_line.substr(command_line.find("moves") + 6, command_line.length());
+  auto moves = vector<string>();
+  moves.push_back(moves_extraction);
 
   return std::make_tuple(fen, moves);
 }
