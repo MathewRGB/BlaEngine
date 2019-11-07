@@ -1,3 +1,4 @@
+#include <fstream>
 #include <thread>
 
 #include "helper_for_tests.h"
@@ -13,7 +14,6 @@ void teardown_std_mock_io();
 
 std::stringstream mock_cin, mock_cout;
 std::streambuf *cin_backup, *cout_backup;
-
 
 void setup_std_mock_io() {
   cin_backup = std::cin.rdbuf();
@@ -141,8 +141,38 @@ TEST(Uci, test_go_thinking_info) {
 }
 
 TEST(Uci, test_extract_game_state) {
-  auto test_string = "position startpos moves g7g6 h7h6";
-  auto gs_tuple = Uci::extractGameState(test_string);
+  auto pgn_moves = vector<string>();
+  auto calc_module = Calculator();
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+  ifstream file;
+  file.open("mock_data/test_gamestates.txt");
+  string test_string;
 
-  ASSERT_EQ(get<0>(gs_tuple), "startpos");
+  if (file.is_open()) getline(file, test_string);
+  auto gs_tuple1 = uci_module.extractGameState(test_string);
+  ASSERT_EQ(get<0>(gs_tuple1),
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
+  ASSERT_TRUE(get<1>(gs_tuple1).empty());
+
+  getline(file, test_string);
+  auto gs_tuple2 = uci_module.extractGameState(test_string);
+  ASSERT_EQ(get<0>(gs_tuple2),
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
+  ASSERT_TRUE(get<1>(gs_tuple2).empty());
+
+  getline(file, test_string);
+  auto gs_tuple3 = uci_module.extractGameState(test_string);
+  ASSERT_EQ(get<0>(gs_tuple3),
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
+  ASSERT_EQ(get<1>(gs_tuple3).size(), 63);
+
+  // string test_string4;
+  // getline(file, test_string4);
+  // auto gs_tuple4 = uci_module.extractGameState(test_string4);
+  // ASSERT_EQ(get<0>(gs_tuple4),
+  //           "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
+  // ASSERT_TRUE(get<1>(gs_tuple4).empty());
+
+  file.close();
 }

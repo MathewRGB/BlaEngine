@@ -35,7 +35,7 @@ list(APPEND CMAKE_MODULE_PATH "/usr/local/lib/cmake")
 #-------------------------------------------------------------------------------
 #
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 set(GENERAL_COMPILER_FLAGS "\
 -pedantic \
@@ -99,7 +99,7 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 add_definitions(-DBLAENGINE_BUILD_COMMIT_STRING="${GIT_COMMIT_HASH}")
-ADD_DEFINITIONS( -D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
+add_definitions(-D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
 
 #-------------------------------------------------------------------------------
 # Output targets
@@ -176,3 +176,6 @@ target_link_libraries(runTests
     pthread)
 
 add_test(main_tests runTests)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tests/mock_data
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -48,20 +48,7 @@ void Uci::quit() {
   cout << engine_info.name + " says byebye" << endl;
 }
 
-void Uci::isReady() { 
-  cout << "readyok" << endl; 
-}
-
-tuple<string, vector<string>> Uci::extractGameState(string command_line) {
-  string position_fen = command_line.substr(0, command_line.find(" moves"));
-  string fen = position_fen.substr(9, position_fen.length());
-  string moves_extraction = 
-    command_line.substr(command_line.find("moves") + 6, command_line.length());
-  auto moves = vector<string>();
-  moves.push_back(moves_extraction);
-
-  return std::make_tuple(fen, moves);
-}
+void Uci::isReady() { cout << "readyok" << endl; }
 
 void Uci::position(string command_line) {
   // TODO UciToFenPosition
@@ -78,6 +65,34 @@ void Uci::go(string command_line) {
   } else {
     cout << "bestmove " << bestmove << endl;
   }
+}
+
+tuple<string, vector<string>> Uci::extractGameState(string command_line) {
+  string position_fen = command_line.substr(0, command_line.find(" moves"));
+  string extracted_fen = position_fen.substr(9, position_fen.length());
+  if (extracted_fen == "startpos") {
+      extracted_fen = fen_startpos;
+  }
+  vector<string> moves = this->extractMoves(command_line);
+
+  return std::make_tuple(fen_startpos, moves);
+}
+
+vector<string> Uci::extractMoves(string command_line) {
+  auto moves = vector<string>();
+
+  if (command_line.find("moves") != string::npos) {
+    string moves_extraction = command_line.substr(
+        command_line.find("moves") + 6, command_line.length());
+    string current_token;
+    while (current_token != "") {
+      current_token = moves_extraction.substr(0, moves_extraction.find(" "));
+      moves_extraction.erase(0, moves_extraction.find(" ") + 1);
+      moves.push_back(current_token);
+    }
+  }
+
+  return moves;
 }
 
 }  // namespace blaengine::communication

@@ -12,7 +12,6 @@
 using namespace std;
 
 namespace blaengine::communication {
-
 class Uci {
  public:
   Uci(){};
@@ -34,7 +33,12 @@ class Uci {
 
   void listenOnInput();
 
-  static tuple<string, vector<string>> extractGameState(string command_line);
+  tuple<string, vector<string>> extractGameState(string command_line);
+
+  vector<string> extractMoves(string command_line);
+
+  const string fen_startpos =
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1";
 
  private:
   void translateInput(string input);
