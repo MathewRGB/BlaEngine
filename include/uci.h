@@ -37,15 +37,15 @@ class Uci {
 
   vector<string> extractMoves(string command_line);
 
-  const string fen_startpos =
-      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1";
-
  private:
   void translateInput(string input);
 
   shared_ptr<BlaEngine> engine;
 
   bool quitted = false;
+
+  const string fen_startpos =
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1";
 };
 
 }  // namespace blaengine::communication

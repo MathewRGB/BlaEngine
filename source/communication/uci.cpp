@@ -51,9 +51,8 @@ void Uci::quit() {
 void Uci::isReady() { cout << "readyok" << endl; }
 
 void Uci::position(string command_line) {
-  // TODO UciToFenPosition
-  // position fen ... moves ...
-  // position startpos moves e2e4 e7e5
+  auto game_state = this->extractGameState(command_line);
+  this->engine->setGameState(get<0>(game_state), get<1>(game_state));
 }
 
 void Uci::go(string command_line) {
