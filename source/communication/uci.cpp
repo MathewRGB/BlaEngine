@@ -68,14 +68,21 @@ void Uci::go(string command_line) {
 }
 
 tuple<string, vector<string>> Uci::extractGameState(string command_line) {
+  bool startpos_exists = (command_line.find("startpos") != string::npos);
+  bool fen_exists = (command_line.find("fen") != string::npos);
+
   string position_fen = command_line.substr(0, command_line.find(" moves"));
-  string extracted_fen = position_fen.substr(9, position_fen.length());
-  if (extracted_fen == "startpos") {
-      extracted_fen = fen_startpos;
+  string extracted_fen;
+
+  if (!fen_exists && startpos_exists) {
+    extracted_fen = fen_startpos;
+  } else if (fen_exists && !startpos_exists) {
+    extracted_fen = position_fen.substr(13, position_fen.length());
   }
+
   vector<string> moves = this->extractMoves(command_line);
 
-  return std::make_tuple(fen_startpos, moves);
+  return std::make_tuple(extracted_fen, moves);
 }
 
 vector<string> Uci::extractMoves(string command_line) {
@@ -85,10 +92,14 @@ vector<string> Uci::extractMoves(string command_line) {
     string moves_extraction = command_line.substr(
         command_line.find("moves") + 6, command_line.length());
     string current_token;
-    while (current_token != "") {
+    while (current_token.empty() ||
+           moves_extraction.find(" ") != string::npos) {
       current_token = moves_extraction.substr(0, moves_extraction.find(" "));
-      moves_extraction.erase(0, moves_extraction.find(" ") + 1);
       moves.push_back(current_token);
+      moves_extraction.erase(0, moves_extraction.find(" ") + 1);
+    }
+    if (!moves_extraction.empty()) {
+      moves.push_back(moves_extraction);
     }
   }
 
