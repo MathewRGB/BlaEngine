@@ -48,11 +48,14 @@ void Uci::quit() {
   cout << engine_info.name + " says byebye" << endl;
 }
 
-void Uci::isReady() { cout << "readyok" << endl; }
+void Uci::isReady() { 
+  cout << "readyok" << endl; 
+}
 
 void Uci::position(string command_line) {
   auto game_state = this->extractGameState(command_line);
   this->engine->setGameState(get<0>(game_state), get<1>(game_state));
+  cout << "info string position was set" << endl;
 }
 
 void Uci::go(string command_line) {

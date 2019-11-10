@@ -140,6 +140,28 @@ TEST(Uci, test_go_thinking_info) {
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
 }
 
+TEST(Uci, test_position_cmd) {
+  setup_std_mock_io();
+
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+
+  thread uci_com_thread(uci_module);
+
+  mock_cin.str("position startpos\nquit");
+
+  sleep(RND_DELAY);
+  string result_string[2];
+  getline(mock_cout, result_string[0]);
+  getline(mock_cout, result_string[1]);
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  ASSERT_NE(result_string[0].find("position was set"), string::npos);
+  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+}
+
 TEST(Uci, test_extract_game_state) {
   auto pgn_moves = vector<string>();
   auto calc_module = Calculator();
