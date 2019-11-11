@@ -164,7 +164,6 @@ TEST(Uci, test_position_cmd) {
 
 TEST(Uci, test_extract_game_state) {
   auto pgn_moves = vector<string>();
-  auto calc_module = Calculator();
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
   ifstream file;
