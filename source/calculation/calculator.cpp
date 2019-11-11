@@ -29,10 +29,11 @@ void Calculator::interpretAndSetFen(string fen) {
   }
 }
 
-void Calculator::makeMovesFromFieldStrings(vector<string> moves) {}
+void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
+  // TODO field string validator needed
+}
 
 ushort Calculator::getFieldIndex(string field) {
-  // TODO field validator needed
   ushort row_index = field[0] - 'a';
   ushort line_index = field[1] - '1';
 
