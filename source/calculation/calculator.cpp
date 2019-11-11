@@ -6,8 +6,9 @@ Calculator::Calculator() {
   current_game_state = GameState();
   current_game_state.board = Board();
   current_game_state.next_turn = NextTurn::white;
-  current_game_state.half_moves = 0;
+  current_game_state.next_half_move = 0;
   current_game_state.half_moves_40_move_rule = 0;
+  current_game_state.en_passant_move = -1;
 }
 
 void Calculator::setCurrentGameState(string fen, vector<string> moves) {
@@ -54,8 +55,22 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
 
   this->current_game_state.board.fields[field_after] = piece_to_move;
   this->current_game_state.board.fields[field_before] = Pieces::left_piece;
-}
 
+  bool rochade = (piece_to_move == 'k' || piece_to_move == 'K') &&
+                 std::abs(field_before - field_after) == 2;
+  if (rochade && field_after < 4) {
+    this->makeMove(0,3);
+  }
+  if (rochade && field_after > 4) {
+    this->makeMove(7,5);
+  }
+  if (rochade && field_after < 60) {
+    this->makeMove(56,59);
+  }
+  if (rochade && field_after > 60) {
+    this->makeMove(63,61);
+  }
+}
 
 void Calculator::validateFenString(string fen) {
   if (fen.empty()) {
