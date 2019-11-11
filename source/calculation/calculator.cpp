@@ -6,8 +6,8 @@ Calculator::Calculator() {
   current_game_state = GameState();
   current_game_state.board = Board();
   current_game_state.next_turn = NextTurn::white;
-  current_game_state.white_half_moves = 0;
-  current_game_state.black_half_moves = 0;
+  current_game_state.half_moves = 0;
+  current_game_state.half_moves_40_move_rule = 0;
 }
 
 void Calculator::setCurrentGameState(string fen, vector<string> moves) {
@@ -34,7 +34,7 @@ void Calculator::interpretAndSetFen(string fen) {
 
 void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
   // TODO validator needed
-  for (int i = 0; i < moves.size(); i++) {
+  for (uint i = 0; i < moves.size(); i++) {
     ushort field_before = this->getFieldIndex(moves[i].substr(0, 2));
     ushort field_after = this->getFieldIndex(moves[i].substr(2, 3));
     char piece_to_move = this->current_game_state.board.fields[field_before];

@@ -38,8 +38,8 @@ enum class NextTurn : ushort { white, black };
 struct GameState {
   Board board;
   NextTurn next_turn;
-  ushort white_half_moves;
-  ushort black_half_moves;
+  ushort half_moves;
+  ushort half_moves_40_move_rule;
 };
 
 class Calculator {
