@@ -34,9 +34,9 @@ void Calculator::interpretAndSetFen(string fen) {
 
 void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
   // TODO validator needed
-  for (int i=0; i<moves.size();i++){
-    ushort field_before = this->getFieldIndex(moves[i].substr(0,2));
-    ushort field_after = this->getFieldIndex(moves[i].substr(2,3));
+  for (int i = 0; i < moves.size(); i++) {
+    ushort field_before = this->getFieldIndex(moves[i].substr(0, 2));
+    ushort field_after = this->getFieldIndex(moves[i].substr(2, 3));
     char piece_to_move = this->current_game_state.board.fields[field_before];
 
     this->current_game_state.board.fields[field_after] = piece_to_move;
