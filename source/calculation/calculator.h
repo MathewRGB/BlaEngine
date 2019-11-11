@@ -49,6 +49,13 @@ class Calculator {
   void setCurrentGameState(string fen, vector<string> moves);
 
   GameState current_game_state;
+
+  private:
+    void interpretAndSetFen(string fen);
+
+    void makeMovesFromFieldStrings(vector<string> moves);
+
+    ushort getFieldIndex(string field);
 };
 
 }  // namespace blaengine::calculation
