@@ -56,6 +56,12 @@ class Calculator {
     void makeMovesFromFieldStrings(vector<string> moves);
 
     ushort getFieldIndex(string field);
+
+    void makeMove(ushort field_before, ushort field_after);
+
+    void validateMoveString(string move);
+
+    void validateFenString(string fen);
 };
 
 }  // namespace blaengine::calculation

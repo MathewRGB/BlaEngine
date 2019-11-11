@@ -16,7 +16,8 @@ void Calculator::setCurrentGameState(string fen, vector<string> moves) {
 }
 
 void Calculator::interpretAndSetFen(string fen) {
-  // TODO fen validator needed
+  this->validateFenString(fen);
+
   int fen_idx = 0;
   int field_idx = 0;
 
@@ -33,14 +34,11 @@ void Calculator::interpretAndSetFen(string fen) {
 }
 
 void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
-  // TODO validator needed
   for (uint i = 0; i < moves.size(); i++) {
+    this->validateMoveString(moves[i]);
     ushort field_before = this->getFieldIndex(moves[i].substr(0, 2));
     ushort field_after = this->getFieldIndex(moves[i].substr(2, 3));
-    char piece_to_move = this->current_game_state.board.fields[field_before];
-
-    this->current_game_state.board.fields[field_after] = piece_to_move;
-    this->current_game_state.board.fields[field_before] = Pieces::left_piece;
+    this->makeMove(field_before, field_after);
   }
 }
 
@@ -49,6 +47,26 @@ ushort Calculator::getFieldIndex(string field) {
   ushort row_index = field[1] - '1';
 
   return row_index * 8 + line_index;
+}
+
+void Calculator::makeMove(ushort field_before, ushort field_after) {
+  char piece_to_move = this->current_game_state.board.fields[field_before];
+
+  this->current_game_state.board.fields[field_after] = piece_to_move;
+  this->current_game_state.board.fields[field_before] = Pieces::left_piece;
+}
+
+
+void Calculator::validateFenString(string fen) {
+  if (fen.empty()) {
+    throw("FEN string was not in the right format or even empty.");
+  }
+}
+
+void Calculator::validateMoveString(string move) {
+  if (move.empty() || move.size() < 4) {
+    throw("move was in a wrong format. It has to be e.g. e2e3");
+  }
 }
 
 }  // namespace blaengine::calculation
