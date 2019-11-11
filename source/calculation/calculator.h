@@ -17,7 +17,7 @@ struct Board {
   char castling[CASTLING_NUMBER] = {0};
 };
 
-enum class Pieces : char {
+enum Pieces : char {
   white_king = 'K',
   black_king = 'k',
   white_queen = 'Q',

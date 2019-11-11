@@ -10,7 +10,10 @@ Calculator::Calculator() {
   current_game_state.black_half_moves = 0;
 }
 
-void Calculator::setCurrentGameState(string fen, vector<string> moves) {}
+void Calculator::setCurrentGameState(string fen, vector<string> moves) {
+  this->interpretAndSetFen(fen);
+  this->makeMovesFromFieldStrings(moves);
+}
 
 void Calculator::interpretAndSetFen(string fen) {
   // TODO fen validator needed
@@ -30,12 +33,20 @@ void Calculator::interpretAndSetFen(string fen) {
 }
 
 void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
-  // TODO field string validator needed
+  // TODO validator needed
+  for (int i=0; i<moves.size();i++){
+    ushort field_before = this->getFieldIndex(moves[i].substr(0,2));
+    ushort field_after = this->getFieldIndex(moves[i].substr(2,3));
+    char piece_to_move = this->current_game_state.board.fields[field_before];
+
+    this->current_game_state.board.fields[field_after] = piece_to_move;
+    this->current_game_state.board.fields[field_before] = Pieces::left_piece;
+  }
 }
 
 ushort Calculator::getFieldIndex(string field) {
-  ushort row_index = field[0] - 'a';
-  ushort line_index = field[1] - '1';
+  ushort line_index = field[0] - 'a';
+  ushort row_index = field[1] - '1';
 
   return row_index * 8 + line_index;
 }
