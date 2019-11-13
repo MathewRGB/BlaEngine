@@ -54,7 +54,7 @@ void Calculator::extractFenPosition(string fen_position) {
   int fen_idx = 0;
   int field_idx = 0;
 
-  for (; fen_idx < FIELD_NUMBER; fen_idx++, field_idx++) {
+  for (; field_idx < FIELD_NUMBER; fen_idx++, field_idx++) {
     if (fen_position[fen_idx] == '/') {
       field_idx--;
       continue;

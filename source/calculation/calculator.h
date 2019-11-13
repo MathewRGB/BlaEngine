@@ -51,7 +51,6 @@ class Calculator {
   void interpretAndSetFen(string fen);
 
   void makeMovesFromFieldStrings(vector<string> moves);
-
   GameState current_game_state;
 
   private:
@@ -59,6 +58,7 @@ class Calculator {
     void extractFenPosition(string fen_position);
 
     void extractFenCastling(string fen_castling);
+
 
     ushort getFieldIndex(string field);
 

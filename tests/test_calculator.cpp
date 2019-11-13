@@ -36,7 +36,7 @@ bool compare_game_states(GameState state1, GameState state2) {
 
 TEST(Calculator, test_set_fen_string) {
   auto calc_module = Calculator();
-  string fen = "r2r2k1/pppqbppp/1nn1p3/8/1PPPN3/P3BN2/4QPPP/3R1RK1 b - b3 0 15";
+  auto fen = "r2r2k1/pppqbppp/1nn1p3/8/1PPPN3/P3BN2/4QPPP/3R1RK1 b - b3 0 15";
   calc_module.interpretAndSetFen(fen);
 
   auto comp_calc_module = Calculator();
