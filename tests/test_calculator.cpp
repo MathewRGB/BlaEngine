@@ -81,7 +81,24 @@ TEST(Calculator, test_set_fen_string) {
                                   comp_calc_module.current_game_state));
 }
 
-TEST(Calculator, test_set_game_state) {
+TEST(Calculator, test_set_game_state_2_moves) {
+  auto comparison_fen =
+      "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2";
+  auto fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1";
+  vector<string> moves{"e2e4", "e7e6"};
+
+  auto comp_calc_module = Calculator();
+  comp_calc_module.interpretAndSetFen(comparison_fen);
+
+  auto calc_module = Calculator();
+  calc_module.interpretAndSetFen(fen);
+  calc_module.makeMovesFromFieldStrings(moves);
+
+  ASSERT_TRUE(compare_game_states(calc_module.current_game_state,
+                                  comp_calc_module.current_game_state));
+}
+
+TEST(Calculator, test_set_game_state_29_moves) {
   auto comparison_fen =
       "r2r2k1/pppqbppp/1nn1p3/8/1PPPN3/P3BN2/4QPPP/3R1RK1 b - b3 0 15";
   auto fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1";

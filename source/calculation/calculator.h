@@ -59,7 +59,6 @@ class Calculator {
 
     void extractFenCastling(string fen_castling);
 
-
     ushort getFieldIndex(string field);
 
     void makeMove(ushort field_before, ushort field_after);
