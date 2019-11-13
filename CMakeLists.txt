@@ -154,10 +154,10 @@ endif(BUILD_DOCUMENTATION)
 # Unit Tests
 #-------------------------------------------------------------------------------
 #
-if(CMAKE_BUILD_TYPE MATCHES "^(Release)$")
-    message(STATUS "Release mode no tests compiled!")
-    return()
-endif()
+# if(CMAKE_BUILD_TYPE MATCHES "^(Release)$")
+#     message(STATUS "Release mode no tests compiled!")
+#     return()
+# endif()
 
 # Locate GTest
 message(STATUS "Debug mode tests will be compiled!")

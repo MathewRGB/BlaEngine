@@ -54,7 +54,12 @@ void Uci::isReady() {
 
 void Uci::position(string command_line) {
   auto game_state = this->extractGameState(command_line);
-  this->engine->setGameState(get<0>(game_state), get<1>(game_state));
+
+  if (!get<1>(game_state).empty()){
+    this->engine->makeMovesFromFieldStrings(get<1>(game_state));
+  }
+
+  this->engine->interpretAndSetFen(get<0>(game_state));
   cout << "info string position was set" << endl;
 }
 

@@ -72,7 +72,8 @@ class BlaEngine {
   /// @param moves
   /// vector<string> of additional moves like [g7g6, a2a3, ..]
   ///
-  void setGameState(string fen, vector<string> moves);
+  void interpretAndSetFen(string fen);
+  void makeMovesFromFieldStrings(vector<string> moves);
 
   ///
   ///@brief

@@ -8,29 +8,61 @@ Calculator::Calculator() {
   current_game_state.next_turn = NextTurn::white;
   current_game_state.next_half_move = 0;
   current_game_state.half_moves_40_move_rule = 0;
-  current_game_state.en_passant_move = -1;
+  current_game_state.en_passant_field = -1;
 }
 
-void Calculator::setCurrentGameState(string fen, vector<string> moves) {
-  this->interpretAndSetFen(fen);
-  this->makeMovesFromFieldStrings(moves);
-}
+Calculator::~Calculator() {}
 
 void Calculator::interpretAndSetFen(string fen) {
   this->validateFenString(fen);
 
+  string fen_position = fen.substr(0, fen.find(" "));
+  this->extractFenPosition(fen_position);
+
+  fen.erase(0, fen.find(" ") + 1);
+  this->current_game_state.next_turn =
+      (fen[0] == 'w') ? NextTurn::white : NextTurn::black;
+
+  fen.erase(0, fen.find(" ") + 1);
+  string castling_info = fen.substr(0, fen.find(" "));
+  if (castling_info.compare("-") != 0) {
+    this->extractFenCastling(castling_info);
+  }
+
+  fen.erase(0, fen.find(" ") + 1);
+  string en_passant = fen.substr(0, fen.find(" "));
+  if (en_passant[0] != '-') {
+    this->current_game_state.en_passant_field = this->getFieldIndex(en_passant);
+  }
+
+  fen.erase(0, fen.find(" ") + 1);
+  string rule_40_moves = fen.substr(0, fen.find(" "));
+  this->current_game_state.half_moves_40_move_rule = std::stoi(rule_40_moves);
+
+  fen.erase(0, fen.find(" ") + 1);
+  string next_half_move = fen.substr(0, fen.find(" "));
+  this->current_game_state.next_half_move = std::stoi(next_half_move);
+}
+
+void Calculator::extractFenCastling(string fen_castling) {
+  for (uint i = 0; i < fen_castling.size(); i++) {
+    this->current_game_state.board.castling[i] = fen_castling[i];
+  }
+}
+
+void Calculator::extractFenPosition(string fen_position) {
   int fen_idx = 0;
   int field_idx = 0;
 
   for (; fen_idx < FIELD_NUMBER; fen_idx++, field_idx++) {
-    if (fen[fen_idx] == '/') {
+    if (fen_position[fen_idx] == '/') {
       field_idx--;
       continue;
-    } else if (isdigit(fen[fen_idx])) {
-      field_idx += fen[fen_idx] - '1';
+    } else if (isdigit(fen_position[fen_idx])) {
+      field_idx += fen_position[fen_idx] - '1';
       continue;
     }
-    this->current_game_state.board.fields[field_idx] = fen[fen_idx];
+    this->current_game_state.board.fields[field_idx] = fen_position[fen_idx];
   }
 }
 
@@ -59,16 +91,16 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
   bool rochade = (piece_to_move == 'k' || piece_to_move == 'K') &&
                  std::abs(field_before - field_after) == 2;
   if (rochade && field_after < 4) {
-    this->makeMove(0,3);
+    this->makeMove(0, 3);
   }
   if (rochade && field_after > 4) {
-    this->makeMove(7,5);
+    this->makeMove(7, 5);
   }
   if (rochade && field_after < 60) {
-    this->makeMove(56,59);
+    this->makeMove(56, 59);
   }
   if (rochade && field_after > 60) {
-    this->makeMove(63,61);
+    this->makeMove(63, 61);
   }
 }
 

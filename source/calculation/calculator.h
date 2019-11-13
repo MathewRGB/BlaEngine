@@ -13,8 +13,8 @@ using namespace std;
 namespace blaengine::calculation {
 
 struct Board {
-  char fields[FIELD_NUMBER] = {0};
-  char castling[CASTLING_NUMBER] = {0};
+  char fields[FIELD_NUMBER] = {'0'};
+  char castling[CASTLING_NUMBER] = {'0'};
 };
 
 enum Pieces : char {
@@ -30,7 +30,7 @@ enum Pieces : char {
   black_knight = 'n',
   white_pawn = 'P',
   black_pawn = 'p',
-  left_piece = 0
+  left_piece = '0'
 };
 
 enum class NextTurn : ushort { white, black };
@@ -38,7 +38,7 @@ enum class NextTurn : ushort { white, black };
 struct GameState {
   Board board;
   NextTurn next_turn;
-  short en_passant_move;
+  short en_passant_field;
   ushort next_half_move;
   ushort half_moves_40_move_rule;
 };
@@ -46,15 +46,19 @@ struct GameState {
 class Calculator {
  public:
   Calculator();
+  ~Calculator();
 
-  void setCurrentGameState(string fen, vector<string> moves);
+  void interpretAndSetFen(string fen);
+
+  void makeMovesFromFieldStrings(vector<string> moves);
 
   GameState current_game_state;
 
   private:
-    void interpretAndSetFen(string fen);
 
-    void makeMovesFromFieldStrings(vector<string> moves);
+    void extractFenPosition(string fen_position);
+
+    void extractFenCastling(string fen_castling);
 
     ushort getFieldIndex(string field);
 

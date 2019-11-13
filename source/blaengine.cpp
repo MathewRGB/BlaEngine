@@ -18,8 +18,12 @@ void BlaEngine::shutdownEngine() {
   this->~BlaEngine();
 }
 
-void BlaEngine::setGameState(string fen, vector<string> moves){
-  this->engine_calculator.setCurrentGameState(fen, moves);
+void BlaEngine::interpretAndSetFen(string fen){
+  this->engine_calculator.interpretAndSetFen(fen);
+}
+
+void BlaEngine::makeMovesFromFieldStrings(vector<string> moves){
+  this->engine_calculator.makeMovesFromFieldStrings(moves);
 }
 
 string BlaEngine::getBestMove() {
