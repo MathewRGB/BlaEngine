@@ -173,7 +173,7 @@ TEST(Uci, test_extract_game_state) {
   if (file.is_open()) getline(file, test_string);
   auto gs_tuple1 = uci_module.extractGameState(test_string);
   ASSERT_EQ(get<0>(gs_tuple1),
-            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   ASSERT_TRUE(get<1>(gs_tuple1).empty());
 
   getline(file, test_string);
@@ -185,7 +185,7 @@ TEST(Uci, test_extract_game_state) {
   getline(file, test_string);
   auto gs_tuple3 = uci_module.extractGameState(test_string);
   ASSERT_EQ(get<0>(gs_tuple3),
-            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   ASSERT_EQ(get<1>(gs_tuple3).size(), 63);
 
   getline(file, test_string);

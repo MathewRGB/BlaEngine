@@ -41,7 +41,7 @@ void Calculator::interpretAndSetFen(string fen) {
 
   fen.erase(0, fen.find(" ") + 1);
   string next_half_move = fen.substr(0, fen.find(" "));
-  this->current_game_state.next_half_move = std::stoi(next_half_move);
+  this->current_game_state.next_half_move += std::stoi(next_half_move);
 }
 
 void Calculator::extractFenCastling(string fen_castling) {
@@ -75,6 +75,12 @@ void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
     ushort field_before = this->getFieldIndex(moves[i].substr(0, 2));
     ushort field_after = this->getFieldIndex(moves[i].substr(2, 3));
     this->makeMove(field_before, field_after);
+
+    this->current_game_state.next_half_move++;
+    this->current_game_state.next_turn =
+        (this->current_game_state.next_turn == NextTurn::white)
+            ? NextTurn::black
+            : NextTurn::white;
   }
 }
 
