@@ -102,17 +102,26 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
 
   bool rochade = (piece_to_move == 'k' || piece_to_move == 'K') &&
                  std::abs(field_before - field_after) == 2;
-  if (rochade && field_after < 4) {
+
+  if (rochade && field_after == 2) {
     this->makeMove(0, 3);
   }
-  if (rochade && field_after > 4) {
+  if (rochade && field_after == 6) {
     this->makeMove(7, 5);
   }
-  if (rochade && field_after < 60) {
+  if (rochade && field_after == 58) {
     this->makeMove(56, 59);
   }
-  if (rochade && field_after > 60) {
+  if (rochade && field_after == 62) {
     this->makeMove(63, 61);
+  }
+  if (rochade && piece_to_move == 'K'){
+    this->current_game_state.board.castling[0] = Pieces::left_piece;
+    this->current_game_state.board.castling[1] = Pieces::left_piece;
+  }
+  if (rochade && piece_to_move == 'k'){
+    this->current_game_state.board.castling[2] = Pieces::left_piece;
+    this->current_game_state.board.castling[3] = Pieces::left_piece;
   }
 }
 
