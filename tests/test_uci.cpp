@@ -1,7 +1,6 @@
 #include <fstream>
 #include <thread>
 
-#include "helper_for_tests.h"
 #include "uci.h"
 
 #define RND_DELAY 1.5

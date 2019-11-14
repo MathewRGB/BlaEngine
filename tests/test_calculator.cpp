@@ -1,4 +1,3 @@
-#include "helper_for_tests.h"
 #include "source/calculation/calculator.h"
 
 using namespace blaengine::calculation;

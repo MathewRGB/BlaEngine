@@ -1,4 +1,3 @@
-#include "helper_for_tests.h"
 #include "blaengine.h"
 
 using namespace blaengine;
