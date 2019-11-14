@@ -51,20 +51,18 @@ void Calculator::extractFenCastling(string fen_castling) {
 }
 
 void Calculator::extractFenPosition(string fen_position) {
-  int fen_idx = 0;
   int field_idx = 0;
-  int fen_position_last_idx = fen_position.length() - 1;
 
-  for (; field_idx < FIELD_NUMBER; fen_idx++, field_idx++) {
-    if (fen_position[fen_position_last_idx - fen_idx] == '/') {
-      field_idx--;
+  for (int fen_idx = 0; fen_idx < fen_position.length(); fen_idx++) {
+    if (fen_position[fen_idx] == '/') {
       continue;
-    } else if (isdigit(fen_position[fen_position_last_idx - fen_idx])) {
-      field_idx += fen_position[fen_position_last_idx - fen_idx] - '1';
+    } else if (isdigit(fen_position[fen_idx])) {
+      field_idx += fen_position[fen_idx] - '0';
       continue;
+    } else {
+      this->current_game_state.board.fields[field_idx] = fen_position[fen_idx];
+      field_idx++;
     }
-    this->current_game_state.board.fields[field_idx] =
-        fen_position[fen_position_last_idx - fen_idx];
   }
 }
 
