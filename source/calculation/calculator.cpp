@@ -41,8 +41,8 @@ void Calculator::interpretAndSetFen(string fen) {
 
   fen.erase(0, fen.find(" ") + 1);
   string next_full_move = fen.substr(0, fen.find(" "));
-  this->current_game_state.next_half_move += std::stoi(next_full_move)*2;
-  if (this->current_game_state.next_turn == NextTurn::white){
+  this->current_game_state.next_half_move += std::stoi(next_full_move) * 2;
+  if (this->current_game_state.next_turn == NextTurn::white) {
     this->current_game_state.next_half_move--;
   }
 }
@@ -100,6 +100,7 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
   this->current_game_state.board.fields[field_after] = piece_to_move;
   this->current_game_state.board.fields[field_before] = Pieces::left_piece;
 
+  // TODO function checking_castling (Rook move problem is not implemented yet!)
   bool rochade = (piece_to_move == 'k' || piece_to_move == 'K') &&
                  std::abs(field_before - field_after) == 2;
 
@@ -115,13 +116,26 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
   if (rochade && field_after == 62) {
     this->makeMove(63, 61);
   }
-  if (rochade && piece_to_move == 'K'){
+  if (rochade && piece_to_move == 'K') {
     this->current_game_state.board.castling[0] = Pieces::left_piece;
     this->current_game_state.board.castling[1] = Pieces::left_piece;
   }
-  if (rochade && piece_to_move == 'k'){
+  if (rochade && piece_to_move == 'k') {
     this->current_game_state.board.castling[2] = Pieces::left_piece;
     this->current_game_state.board.castling[3] = Pieces::left_piece;
+  }
+
+  // TODO function checking_for_en_passant
+  bool en_passant = (piece_to_move == 'p' || piece_to_move == 'P') &&
+                    std::abs(field_before - field_after) == 16;
+  if (en_passant && (field_after - field_before) > 0) {
+    this->current_game_state.en_passant_field = field_after - 8;
+  }
+  if (en_passant && (field_after - field_before) < 0) {
+    this->current_game_state.en_passant_field = field_after + 8;
+  }
+  if (!en_passant) {
+    this->current_game_state.en_passant_field = -1;
   }
 }
 
