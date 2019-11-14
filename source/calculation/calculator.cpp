@@ -54,9 +54,9 @@ void Calculator::extractFenCastling(string fen_castling) {
 }
 
 void Calculator::extractFenPosition(string fen_position) {
-  int field_idx = 0;
+  uint field_idx = 0;
 
-  for (int fen_idx = 0; fen_idx < fen_position.length(); fen_idx++) {
+  for (uint fen_idx = 0; fen_idx < fen_position.length(); fen_idx++) {
     if (fen_position[fen_idx] == '/') {
       continue;
     } else if (isdigit(fen_position[fen_idx])) {
@@ -64,7 +64,7 @@ void Calculator::extractFenPosition(string fen_position) {
       continue;
     } else {
       int transformed_field_idx =
-          (FIELD_NUMBER - (int)(field_idx / 8 + 1) * 8) + field_idx % 8;
+          (FIELD_NUMBER - (uint)(field_idx / 8 + 1) * 8) + field_idx % 8;
       this->current_game_state.board.fields[transformed_field_idx] =
           fen_position[fen_idx];
       field_idx++;
