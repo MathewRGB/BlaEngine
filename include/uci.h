@@ -45,7 +45,7 @@ class Uci {
   bool quitted = false;
 
   const string fen_startpos =
-      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1";
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 };
 
 }  // namespace blaengine::communication
