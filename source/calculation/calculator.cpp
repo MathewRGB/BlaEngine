@@ -40,8 +40,11 @@ void Calculator::interpretAndSetFen(string fen) {
   this->current_game_state.half_moves_40_move_rule = std::stoi(rule_40_moves);
 
   fen.erase(0, fen.find(" ") + 1);
-  string next_half_move = fen.substr(0, fen.find(" "));
-  this->current_game_state.next_half_move += std::stoi(next_half_move);
+  string next_full_move = fen.substr(0, fen.find(" "));
+  this->current_game_state.next_half_move += std::stoi(next_full_move)*2;
+  if (this->current_game_state.next_turn == NextTurn::white){
+    this->current_game_state.next_half_move--;
+  }
 }
 
 void Calculator::extractFenCastling(string fen_castling) {

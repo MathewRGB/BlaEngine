@@ -75,7 +75,7 @@ TEST(Calculator, test_set_fen_string) {
   comp_calc_module.current_game_state.en_passant_field = 17;
   comp_calc_module.current_game_state.half_moves_40_move_rule = 0;
   comp_calc_module.current_game_state.next_turn = NextTurn::black;
-  comp_calc_module.current_game_state.next_half_move = 15;
+  comp_calc_module.current_game_state.next_half_move = 30;
 
   ASSERT_TRUE(compare_game_states(calc_module.current_game_state,
                                   comp_calc_module.current_game_state));
