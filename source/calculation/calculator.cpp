@@ -60,7 +60,10 @@ void Calculator::extractFenPosition(string fen_position) {
       field_idx += fen_position[fen_idx] - '0';
       continue;
     } else {
-      this->current_game_state.board.fields[field_idx] = fen_position[fen_idx];
+      int transformed_field_idx =
+          (FIELD_NUMBER - (int)(field_idx / 8 + 1) * 8) + field_idx % 8;
+      this->current_game_state.board.fields[transformed_field_idx] =
+          fen_position[fen_idx];
       field_idx++;
     }
   }

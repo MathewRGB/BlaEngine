@@ -13,8 +13,8 @@ using namespace std;
 namespace blaengine::calculation {
 
 struct Board {
-  char fields[FIELD_NUMBER] = {'0'};
-  char castling[CASTLING_NUMBER] = {'0'};
+  char fields[FIELD_NUMBER]{0};
+  char castling[CASTLING_NUMBER]{0};
 };
 
 enum Pieces : char {
@@ -30,7 +30,7 @@ enum Pieces : char {
   black_knight = 'n',
   white_pawn = 'P',
   black_pawn = 'p',
-  left_piece = '0'
+  left_piece = 0
 };
 
 enum class NextTurn : ushort { white, black };
