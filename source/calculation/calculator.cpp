@@ -128,6 +128,16 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
   // TODO function checking_for_en_passant
   bool en_passant = (piece_to_move == 'p' || piece_to_move == 'P') &&
                     std::abs(field_before - field_after) == 16;
+  if ((piece_to_move == 'p' || piece_to_move == 'P') &&
+      field_after == this->current_game_state.en_passant_field &&
+      (field_after - field_before) > 0) {
+    this->current_game_state.board.fields[field_after - 8] = Pieces::left_piece;
+  }
+  if ((piece_to_move == 'p' || piece_to_move == 'P') &&
+      field_after == this->current_game_state.en_passant_field &&
+      (field_after - field_before) < 0) {
+    this->current_game_state.board.fields[field_after + 8] = Pieces::left_piece;
+  }
   if (en_passant && (field_after - field_before) > 0) {
     this->current_game_state.en_passant_field = field_after - 8;
   }

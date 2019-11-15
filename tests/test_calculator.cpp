@@ -119,9 +119,9 @@ TEST(Calculator, test_set_game_state_29_moves) {
 }
 
 TEST(Calculator, test_en_passant_move_black) {
-  auto comparison_fen = "8/8/8/4ppk1/8/6K1/7P/8 w - - 0 4";
-  auto fen = "8/8/4p1k1/5p2/6p1/8/5PKP/8 w - - 10 1";
-  vector<string> moves{"f2f4", "g4f3", "g2f3", "g6g5", "f3g3"};
+  auto comparison_fen = "7k/8/5p2/6p1/8/6p1/8/1K6 w - - 0 2";
+  auto fen = "7k/8/5p2/6p1/7p/8/6P1/1K6 w - - 0 1";
+  vector<string> moves{"g2g4", "h4g3"};
 
   auto comp_calc_module = Calculator();
   comp_calc_module.interpretAndSetFen(comparison_fen);
