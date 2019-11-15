@@ -117,3 +117,51 @@ TEST(Calculator, test_set_game_state_29_moves) {
   ASSERT_TRUE(compare_game_states(calc_module.current_game_state,
                                   comp_calc_module.current_game_state));
 }
+
+TEST(Calculator, test_en_passant_move_black) {
+  auto comparison_fen = "8/8/8/4ppk1/8/6K1/7P/8 w - - 0 4";
+  auto fen = "8/8/4p1k1/5p2/6p1/8/5PKP/8 w - - 10 1";
+  vector<string> moves{"f2f4", "g4f3", "g2f3", "g6g5", "f3g3"};
+
+  auto comp_calc_module = Calculator();
+  comp_calc_module.interpretAndSetFen(comparison_fen);
+
+  auto calc_module = Calculator();
+  calc_module.interpretAndSetFen(fen);
+  calc_module.makeMovesFromFieldStrings(moves);
+
+  ASSERT_TRUE(compare_game_states(calc_module.current_game_state,
+                                  comp_calc_module.current_game_state));
+}
+
+TEST(Calculator, test_piece_transformation_white_Q) {
+  auto comparison_fen = "5Q2/8/6k1/8/8/8/6PP/5K2 b - - 2 5";
+  auto fen = "8/p6k/8/1P6/8/8/6PP/5K2 b - - 0 1";
+  vector<string> moves{"a7a5", "b5a6", "h7g7", "a6a7", "g7f7", "a7a8q", "f7g6"};
+
+  auto comp_calc_module = Calculator();
+  comp_calc_module.interpretAndSetFen(comparison_fen);
+
+  auto calc_module = Calculator();
+  calc_module.interpretAndSetFen(fen);
+  calc_module.makeMovesFromFieldStrings(moves);
+
+  ASSERT_TRUE(compare_game_states(calc_module.current_game_state,
+                                  comp_calc_module.current_game_state));
+}
+
+TEST(Calculator, test_piece_transformation_black_q) {
+  auto comparison_fen = "7k/6pp/8/4q3/8/8/4K1PP/8 w - - 2 5";
+  auto fen = "7k/6pp/8/8/1p6/8/P5PP/7K w - - 0 1";
+  vector<string> moves{"a2a4", "b4a3", "h1g1", "a3a2", "g1f1", "a2a1q", "f1e2"};
+
+  auto comp_calc_module = Calculator();
+  comp_calc_module.interpretAndSetFen(comparison_fen);
+
+  auto calc_module = Calculator();
+  calc_module.interpretAndSetFen(fen);
+  calc_module.makeMovesFromFieldStrings(moves);
+
+  ASSERT_TRUE(compare_game_states(calc_module.current_game_state,
+                                  comp_calc_module.current_game_state));
+}
