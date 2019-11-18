@@ -3,6 +3,10 @@
 
 #include "game_state_controller.h"
 
+#define WHITE_SPACE " "
+#define DEFAULT_HYPHEN "-"
+#define W_FOR_WHITE "w"
+
 using namespace std;
 
 namespace blaengine::calculation {
