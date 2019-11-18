@@ -17,7 +17,7 @@ struct Board {
   char castling[CASTLING_NUMBER]{0};
 };
 
-enum Pieces : char {
+enum Piece : char {
   white_king = 'K',
   black_king = 'k',
   white_queen = 'Q',
@@ -57,19 +57,19 @@ class GameStateController {
   ushort getFieldIndex(string field);
 
   void makeMove(ushort field_before, ushort field_after,
-                Pieces piece_got = Pieces::left_piece);
+                Piece piece_got = Piece::left_piece);
 
-  Pieces transformPiece(string move);
+  Piece transformPiece(string move);
 
-  void changeMovesForDraw(Pieces moving_piece, ushort field_after);
+  void changeMovesForDraw(Piece moving_piece, ushort field_after);
 
   void checkAndPerformCastling(ushort field_before, ushort field_after,
-                               Pieces moving_piece);
+                               Piece moving_piece);
 
   void checkAndPerformEnPassant(ushort field_before, ushort field_after,
-                               Pieces moving_piece);
+                                Piece moving_piece);
 
-  void checkAndTransformPiece(ushort fiel_after, Pieces piece_got);
+  void checkAndTransformPiece(ushort field_after, Piece piece_got);
 };
 
 }  // namespace blaengine::calculation

@@ -59,7 +59,7 @@ void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
     ushort field_before = gstate_controller.getFieldIndex(field_string_before);
     ushort field_after = gstate_controller.getFieldIndex(field_string_after);
 
-    Pieces piece_got = this->game_state_controller.transformPiece(moves[i]);
+    Piece piece_got = this->game_state_controller.transformPiece(moves[i]);
     gstate_controller.makeMove(field_before, field_after, piece_got);
 
     current_gstate.next_half_move++;

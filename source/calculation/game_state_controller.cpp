@@ -46,52 +46,49 @@ ushort GameStateController::getFieldIndex(string field) {
 }
 
 void GameStateController::makeMove(ushort field_before, ushort field_after,
-                                   Pieces piece_got) {
+                                   Piece piece_got) {
   char moving_piece = this->current_game_state.board.fields[field_before];
 
-  this->changeMovesForDraw((Pieces)moving_piece, field_after);
+  this->changeMovesForDraw((Piece)moving_piece, field_after);
 
   this->current_game_state.board.fields[field_after] = moving_piece;
-  this->current_game_state.board.fields[field_before] = Pieces::left_piece;
+  this->current_game_state.board.fields[field_before] = Piece::left_piece;
 
-  this->checkAndPerformCastling(field_before, field_after,
-                                (Pieces)moving_piece);
+  this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
 
   this->checkAndPerformEnPassant(field_before, field_after,
-                                 (Pieces)moving_piece);
+                                 (Piece)moving_piece);
 
   this->checkAndTransformPiece(field_after, piece_got);
 }
 
-Pieces GameStateController::transformPiece(string move) {
-  Pieces piece_got =
-      (move.length() == 5) ? (Pieces)(move.at(4)) : Pieces::left_piece;
-  if (piece_got == Pieces::black_queen &&
+Piece GameStateController::transformPiece(string move) {
+  Piece piece_got =
+      (move.length() == 5) ? (Piece)(move.at(4)) : Piece::left_piece;
+  if (piece_got == Piece::black_queen &&
       this->current_game_state.next_turn == NextTurn::white) {
-    piece_got = Pieces::white_queen;
+    piece_got = Piece::white_queen;
   }
-  if (piece_got == Pieces::black_knight &&
+  if (piece_got == Piece::black_knight &&
       this->current_game_state.next_turn == NextTurn::white) {
-    piece_got = Pieces::white_knight;
+    piece_got = Piece::white_knight;
   }
-  if (piece_got == Pieces::black_rook &&
+  if (piece_got == Piece::black_rook &&
       this->current_game_state.next_turn == NextTurn::white) {
-    piece_got = Pieces::white_rook;
+    piece_got = Piece::white_rook;
   }
-  if (piece_got == Pieces::black_bishop &&
+  if (piece_got == Piece::black_bishop &&
       this->current_game_state.next_turn == NextTurn::white) {
-    piece_got = Pieces::white_bishop;
+    piece_got = Piece::white_bishop;
   }
 
   return piece_got;
 }
 
-void GameStateController::changeMovesForDraw(Pieces moving_piece,
+void GameStateController::changeMovesForDraw(Piece moving_piece,
                                              ushort field_after) {
-  if (moving_piece != Pieces::black_pawn &&
-      moving_piece != Pieces::white_pawn &&
-      this->current_game_state.board.fields[field_after] ==
-          Pieces::left_piece) {
+  if (moving_piece != Piece::black_pawn && moving_piece != Piece::white_pawn &&
+      this->current_game_state.board.fields[field_after] == Piece::left_piece) {
     this->current_game_state.half_moves_for_draw++;
   } else {
     this->current_game_state.half_moves_for_draw = 0;
@@ -100,7 +97,7 @@ void GameStateController::changeMovesForDraw(Pieces moving_piece,
 
 void GameStateController::checkAndPerformCastling(ushort field_before,
                                                   ushort field_after,
-                                                  Pieces moving_piece) {
+                                                  Piece moving_piece) {
   bool castling = (moving_piece == 'k' || moving_piece == 'K') &&
                   std::abs(field_before - field_after) == 2;
 
@@ -117,29 +114,29 @@ void GameStateController::checkAndPerformCastling(ushort field_before,
     this->makeMove(63, 61);
   }
   if (castling && moving_piece == 'K') {
-    this->current_game_state.board.castling[0] = Pieces::left_piece;
-    this->current_game_state.board.castling[1] = Pieces::left_piece;
+    this->current_game_state.board.castling[0] = Piece::left_piece;
+    this->current_game_state.board.castling[1] = Piece::left_piece;
   }
   if (castling && moving_piece == 'k') {
-    this->current_game_state.board.castling[2] = Pieces::left_piece;
-    this->current_game_state.board.castling[3] = Pieces::left_piece;
+    this->current_game_state.board.castling[2] = Piece::left_piece;
+    this->current_game_state.board.castling[3] = Piece::left_piece;
   }
 }
 
 void GameStateController::checkAndPerformEnPassant(ushort field_before,
                                                    ushort field_after,
-                                                   Pieces moving_piece) {
+                                                   Piece moving_piece) {
   bool en_passant = (moving_piece == 'p' || moving_piece == 'P') &&
                     std::abs(field_before - field_after) == 16;
   if ((moving_piece == 'p' || moving_piece == 'P') &&
       field_after == this->current_game_state.en_passant_field &&
       (field_after - field_before) > 0) {
-    this->current_game_state.board.fields[field_after - 8] = Pieces::left_piece;
+    this->current_game_state.board.fields[field_after - 8] = Piece::left_piece;
   }
   if ((moving_piece == 'p' || moving_piece == 'P') &&
       field_after == this->current_game_state.en_passant_field &&
       (field_after - field_before) < 0) {
-    this->current_game_state.board.fields[field_after + 8] = Pieces::left_piece;
+    this->current_game_state.board.fields[field_after + 8] = Piece::left_piece;
   }
   if (en_passant && (field_after - field_before) > 0) {
     this->current_game_state.en_passant_field = field_after - 8;
@@ -153,8 +150,8 @@ void GameStateController::checkAndPerformEnPassant(ushort field_before,
 }
 
 void GameStateController::checkAndTransformPiece(ushort field_after,
-                                                 Pieces piece_got) {
-  if (piece_got != Pieces::left_piece) {
+                                                 Piece piece_got) {
+  if (piece_got != Piece::left_piece) {
     this->current_game_state.board.fields[field_after] = piece_got;
   }
 }
