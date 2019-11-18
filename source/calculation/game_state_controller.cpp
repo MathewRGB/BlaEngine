@@ -46,15 +46,16 @@ ushort GameStateController::getFieldIndex(string field) {
 }
 
 void GameStateController::makeMove(ushort field_before, ushort field_after,
-                          Pieces piece_got) {
+                                   Pieces piece_got) {
   char piece_to_move = this->current_game_state.board.fields[field_before];
 
   // TODO function for this 40 moves rule
   if (piece_to_move != Pieces::black_pawn &&
       piece_to_move != Pieces::white_pawn &&
-      this->current_game_state.board.fields[field_after] == Pieces::left_piece) {
+      this->current_game_state.board.fields[field_after] ==
+          Pieces::left_piece) {
     this->current_game_state.half_moves_for_draw++;
-  } else{
+  } else {
     this->current_game_state.half_moves_for_draw = 0;
   }
 
@@ -113,6 +114,29 @@ void GameStateController::makeMove(ushort field_before, ushort field_after,
   if (piece_got != Pieces::left_piece) {
     this->current_game_state.board.fields[field_after] = piece_got;
   }
+}
+
+Pieces GameStateController::transformPiece(string move) {
+  Pieces piece_got =
+      (move.length() == 5) ? (Pieces)(move.at(4)) : Pieces::left_piece;
+  if (piece_got == Pieces::black_queen &&
+      this->current_game_state.next_turn == NextTurn::white) {
+    piece_got = Pieces::white_queen;
+  }
+  if (piece_got == Pieces::black_knight &&
+      this->current_game_state.next_turn == NextTurn::white) {
+    piece_got = Pieces::white_knight;
+  }
+  if (piece_got == Pieces::black_rook &&
+      this->current_game_state.next_turn == NextTurn::white) {
+    piece_got = Pieces::white_rook;
+  }
+  if (piece_got == Pieces::black_bishop &&
+      this->current_game_state.next_turn == NextTurn::white) {
+    piece_got = Pieces::white_bishop;
+  }
+
+  return piece_got;
 }
 
 }  // namespace blaengine::calculation

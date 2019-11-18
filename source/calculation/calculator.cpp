@@ -54,30 +54,7 @@ void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
     ushort field_after =
         this->game_state_controller.getFieldIndex(moves[i].substr(2, 3));
 
-    // TODO function for this needed piece transformation
-    Pieces piece_got = (moves[i].length() == 5) ? (Pieces)(moves[i].at(4))
-                                                : Pieces::left_piece;
-    if (piece_got == Pieces::black_queen &&
-        this->game_state_controller.current_game_state.next_turn ==
-            NextTurn::white) {
-      piece_got = Pieces::white_queen;
-    }
-    if (piece_got == Pieces::black_knight &&
-        this->game_state_controller.current_game_state.next_turn ==
-            NextTurn::white) {
-      piece_got = Pieces::white_knight;
-    }
-    if (piece_got == Pieces::black_rook &&
-        this->game_state_controller.current_game_state.next_turn ==
-            NextTurn::white) {
-      piece_got = Pieces::white_rook;
-    }
-    if (piece_got == Pieces::black_bishop &&
-        this->game_state_controller.current_game_state.next_turn ==
-            NextTurn::white) {
-      piece_got = Pieces::white_bishop;
-    }
-
+    Pieces piece_got = this->game_state_controller.transformPiece(moves[i]);
     this->game_state_controller.makeMove(field_before, field_after, piece_got);
 
     this->game_state_controller.current_game_state.next_half_move++;

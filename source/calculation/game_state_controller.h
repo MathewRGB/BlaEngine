@@ -58,6 +58,8 @@ class GameStateController {
 
   void makeMove(ushort field_before, ushort field_after,
                 Pieces piece_got = Pieces::left_piece);
+
+  Pieces transformPiece(string move);
 };
 
 }  // namespace blaengine::calculation
