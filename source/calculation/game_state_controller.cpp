@@ -21,18 +21,17 @@ void GameStateController::extractFenCastling(string fen_castling) {
 
 void GameStateController::extractFenPosition(string fen_position) {
   uint field_idx = 0;
+  auto fields = this->current_game_state.board.fields;
 
   for (uint fen_idx = 0; fen_idx < fen_position.length(); fen_idx++) {
-    if (fen_position[fen_idx] == '/') {
+    if (fen_position[fen_idx] == FEN_POS_SEPARATOR) {
       continue;
     } else if (isdigit(fen_position[fen_idx])) {
       field_idx += fen_position[fen_idx] - '0';
       continue;
     } else {
-      int transformed_field_idx =
-          (FIELD_NUMBER - (uint)(field_idx / 8 + 1) * 8) + field_idx % 8;
-      this->current_game_state.board.fields[transformed_field_idx] =
-          fen_position[fen_idx];
+      ushort mapped_field_idx = this->getMappedFieldIndex(field_idx);
+      fields[mapped_field_idx] = fen_position[fen_idx];
       field_idx++;
     }
   }
@@ -55,10 +54,8 @@ void GameStateController::makeMove(ushort field_before, ushort field_after,
   this->current_game_state.board.fields[field_before] = Piece::left_piece;
 
   this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
-
   this->checkAndPerformEnPassant(field_before, field_after,
                                  (Piece)moving_piece);
-
   this->checkAndTransformPiece(field_after, piece_got);
 }
 
@@ -98,7 +95,8 @@ void GameStateController::changeMovesForDraw(Piece moving_piece,
 void GameStateController::checkAndPerformCastling(ushort field_before,
                                                   ushort field_after,
                                                   Piece moving_piece) {
-  bool castling = (moving_piece == 'k' || moving_piece == 'K') &&
+  bool castling = (moving_piece == Piece::black_king ||
+                   moving_piece == Piece::white_king) &&
                   std::abs(field_before - field_after) == 2;
 
   if (castling && field_after == 2) {
@@ -113,11 +111,11 @@ void GameStateController::checkAndPerformCastling(ushort field_before,
   if (castling && field_after == 62) {
     this->makeMove(63, 61);
   }
-  if (castling && moving_piece == 'K') {
+  if (castling && moving_piece == Piece::white_king) {
     this->current_game_state.board.castling[0] = Piece::left_piece;
     this->current_game_state.board.castling[1] = Piece::left_piece;
   }
-  if (castling && moving_piece == 'k') {
+  if (castling && moving_piece == Piece::black_king) {
     this->current_game_state.board.castling[2] = Piece::left_piece;
     this->current_game_state.board.castling[3] = Piece::left_piece;
   }
@@ -126,14 +124,17 @@ void GameStateController::checkAndPerformCastling(ushort field_before,
 void GameStateController::checkAndPerformEnPassant(ushort field_before,
                                                    ushort field_after,
                                                    Piece moving_piece) {
-  bool en_passant = (moving_piece == 'p' || moving_piece == 'P') &&
+  bool en_passant = (moving_piece == Piece::black_pawn ||
+                     moving_piece == Piece::white_pawn) &&
                     std::abs(field_before - field_after) == 16;
-  if ((moving_piece == 'p' || moving_piece == 'P') &&
+  if ((moving_piece == Piece::black_pawn ||
+       moving_piece == Piece::white_pawn) &&
       field_after == this->current_game_state.en_passant_field &&
       (field_after - field_before) > 0) {
     this->current_game_state.board.fields[field_after - 8] = Piece::left_piece;
   }
-  if ((moving_piece == 'p' || moving_piece == 'P') &&
+  if ((moving_piece == Piece::black_pawn ||
+       moving_piece == Piece::white_pawn) &&
       field_after == this->current_game_state.en_passant_field &&
       (field_after - field_before) < 0) {
     this->current_game_state.board.fields[field_after + 8] = Piece::left_piece;
@@ -154,6 +155,10 @@ void GameStateController::checkAndTransformPiece(ushort field_after,
   if (piece_got != Piece::left_piece) {
     this->current_game_state.board.fields[field_after] = piece_got;
   }
+}
+
+ushort GameStateController::getMappedFieldIndex(ushort field_index) {
+  return (FIELD_NUMBER - (ushort)(field_index / 8 + 1) * 8) + field_index % 8;
 }
 
 }  // namespace blaengine::calculation

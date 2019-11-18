@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#define FEN_POS_SEPARATOR '/'
 #define FIELD_NUMBER 64
 #define CASTLING_NUMBER 4
 
@@ -70,6 +71,8 @@ class GameStateController {
                                 Piece moving_piece);
 
   void checkAndTransformPiece(ushort field_after, Piece piece_got);
+
+  ushort getMappedFieldIndex(ushort field_index);
 };
 
 }  // namespace blaengine::calculation
