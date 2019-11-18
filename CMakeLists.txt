@@ -108,7 +108,8 @@ add_definitions(-D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
 add_library(libblaengine SHARED
     source/blaengine.cpp
     source/communication/uci.cpp
-    source/calculation/calculator.cpp)
+    source/calculation/calculator.cpp
+    source/calculation/game_state_controller.cpp)
 
 target_link_libraries(libblaengine
     ${GTEST_LIBRARIES}
