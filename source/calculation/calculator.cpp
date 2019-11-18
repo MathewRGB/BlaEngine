@@ -77,7 +77,28 @@ void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
     this->validateMoveString(moves[i]);
     ushort field_before = this->getFieldIndex(moves[i].substr(0, 2));
     ushort field_after = this->getFieldIndex(moves[i].substr(2, 3));
-    this->makeMove(field_before, field_after);
+
+    // TODO function for this needed piece transformation
+    Pieces piece_got = (moves[i].length() == 5) ? (Pieces)(moves[i].at(4))
+                                                : Pieces::left_piece;
+    if (piece_got == Pieces::black_queen &&
+        this->current_game_state.next_turn == NextTurn::white) {
+      piece_got = Pieces::white_queen;
+    }
+    if (piece_got == Pieces::black_knight &&
+        this->current_game_state.next_turn == NextTurn::white) {
+      piece_got = Pieces::white_knight;
+    }
+    if (piece_got == Pieces::black_rook &&
+        this->current_game_state.next_turn == NextTurn::white) {
+      piece_got = Pieces::white_rook;
+    }
+    if (piece_got == Pieces::black_bishop &&
+        this->current_game_state.next_turn == NextTurn::white) {
+      piece_got = Pieces::white_bishop;
+    }
+
+    this->makeMove(field_before, field_after, piece_got);
 
     this->current_game_state.next_half_move++;
     this->current_game_state.next_turn =
@@ -94,8 +115,18 @@ ushort Calculator::getFieldIndex(string field) {
   return row_index * 8 + line_index;
 }
 
-void Calculator::makeMove(ushort field_before, ushort field_after) {
+void Calculator::makeMove(ushort field_before, ushort field_after,
+                          Pieces piece_got) {
   char piece_to_move = this->current_game_state.board.fields[field_before];
+
+  // TODO function for this 40 moves rule
+  if (piece_to_move != Pieces::black_pawn &&
+      piece_to_move != Pieces::white_pawn &&
+      this->current_game_state.board.fields[field_after] == Pieces::left_piece) {
+    this->current_game_state.half_moves_40_move_rule++;
+  } else{
+    this->current_game_state.half_moves_40_move_rule = 0;
+  }
 
   this->current_game_state.board.fields[field_after] = piece_to_move;
   this->current_game_state.board.fields[field_before] = Pieces::left_piece;
@@ -146,6 +177,11 @@ void Calculator::makeMove(ushort field_before, ushort field_after) {
   }
   if (!en_passant) {
     this->current_game_state.en_passant_field = -1;
+  }
+
+  // TODO function transformation move
+  if (piece_got != Pieces::left_piece) {
+    this->current_game_state.board.fields[field_after] = piece_got;
   }
 }
 

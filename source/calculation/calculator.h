@@ -51,21 +51,22 @@ class Calculator {
   void interpretAndSetFen(string fen);
 
   void makeMovesFromFieldStrings(vector<string> moves);
+
   GameState current_game_state;
 
-  private:
+ private:
+  void extractFenPosition(string fen_position);
 
-    void extractFenPosition(string fen_position);
+  void extractFenCastling(string fen_castling);
 
-    void extractFenCastling(string fen_castling);
+  ushort getFieldIndex(string field);
 
-    ushort getFieldIndex(string field);
+  void makeMove(ushort field_before, ushort field_after,
+                Pieces piece_got = Pieces::left_piece);
 
-    void makeMove(ushort field_before, ushort field_after);
+  void validateMoveString(string move);
 
-    void validateMoveString(string move);
-
-    void validateFenString(string fen);
+  void validateFenString(string fen);
 };
 
 }  // namespace blaengine::calculation

@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "source/calculation/calculator.h"
 
 using namespace blaengine::calculation;
@@ -137,8 +138,8 @@ TEST(Calculator, test_en_passant_move_black) {
 TEST(Calculator, test_piece_transformation_white_Q) {
   auto comparison_fen = "5Q2/8/6k1/8/8/8/6PP/5K2 b - - 2 5";
   auto fen = "8/p6k/8/1P6/8/8/6PP/5K2 b - - 0 1";
-  // TODO wrong setup last move left
-  vector<string> moves{"a7a5", "b5a6", "h7g7", "a6a7", "g7f7", "a7a8q", "f7g6"};
+  vector<string> moves{"a7a5", "b5a6",  "h7g7", "a6a7",
+                       "g7f7", "a7a8q", "f7g6", "a8f8"};
 
   auto comp_calc_module = Calculator();
   comp_calc_module.interpretAndSetFen(comparison_fen);
@@ -152,10 +153,10 @@ TEST(Calculator, test_piece_transformation_white_Q) {
 }
 
 TEST(Calculator, test_piece_transformation_black_q) {
-  auto comparison_fen = "7k/6pp/8/4q3/8/8/4K1PP/8 w - - 2 5";
+  auto comparison_fen = "7k/6pp/8/8/8/6PK/7P/5q2 w - - 2 5";
   auto fen = "7k/6pp/8/8/1p6/8/P5PP/7K w - - 0 1";
-  // TODO wrong setup last move left
-  vector<string> moves{"a2a4", "b4a3", "h1g1", "a3a2", "g1f1", "a2a1q", "f1e2"};
+  vector<string> moves{"a2a4", "b4a3",  "g2g3", "a3a2",
+                       "h1g2", "a2a1q", "g2h3", "a1f1"};
 
   auto comp_calc_module = Calculator();
   comp_calc_module.interpretAndSetFen(comparison_fen);
