@@ -40,7 +40,7 @@ struct GameState {
   NextTurn next_turn;
   short en_passant_field;
   ushort next_half_move;
-  ushort half_moves_40_move_rule;
+  ushort half_moves_for_draw;
 };
 
 class Calculator {

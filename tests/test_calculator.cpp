@@ -22,7 +22,7 @@ bool compare_game_states(GameState state1, GameState state2) {
     cout << "en_passant_field is wrong" << endl;
     return false;
   }
-  if (state1.half_moves_40_move_rule != state2.half_moves_40_move_rule) {
+  if (state1.half_moves_for_draw != state2.half_moves_for_draw) {
     cout << "half_moves_40_move_rule is wrong" << endl;
     return false;
   }
@@ -73,7 +73,7 @@ TEST(Calculator, test_set_fen_string) {
   comp_calc_module.current_game_state.board.fields[59] = 'r';
   comp_calc_module.current_game_state.board.fields[62] = 'k';
   comp_calc_module.current_game_state.en_passant_field = 17;
-  comp_calc_module.current_game_state.half_moves_40_move_rule = 0;
+  comp_calc_module.current_game_state.half_moves_for_draw = 0;
   comp_calc_module.current_game_state.next_turn = NextTurn::black;
   comp_calc_module.current_game_state.next_half_move = 30;
 

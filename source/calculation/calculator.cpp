@@ -7,7 +7,7 @@ Calculator::Calculator() {
   current_game_state.board = Board();
   current_game_state.next_turn = NextTurn::white;
   current_game_state.next_half_move = 0;
-  current_game_state.half_moves_40_move_rule = 0;
+  current_game_state.half_moves_for_draw = 0;
   current_game_state.en_passant_field = -1;
 }
 
@@ -37,7 +37,7 @@ void Calculator::interpretAndSetFen(string fen) {
 
   fen.erase(0, fen.find(" ") + 1);
   string rule_40_moves = fen.substr(0, fen.find(" "));
-  this->current_game_state.half_moves_40_move_rule = std::stoi(rule_40_moves);
+  this->current_game_state.half_moves_for_draw = std::stoi(rule_40_moves);
 
   fen.erase(0, fen.find(" ") + 1);
   string next_full_move = fen.substr(0, fen.find(" "));
@@ -123,9 +123,9 @@ void Calculator::makeMove(ushort field_before, ushort field_after,
   if (piece_to_move != Pieces::black_pawn &&
       piece_to_move != Pieces::white_pawn &&
       this->current_game_state.board.fields[field_after] == Pieces::left_piece) {
-    this->current_game_state.half_moves_40_move_rule++;
+    this->current_game_state.half_moves_for_draw++;
   } else{
-    this->current_game_state.half_moves_40_move_rule = 0;
+    this->current_game_state.half_moves_for_draw = 0;
   }
 
   this->current_game_state.board.fields[field_after] = piece_to_move;
