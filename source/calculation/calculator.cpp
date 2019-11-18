@@ -19,7 +19,7 @@ void Calculator::interpretAndSetFen(string fen) {
 
   fen.erase(0, fen.find(WHITE_SPACE) + 1);
   current_gstate.next_turn =
-      (fen[0] == (char&)W_FOR_WHITE) ? NextTurn::white : NextTurn::black;
+      (fen[0] == W_FOR_WHITE) ? NextTurn::white : NextTurn::black;
 
   fen.erase(0, fen.find(WHITE_SPACE) + 1);
   string castling_info = fen.substr(0, fen.find(WHITE_SPACE));

@@ -5,7 +5,7 @@
 
 #define WHITE_SPACE " "
 #define DEFAULT_HYPHEN "-"
-#define W_FOR_WHITE "w"
+#define W_FOR_WHITE 'w'
 
 using namespace std;
 
