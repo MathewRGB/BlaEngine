@@ -53,12 +53,12 @@ class GameStateController {
 
   void extractFenPosition(string fen_position);
 
+  void makeMove(ushort field_before, ushort field_after,
+                Piece piece_got = Piece::left_piece);
+
   void extractFenCastling(string fen_castling);
 
   ushort getFieldIndex(string field);
-
-  void makeMove(ushort field_before, ushort field_after,
-                Piece piece_got = Piece::left_piece);
 
   Piece transformPiece(string move);
 

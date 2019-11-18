@@ -37,26 +37,26 @@ void GameStateController::extractFenPosition(string fen_position) {
   }
 }
 
-ushort GameStateController::getFieldIndex(string field) {
-  ushort line_index = field[0] - 'a';
-  ushort row_index = field[1] - '1';
-
-  return row_index * 8 + line_index;
-}
-
 void GameStateController::makeMove(ushort field_before, ushort field_after,
                                    Piece piece_got) {
-  char moving_piece = this->current_game_state.board.fields[field_before];
+  Piece moving_piece =
+      (Piece)this->current_game_state.board.fields[field_before];
 
-  this->changeMovesForDraw((Piece)moving_piece, field_after);
+  this->changeMovesForDraw(moving_piece, field_after);
 
   this->current_game_state.board.fields[field_after] = moving_piece;
   this->current_game_state.board.fields[field_before] = Piece::left_piece;
 
   this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
-  this->checkAndPerformEnPassant(field_before, field_after,
-                                 (Piece)moving_piece);
+  this->checkAndPerformEnPassant(field_before, field_after, moving_piece);
   this->checkAndTransformPiece(field_after, piece_got);
+}
+
+ushort GameStateController::getFieldIndex(string field) {
+  ushort line_index = field[0] - 'a';
+  ushort row_index = field[1] - '1';
+
+  return row_index * 8 + line_index;
 }
 
 Piece GameStateController::transformPiece(string move) {
@@ -127,6 +127,7 @@ void GameStateController::checkAndPerformEnPassant(ushort field_before,
   bool en_passant = (moving_piece == Piece::black_pawn ||
                      moving_piece == Piece::white_pawn) &&
                     std::abs(field_before - field_after) == 16;
+
   if ((moving_piece == Piece::black_pawn ||
        moving_piece == Piece::white_pawn) &&
       field_after == this->current_game_state.en_passant_field &&
