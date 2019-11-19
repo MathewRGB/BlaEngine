@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
 #include <fstream>
 #include <thread>
+#include "gtest/gtest.h"
 
 #include "uci.h"
 
@@ -190,15 +190,27 @@ TEST(Uci, test_extract_game_state) {
 
   getline(file, test_string);
   auto gs_tuple4 = uci_module.extractGameState(test_string);
-  ASSERT_EQ(get<0>(gs_tuple4),
-            "8/6pk/5pn1/1q5p/7P/3P2P1/4QP2/4N1K1 b - - 0 1");
+  ASSERT_EQ(get<0>(gs_tuple4), "8/6pk/5pn1/1q5p/7P/3P2P1/4QP2/4N1K1 b - - 0 1");
   ASSERT_TRUE(get<1>(gs_tuple4).empty());
 
   getline(file, test_string);
   auto gs_tuple5 = uci_module.extractGameState(test_string);
-  ASSERT_EQ(get<0>(gs_tuple5),
-            "8/6pk/5pn1/1q5p/7P/3P2P1/4QP2/4N1K1 b - - 0 1");
+  ASSERT_EQ(get<0>(gs_tuple5), "8/6pk/5pn1/1q5p/7P/3P2P1/4QP2/4N1K1 b - - 0 1");
   ASSERT_EQ(get<1>(gs_tuple5).size(), 6);
 
   file.close();
 }
+
+// TEST(Uci, test_position_full_game) {
+//   ifstream file;
+//   file.open("mock_data/test_gamestates.txt");
+//   string test_position;
+//   string comparison_position;
+
+//   for (int i = 0; i < 5 && file.is_open(); i++) {
+//     getline(file, test_position);
+//   }
+//   getline(file, comparison_position);
+//   file.close();
+
+// }
