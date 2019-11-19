@@ -4,6 +4,7 @@
 #include "test_blaengine.cpp"
 #include "test_uci.cpp"
 #include "test_calculator.cpp"
+#include "test_movegenerator.cpp"
 
 using namespace std;
 
