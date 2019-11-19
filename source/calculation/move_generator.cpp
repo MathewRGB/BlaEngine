@@ -22,6 +22,8 @@ void MoveGenerator::stopSearching() {}
 
 vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
                                          ushort field_index) {
+  auto possible_moves = vector<Move>();
+
   
                                          }
 
