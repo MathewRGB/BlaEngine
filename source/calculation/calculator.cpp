@@ -9,10 +9,10 @@ Calculator::Calculator() {
 Calculator::~Calculator() {}
 
 void Calculator::interpretAndSetFen(string fen) {
-  this->validateFenString(fen);
-
   GameStateController& gstate_controller = this->game_state_controller;
   GameState& current_gstate = this->game_state_controller.current_game_state;
+  
+  this->validateFenString(fen);
 
   string fen_position = fen.substr(0, fen.find(WHITE_SPACE));
   gstate_controller.extractFenPosition(fen_position);
