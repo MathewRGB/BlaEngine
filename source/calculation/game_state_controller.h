@@ -58,10 +58,6 @@ class GameStateController {
 
   void extractFenCastling(string fen_castling);
 
-  ushort getFieldIndex(string field);
-
-  Piece transformPiece(string move);
-
   void changeMovesForDraw(Piece moving_piece, ushort field_after);
 
   void checkAndPerformCastling(ushort field_before, ushort field_after,
@@ -72,7 +68,11 @@ class GameStateController {
 
   void checkAndTransformPiece(ushort field_after, Piece piece_got);
 
-  ushort getMappedFieldIndex(ushort field_index);
+  Piece transformPiece(string move);
+
+  static ushort getFieldIndex(string field);
+
+  static ushort getMappedFieldIndex(ushort field_index);
 };
 
 }  // namespace blaengine::calculation
