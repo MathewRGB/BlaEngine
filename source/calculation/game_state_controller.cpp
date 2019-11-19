@@ -124,30 +124,30 @@ void GameStateController::checkAndPerformCastling(ushort field_before,
 void GameStateController::checkAndPerformEnPassant(ushort field_before,
                                                    ushort field_after,
                                                    Piece moving_piece) {
+  auto fields = this->current_game_state.board.fields;
+  ushort& en_passant_field = (ushort&)this->current_game_state.en_passant_field;
   bool en_passant = (moving_piece == Piece::black_pawn ||
                      moving_piece == Piece::white_pawn) &&
                     std::abs(field_before - field_after) == 16;
 
   if ((moving_piece == Piece::black_pawn ||
        moving_piece == Piece::white_pawn) &&
-      field_after == this->current_game_state.en_passant_field &&
-      (field_after - field_before) > 0) {
-    this->current_game_state.board.fields[field_after - 8] = Piece::left_piece;
+      field_after == en_passant_field && (field_after - field_before) > 0) {
+    fields[field_after - 8] = Piece::left_piece;
   }
   if ((moving_piece == Piece::black_pawn ||
        moving_piece == Piece::white_pawn) &&
-      field_after == this->current_game_state.en_passant_field &&
-      (field_after - field_before) < 0) {
-    this->current_game_state.board.fields[field_after + 8] = Piece::left_piece;
+      field_after == en_passant_field && (field_after - field_before) < 0) {
+    fields[field_after + 8] = Piece::left_piece;
   }
   if (en_passant && (field_after - field_before) > 0) {
-    this->current_game_state.en_passant_field = field_after - 8;
+    en_passant_field = field_after - 8;
   }
   if (en_passant && (field_after - field_before) < 0) {
-    this->current_game_state.en_passant_field = field_after + 8;
+    en_passant_field = field_after + 8;
   }
   if (!en_passant) {
-    this->current_game_state.en_passant_field = -1;
+    en_passant_field = -1;
   }
 }
 
