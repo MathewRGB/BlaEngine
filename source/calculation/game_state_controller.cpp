@@ -38,7 +38,7 @@ void GameStateController::extractFenPosition(string fen_position) {
 }
 
 void GameStateController::makeMove(ushort field_before, ushort field_after,
-                                   Piece piece_got) {
+                                   Piece piece_change) {
   Piece moving_piece =
       (Piece)this->current_game_state.board.fields[field_before];
 
@@ -49,7 +49,7 @@ void GameStateController::makeMove(ushort field_before, ushort field_after,
 
   this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
   this->checkAndPerformEnPassant(field_before, field_after, moving_piece);
-  this->checkAndTransformPiece(field_after, piece_got);
+  this->checkAndTransformPiece(field_after, piece_change);
 }
 
 ushort GameStateController::getFieldIndex(string field) {
@@ -152,9 +152,9 @@ void GameStateController::checkAndPerformEnPassant(ushort field_before,
 }
 
 void GameStateController::checkAndTransformPiece(ushort field_after,
-                                                 Piece piece_got) {
-  if (piece_got != Piece::left_piece) {
-    this->current_game_state.board.fields[field_after] = piece_got;
+                                                 Piece piece_change) {
+  if (piece_change != Piece::left_piece) {
+    this->current_game_state.board.fields[field_after] = piece_change;
   }
 }
 

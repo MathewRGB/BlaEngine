@@ -41,6 +41,12 @@ struct GameState {
   ushort half_moves_for_draw;
 };
 
+struct Move {
+  ushort field_before;
+  ushort field_after;
+  Piece piece_change;
+};
+
 }  // namespace blaengine::calculation
 
 #endif  // GAMESTATE_H_

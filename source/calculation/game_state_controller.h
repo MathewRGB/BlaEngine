@@ -22,7 +22,7 @@ class GameStateController {
   void extractFenPosition(string fen_position);
 
   void makeMove(ushort field_before, ushort field_after,
-                Piece piece_got = Piece::left_piece);
+                Piece piece_change = Piece::left_piece);
 
   void extractFenCastling(string fen_castling);
 
@@ -34,7 +34,7 @@ class GameStateController {
   void checkAndPerformEnPassant(ushort field_before, ushort field_after,
                                 Piece moving_piece);
 
-  void checkAndTransformPiece(ushort field_after, Piece piece_got);
+  void checkAndTransformPiece(ushort field_after, Piece piece_change);
 
   Piece transformPiece(string move);
 

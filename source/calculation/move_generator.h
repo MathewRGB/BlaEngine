@@ -1,7 +1,8 @@
 #ifndef MOVEGENERATOR_H_
 #define MOVEGENERATOR_H_
 
-#include <tuple>
+#include <vector>
+
 #include "game_state.h"
 
 using namespace std;
@@ -13,11 +14,23 @@ class MoveGenerator {
   MoveGenerator();
   ~MoveGenerator();
 
-  void startSearching();
+  void startSearching(GameState game_state);
 
   void stopSearching();
 
-  tuple<ushort,ushort,Piece> bestMove;
+  vector<Move> getPawnMoves(GameState game_state, ushort field_index);
+
+  vector<Move> getRookMoves(GameState game_state, ushort field_index);
+
+  vector<Move> getKnightMoves(GameState game_state, ushort field_index);
+
+  vector<Move> getBishopMoves(GameState game_state, ushort field_index);    
+
+  vector<Move> getQueenMoves(GameState game_state, ushort field_index); 
+
+  vector<Move> getKingMoves(GameState game_state, ushort field_index); 
+
+  Move bestMove;
 
 };
 
