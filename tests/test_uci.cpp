@@ -35,91 +35,43 @@ TEST(Uci, test_uci_call) {
 }
 
 TEST(Uci, test_isready) {
-  setup_std_mock_io();
-
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
+  auto response = vector<string>();
 
-  thread uci_com_thread(uci_module);
+  response = uci_module.translateInput("isready");
 
-  mock_cin.str("isready\nquit");
-
-  sleep(RND_DELAY);
-  string result_string[2];
-  getline(mock_cout, result_string[0]);
-  getline(mock_cout, result_string[1]);
-
-  teardown_std_mock_io();
-  uci_com_thread.join();
-
-  ASSERT_EQ(result_string[0], "readyok");
-  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+  ASSERT_EQ(response[0], "readyok");
 }
 
 TEST(Uci, test_go_move) {
-  setup_std_mock_io();
-
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
+  auto response = vector<string>();
 
-  thread uci_com_thread(uci_module);
+  response = uci_module.translateInput("go ");
 
-  mock_cin.str("go \nquit");
-
-  sleep(RND_DELAY);
-  string result_string[2];
-  getline(mock_cout, result_string[0]);
-  getline(mock_cout, result_string[1]);
-
-  teardown_std_mock_io();
-  uci_com_thread.join();
-
-  ASSERT_NE(result_string[0].find("bestmove"), string::npos);
-  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+  ASSERT_NE(response[0].find("bestmove"), string::npos);
 }
 
 TEST(Uci, test_go_thinking_info) {
-  setup_std_mock_io();
-
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
+  auto response = vector<string>();
 
-  thread uci_com_thread(uci_module);
+  response = uci_module.translateInput("go infinite");
 
-  mock_cin.str("go infinite\nquit");
-
-  sleep(RND_DELAY);
-  string result_string[2];
-  getline(mock_cout, result_string[0]);
-  getline(mock_cout, result_string[1]);
-
-  teardown_std_mock_io();
-  uci_com_thread.join();
-
-  ASSERT_NE(result_string[0].find("info currmove"), string::npos);
-  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+  ASSERT_NE(response[0].find("info currmove"), string::npos);
 }
 
 TEST(Uci, test_position_cmd) {
-  setup_std_mock_io();
-
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
+  auto response = vector<string>();
 
-  thread uci_com_thread(uci_module);
+  response = uci_module.translateInput("position startpos");
 
-  mock_cin.str("position startpos\nquit");
-
-  sleep(RND_DELAY);
-  string result_string[2];
-  getline(mock_cout, result_string[0]);
-  getline(mock_cout, result_string[1]);
-
-  teardown_std_mock_io();
-  uci_com_thread.join();
-
-  ASSERT_NE(result_string[0].find("position was set"), string::npos);
-  ASSERT_NE(result_string[1].find("byebye"), string::npos);
+  ASSERT_NE(response[0].find("position was set"), string::npos);
 }
 
 TEST(Uci, test_extract_game_state) {
@@ -175,43 +127,21 @@ TEST(Uci, test_position_full_game) {
   file.close();
 
   // first instance
-  setup_std_mock_io();
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
+  auto response = vector<string>();
 
-  thread uci_com_thread(uci_module);
-
-  test_position.append("\nquit");
-  mock_cin.str(test_position);
-
-  sleep(RND_DELAY);
-  string result_string[2];
-  getline(mock_cout, result_string[0]);
-  getline(mock_cout, result_string[1]);
-
-  teardown_std_mock_io();
-  uci_com_thread.join();
+  response = uci_module.translateInput(test_position);
 
   // second instance
   setup_std_mock_io();
   auto cmp_blaengine = make_shared<BlaEngine>();
   auto cmp_uci_module = Uci(cmp_blaengine);
+  auto cmp_response = vector<string>();
 
-  thread cmp_uci_com_thread(cmp_uci_module);
+  cmp_response = cmp_uci_module.translateInput(comparison_position);
 
-  comparison_position.append("\nquit");
-  mock_cin.str(comparison_position);
-
-  sleep(RND_DELAY);
-  string cmp_result_string[2];
-  getline(mock_cout, cmp_result_string[0]);
-  getline(mock_cout, cmp_result_string[1]);
-
-  teardown_std_mock_io();
-  cmp_uci_com_thread.join();
-
-  ASSERT_NE(cmp_result_string[0].find("position was set"), string::npos);
-  ASSERT_NE(cmp_result_string[1].find("byebye"), string::npos);
+  ASSERT_NE(cmp_response[0].find("position was set"), string::npos);
   ASSERT_TRUE(compare_game_states(
       cmp_blaengine->engine_calculator.game_state_controller.current_game_state,
       blaengine->engine_calculator.game_state_controller.current_game_state));
