@@ -11,8 +11,6 @@ using namespace blaengine;
 using namespace blaengine::communication;
 
 TEST(Uci, test_quit_call) {
-  setup_std_mock_io();
-
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
   
@@ -22,8 +20,6 @@ TEST(Uci, test_quit_call) {
 }
 
 TEST(Uci, test_uci_call) {
-  setup_std_mock_io();
-
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
   auto uci_response = vector<string>();
