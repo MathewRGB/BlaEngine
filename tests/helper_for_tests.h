@@ -14,7 +14,6 @@ void teardown_std_mock_io();
 std::stringstream mock_cin, mock_cout;
 std::streambuf *cin_backup, *cout_backup;
 
-
 bool compare_game_states(GameState state1, GameState state2) {
   for (int i = 0; i < FIELD_NUMBER; i++) {
     if (state1.board.fields[i] != state2.board.fields[i]) {
@@ -59,6 +58,25 @@ void setup_std_mock_io() {
 void teardown_std_mock_io() {
   std::cin.rdbuf(cin_backup);
   std::cout.rdbuf(cout_backup);
+}
+
+bool expectedMovesInMoves(vector<Move> moves, vector<Move> expected_moves) {
+  bool expected_move_present = false;
+  for (int em_idx = 0; em_idx < expected_moves.size(); em_idx++) {
+    for (int m_idx = 0; m_idx < moves.size(); m_idx++) {
+      if (moves[m_idx] == expected_moves[em_idx]) {
+        expected_move_present = true;
+        break;
+      }
+    }
+    if (!expected_move_present) {
+      return false;
+    } else {
+      expected_move_present = false;
+    }
+  }
+
+  return true;
 }
 
 #endif  // HELPERFORTESTS_H_
