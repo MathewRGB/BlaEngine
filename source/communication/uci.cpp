@@ -9,18 +9,22 @@ Uci::Uci(shared_ptr<BlaEngine> engine) { this->engine = engine; }
 
 void Uci::operator()() { this->listenOnInput(); }
 
-void Uci::translateInput(string input) {
+vector<string> Uci::translateInput(string input) {
+  auto response = vector<string>();
+
   if (input.substr(0, 3) == "uci") {
-    this->uciInit();
+    response = this->uciInit();
   } else if (input.substr(0, 4) == "quit") {
-    this->quit();
+    response = this->quit();
   } else if (input.substr(0, 7) == "isready") {
-    this->isReady();
+    response = this->isReady();
   } else if (input.substr(0, 3) == "go ") {
-    this->go(input);
+    response = this->go(input);
   } else if (input.substr(0, 9) == "position ") {
-    this->position(input);
+    response = this->position(input);
   }
+
+  return response;
 }
 
 void Uci::listenOnInput() {
@@ -29,30 +33,48 @@ void Uci::listenOnInput() {
 
   while (!quitted) {
     getline(std::cin, input);
-    this->translateInput(input);
+    auto response = this->translateInput(input);
+    this->responseToOutput(response);
   }
 }
 
-void Uci::uciInit() {
-  auto engine_info = this->engine->getEngineInfo();
-  cout << "id name " + engine_info.name + "-" + engine_info.version << endl;
-  cout << "id author " + engine_info.author << endl;
-  cout << "uciok" << endl;
+void Uci::responseToOutput(vector<string> response){
+  for (int i=0;i<response.size();i++){
+    cout << response[i] << endl;
+  }
 }
 
-void Uci::quit() {
+vector<string> Uci::uciInit() {
+  auto response = vector<string>();
+  auto engine_info = this->engine->getEngineInfo();
+
+  response.push_back("id name " + engine_info.name + "-" + engine_info.version);
+  response.push_back("id author " + engine_info.author);
+  response.push_back("uciok");
+
+  return response;
+}
+
+vector<string> Uci::quit() {
+  auto response = vector<string>();
   this->engine->shutdownEngine();
   this->quitted = true;
 
   auto engine_info = this->engine->getEngineInfo();
-  cout << engine_info.name + " says byebye" << endl;
+  response.push_back(engine_info.name + " says byebye");
+
+  return response;
 }
 
-void Uci::isReady() { 
-  cout << "readyok" << endl; 
+vector<string> Uci::isReady() {
+  auto response = vector<string>();
+  response.push_back("readyok");
+
+  return response;
 }
 
-void Uci::position(string command_line) {
+vector<string> Uci::position(string command_line) {
+  auto response = vector<string>();
   auto game_state = this->extractGameState(command_line);
 
   this->engine->interpretAndSetFen(get<0>(game_state));
@@ -60,19 +82,23 @@ void Uci::position(string command_line) {
   if (!get<1>(game_state).empty()){
     this->engine->makeMovesFromFieldStrings(get<1>(game_state));
   }
+  response.push_back("info string position was set");
 
-  cout << "info string position was set" << endl;
+  return response;
 }
 
-void Uci::go(string command_line) {
+vector<string> Uci::go(string command_line) {
+  auto response = vector<string>();
   string bestmove = this->engine->getBestMove();
   if (command_line.substr(0, 11) == "go infinite") {
     // TODO this has to be implemented later in a way that the engine itsself
     // invokes this output
-    cout << "info currmove " << bestmove << endl;
+    response.push_back("info currmove " + bestmove);
   } else {
-    cout << "bestmove " << bestmove << endl;
+    response.push_back("bestmove " + bestmove);
   }
+
+  return response;
 }
 
 tuple<string, vector<string>> Uci::extractGameState(string command_line) {

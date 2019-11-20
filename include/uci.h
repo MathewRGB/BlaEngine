@@ -19,26 +19,28 @@ class Uci {
 
   void operator()();
 
-  void uciInit();
+  vector<string> uciInit();
 
-  void quit();
+  vector<string> quit();
 
-  void stop();
+  vector<string> stop();
 
-  void isReady();
+  vector<string> isReady();
 
-  void position(string command_line);
+  vector<string> position(string command_line);
 
-  void go(string command_line);
+  vector<string> go(string command_line);
 
   void listenOnInput();
+
+  void responseToOutput(vector<string> response);
 
   tuple<string, vector<string>> extractGameState(string command_line);
 
   vector<string> extractMoves(string command_line);
 
+  vector<string> translateInput(string input);
  private:
-  void translateInput(string input);
 
   shared_ptr<BlaEngine> engine;
 

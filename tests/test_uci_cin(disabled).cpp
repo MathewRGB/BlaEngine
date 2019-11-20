@@ -10,35 +10,53 @@
 using namespace blaengine;
 using namespace blaengine::communication;
 
-TEST(Uci, test_quit_call) {
+TEST(DISABLED_Uci_cin, test_quit_call) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
-  
-  auto response = uci_module.translateInput("quit");
 
-  ASSERT_NE(response[0].find("byebye"), string::npos);
+  thread uci_com_thread(uci_module);
+
+  mock_cin.str("quit");
+
+  sleep(RND_DELAY);
+  string result_string;
+  getline(mock_cout, result_string);
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  ASSERT_NE(result_string.find("byebye"), string::npos);
 }
 
-TEST(Uci, test_uci_call) {
+TEST(DISABLED_Uci_cin, test_uci_call) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
-  auto uci_response = vector<string>();
-  auto quit_response = vector<string>();
 
-  uci_response = uci_module.translateInput("uci");
-  quit_response = uci_module.translateInput("quit");
+  thread uci_com_thread(uci_module);
 
-  ASSERT_NE(uci_response[0].find("id name"), string::npos);
-  ASSERT_NE(uci_response[1].find("id author"), string::npos);
-  ASSERT_NE(uci_response[2].find("uciok"), string::npos);
-  ASSERT_NE(quit_response[0].find("byebye"), string::npos);
+  mock_cin.str("uci\nquit");
+
+  sleep(RND_DELAY);
+  string result_string[4];
+
+  for (int i = 0; i < 4; i++) {
+    getline(mock_cout, result_string[i]);
+  }
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  ASSERT_NE(result_string[0].find("id name"), string::npos);
+  ASSERT_NE(result_string[1].find("id author"), string::npos);
+  ASSERT_NE(result_string[2].find("uciok"), string::npos);
+  ASSERT_NE(result_string[3].find("byebye"), string::npos);
 }
 
-TEST(Uci, test_isready) {
+TEST(DISABLED_Uci_cin, test_isready) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
@@ -60,7 +78,7 @@ TEST(Uci, test_isready) {
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
 }
 
-TEST(Uci, test_go_move) {
+TEST(DISABLED_Uci_cin, test_go_move) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
@@ -82,7 +100,7 @@ TEST(Uci, test_go_move) {
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
 }
 
-TEST(Uci, test_go_thinking_info) {
+TEST(DISABLED_Uci_cin, test_go_thinking_info) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
@@ -104,7 +122,7 @@ TEST(Uci, test_go_thinking_info) {
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
 }
 
-TEST(Uci, test_position_cmd) {
+TEST(DISABLED_Uci_cin, test_position_cmd) {
   setup_std_mock_io();
 
   auto blaengine = make_shared<BlaEngine>();
@@ -126,7 +144,7 @@ TEST(Uci, test_position_cmd) {
   ASSERT_NE(result_string[1].find("byebye"), string::npos);
 }
 
-TEST(Uci, test_extract_game_state) {
+TEST(DISABLED_Uci_cin, test_extract_game_state) {
   auto pgn_moves = vector<string>();
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
@@ -165,7 +183,7 @@ TEST(Uci, test_extract_game_state) {
   file.close();
 }
 
-TEST(Uci, test_position_full_game) {
+TEST(DISABLED_Uci_cin, test_position_full_game) {
   // get position strings for testing from file
   ifstream file;
   file.open("mock_data/test_gamestates.txt");

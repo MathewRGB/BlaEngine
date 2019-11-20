@@ -8,6 +8,12 @@ using namespace blaengine;
 using namespace blaengine::calculation;
 
 bool compare_game_states(GameState state1, GameState state2);
+void setup_std_mock_io();
+void teardown_std_mock_io();
+
+std::stringstream mock_cin, mock_cout;
+std::streambuf *cin_backup, *cout_backup;
+
 
 bool compare_game_states(GameState state1, GameState state2) {
   for (int i = 0; i < FIELD_NUMBER; i++) {
@@ -40,6 +46,19 @@ bool compare_game_states(GameState state1, GameState state2) {
   }
 
   return true;
+}
+
+void setup_std_mock_io() {
+  cin_backup = std::cin.rdbuf();
+  cout_backup = std::cout.rdbuf();
+
+  std::cin.rdbuf(mock_cin.rdbuf());
+  std::cout.rdbuf(mock_cout.rdbuf());
+}
+
+void teardown_std_mock_io() {
+  std::cin.rdbuf(cin_backup);
+  std::cout.rdbuf(cout_backup);
 }
 
 #endif  // HELPERFORTESTS_H_
