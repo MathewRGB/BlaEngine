@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+
 #include "source/calculation/calculator.h"
 #include "helper_for_tests.h"
 

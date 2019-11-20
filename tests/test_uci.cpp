@@ -2,6 +2,7 @@
 #include <thread>
 #include "gtest/gtest.h"
 
+#include "helper_for_tests.h"
 #include "uci.h"
 
 #define RND_DELAY 1.5
@@ -201,16 +202,58 @@ TEST(Uci, test_extract_game_state) {
   file.close();
 }
 
-// TEST(Uci, test_position_full_game) {
-//   ifstream file;
-//   file.open("mock_data/test_gamestates.txt");
-//   string test_position;
-//   string comparison_position;
+TEST(Uci, test_position_full_game) {
+  // get position strings for testing from file
+  ifstream file;
+  file.open("mock_data/test_gamestates.txt");
+  string test_position;
+  string comparison_position;
 
-//   for (int i = 0; i < 5 && file.is_open(); i++) {
-//     getline(file, test_position);
-//   }
-//   getline(file, comparison_position);
-//   file.close();
+  for (int i = 0; i < 6 && file.is_open(); i++) {
+    getline(file, test_position);
+  }
+  getline(file, comparison_position);
+  file.close();
 
-// }
+  // first instance
+  setup_std_mock_io();
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+
+  thread uci_com_thread(uci_module);
+
+  test_position.append("\nquit");
+  mock_cin.str(test_position);
+
+  sleep(RND_DELAY);
+  string result_string[2];
+  getline(mock_cout, result_string[0]);
+  getline(mock_cout, result_string[1]);
+
+  teardown_std_mock_io();
+  uci_com_thread.join();
+
+  // second instance
+  setup_std_mock_io();
+  auto cmp_blaengine = make_shared<BlaEngine>();
+  auto cmp_uci_module = Uci(cmp_blaengine);
+
+  thread cmp_uci_com_thread(cmp_uci_module);
+
+  comparison_position.append("\nquit");
+  mock_cin.str(comparison_position);
+
+  sleep(RND_DELAY);
+  string cmp_result_string[2];
+  getline(mock_cout, cmp_result_string[0]);
+  getline(mock_cout, cmp_result_string[1]);
+
+  teardown_std_mock_io();
+  cmp_uci_com_thread.join();
+
+  ASSERT_NE(cmp_result_string[0].find("position was set"), string::npos);
+  ASSERT_NE(cmp_result_string[1].find("byebye"), string::npos);
+  ASSERT_TRUE(compare_game_states(
+      cmp_blaengine->engine_calculator.game_state_controller.current_game_state,
+      blaengine->engine_calculator.game_state_controller.current_game_state));
+}

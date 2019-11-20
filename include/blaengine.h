@@ -91,7 +91,6 @@ class BlaEngine {
   ///
   BlaEngineInfo getEngineInfo();
 
- private:
   Calculator engine_calculator;
 };
 
