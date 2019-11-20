@@ -4,6 +4,8 @@
 
 using namespace blaengine::calculation;
 
+
+
 TEST(MoveGenerator, test_w_pawn_moves1) {
   auto move_generator = MoveGenerator();
   auto game_state = GameState();

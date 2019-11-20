@@ -44,7 +44,12 @@ struct GameState {
 struct Move {
   ushort field_before;
   ushort field_after;
-  Piece piece_change;
+  Piece promotion;
+  bool operator==(const Move& _move) {
+    return field_before == _move.field_before &&
+           field_after == _move.field_after &&
+           promotion == _move.promotion;
+  }
 };
 
 }  // namespace blaengine::calculation

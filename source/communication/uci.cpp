@@ -39,7 +39,7 @@ void Uci::listenOnInput() {
 }
 
 void Uci::responseToOutput(vector<string> response){
-  for (int i=0;i<response.size();i++){
+  for (uint i=0;i<response.size();i++){
     cout << response[i] << endl;
   }
 }
