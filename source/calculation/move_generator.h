@@ -24,14 +24,24 @@ class MoveGenerator {
 
   vector<Move> getKnightMoves(GameState game_state, ushort field_index);
 
-  vector<Move> getBishopMoves(GameState game_state, ushort field_index);    
+  vector<Move> getBishopMoves(GameState game_state, ushort field_index);
 
-  vector<Move> getQueenMoves(GameState game_state, ushort field_index); 
+  vector<Move> getQueenMoves(GameState game_state, ushort field_index);
 
-  vector<Move> getKingMoves(GameState game_state, ushort field_index); 
+  vector<Move> getKingMoves(GameState game_state, ushort field_index);
 
   Move bestMove;
 
+ private:
+  ushort moveForward(ushort field_index, ushort number);
+
+  ushort moveBackward(ushort field_index, ushort number);
+
+  ushort moveRight(ushort field_index, ushort number);
+
+  ushort moveLeft(ushort field_index, ushort number);
+
+  bool isWhite(Piece piece);
 };
 
 }  // namespace blaengine::calculation
