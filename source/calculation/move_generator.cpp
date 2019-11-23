@@ -94,8 +94,10 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
       all_moves.push_back({field_index, (ushort)ff_field, Piece::left_piece});
     }
   }
-  if ((is_white && (field_index + 1) % 8 != 0 && !isWhite(fr_piece)) ||
-      (!is_white && field_index % 8 != 0 && isWhite(fr_piece))) {
+  if ((is_white && (field_index + 1) % 8 != 0 && !isWhite(fr_piece) &&
+       fr_piece != Piece::left_piece) ||
+      (!is_white && field_index % 8 != 0 && isWhite(fr_piece) &&
+       fr_piece != Piece::left_piece)) {
     if (fr_field < (short)(36 + 28 * piece_direction) &&
         fr_field > (short)(27 + 28 * piece_direction)) {
       all_moves.push_back({field_index, (ushort)fr_field, promo_bishop});
@@ -106,8 +108,10 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
       all_moves.push_back({field_index, (ushort)fr_field, Piece::left_piece});
     }
   }
-  if ((is_white && field_index % 8 != 0 && !isWhite(fl_piece)) ||
-      (!is_white && (field_index + 1) % 8 != 0 && isWhite(fl_piece))) {
+  if ((is_white && field_index % 8 != 0 && !isWhite(fl_piece) &&
+       fl_piece != Piece::left_piece) ||
+      (!is_white && (field_index + 1) % 8 != 0 && isWhite(fl_piece) &&
+       fl_piece != Piece::left_piece)) {
     if (fl_field < (short)(36 + 28 * piece_direction) &&
         fl_field > (short)(27 + 28 * piece_direction)) {
       all_moves.push_back({field_index, (ushort)fl_field, promo_bishop});
