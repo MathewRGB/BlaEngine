@@ -73,13 +73,21 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
       possible_moves.push_back({field_index, double_move, Piece::left_piece});
     }
 
-    // ushort left_forward = moveLeft(common_field, 1);
-    // auto left_forward_piece = (Piece)game_state.board.fields[left_forward];
+    ushort left_forward = moveLeft(common_field, 1);
+    auto left_forward_piece = (Piece)game_state.board.fields[left_forward];
 
-    // ushort right_forward = moveRight(common_field, 1);
-    // auto left_forward_piece = (Piece)game_state.board.fields[left_forward];
+    if (left_forward_piece != Piece::left_piece &&
+        !isWhite(left_forward_piece)) {
+      possible_moves.push_back({field_index, left_forward, Piece::left_piece});
+    }
 
+    ushort right_forward = moveRight(common_field, 1);
+    auto right_forward_piece = (Piece)game_state.board.fields[right_forward];
 
+    if (right_forward_piece != Piece::left_piece &&
+        !isWhite(right_forward_piece)) {
+      possible_moves.push_back({field_index, right_forward, Piece::left_piece});
+    }
   } else {
   }
 
