@@ -22,19 +22,19 @@ void MoveGenerator::startSearching(GameState game_state) {
 
 void MoveGenerator::stopSearching() {}
 
-ushort MoveGenerator::moveForward(ushort field_index, ushort number) {
+short MoveGenerator::moveForward(short field_index, short number) {
   return field_index + 8 * number;
 }
 
-ushort MoveGenerator::moveBackward(ushort field_index, ushort number) {
+short MoveGenerator::moveBackward(short field_index, short number) {
   return field_index - 8 * number;
 }
 
-ushort MoveGenerator::moveRight(ushort field_index, ushort number) {
+short MoveGenerator::moveRight(short field_index, short number) {
   return field_index + number;
 }
 
-ushort MoveGenerator::moveLeft(ushort field_index, ushort number) {
+short MoveGenerator::moveLeft(short field_index, short number) {
   return field_index - number;
 }
 
@@ -46,49 +46,34 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
                                          ushort field_index) {
   auto possible_moves = vector<Move>();
   auto piece = (Piece)game_state.board.fields[field_index];
-  bool white_piece = (piece == Piece::white_pawn) ? true : false;
+  bool is_white = (piece == Piece::white_pawn) ? true : false;
+  short piece_direction = is_white ? 1 : -1;
 
-  if (white_piece) {
-    ushort common_field = moveForward(field_index, 1);
-    auto piece_common_field = (Piece)game_state.board.fields[common_field];
+  auto f_field = moveForward(field_index, 1 * piece_direction);
+  auto ff_field = moveForward(field_index, 2 * piece_direction);
+  auto fr_field = moveRight(f_field, 1 * piece_direction);
+  auto fl_field = moveLeft(f_field, 1 * piece_direction);
 
-    if (field_index < 48 && piece_common_field == Piece::left_piece) {
-      possible_moves.push_back({field_index, common_field, Piece::left_piece});
+  auto f_piece = (Piece)game_state.board.fields[f_field];
+  auto ff_piece = (Piece)game_state.board.fields[ff_field];
+  auto fr_piece = (Piece)game_state.board.fields[fr_field];
+  auto fl_piece = (Piece)game_state.board.fields[fl_field];
+
+  if (f_piece == Piece::left_piece) {
+    possible_moves.push_back({field_index, f_field, Piece::left_piece});
+    if (ff_piece == Piece::left_piece &&
+        field_index > (27 - 20 * piece_direction) &&
+        field_index < (36 - 20 * piece_direction)) {
+      possible_moves.push_back({field_index, ff_field, Piece::left_piece});
     }
-    if (field_index < 56 && field_index > 40 &&
-        piece_common_field == Piece::left_piece) {
-      possible_moves.push_back(
-          {field_index, common_field, Piece::white_bishop});
-      possible_moves.push_back(
-          {field_index, common_field, Piece::white_knight});
-      possible_moves.push_back({field_index, common_field, Piece::white_queen});
-      possible_moves.push_back({field_index, common_field, Piece::white_rook});
-    }
-
-    ushort double_move = moveForward(field_index, 2);
-    auto piece_double_move = (Piece)game_state.board.fields[double_move];
-    if (field_index > 7 && field_index < 16 &&
-        piece_double_move == Piece::left_piece &&
-        piece_common_field == Piece::left_piece) {
-      possible_moves.push_back({field_index, double_move, Piece::left_piece});
-    }
-
-    ushort left_forward = moveLeft(common_field, 1);
-    auto left_forward_piece = (Piece)game_state.board.fields[left_forward];
-
-    if (left_forward_piece != Piece::left_piece &&
-        !isWhite(left_forward_piece)) {
-      possible_moves.push_back({field_index, left_forward, Piece::left_piece});
-    }
-
-    ushort right_forward = moveRight(common_field, 1);
-    auto right_forward_piece = (Piece)game_state.board.fields[right_forward];
-
-    if (right_forward_piece != Piece::left_piece &&
-        !isWhite(right_forward_piece)) {
-      possible_moves.push_back({field_index, right_forward, Piece::left_piece});
-    }
-  } else {
+  }
+  if ((is_white && (field_index + 1) % 8 != 0 && !isWhite(fr_piece)) ||
+      (!is_white && field_index % 8 != 0 && isWhite(fr_piece))) {
+    possible_moves.push_back({field_index, fr_field, Piece::left_piece});
+  }
+  if ((is_white && field_index % 8 != 0 && !isWhite(fl_piece)) ||
+      (!is_white && (field_index + 1) % 8 != 0 && isWhite(fl_piece))) {
+    possible_moves.push_back({field_index, fl_field, Piece::left_piece});
   }
 
   return possible_moves;

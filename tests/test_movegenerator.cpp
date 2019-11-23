@@ -276,8 +276,8 @@ TEST(MoveGenerator, test_b_pawn_moves_border_free_take_left) {
   game_state.board.fields[40] = Piece::white_rook;
 
   auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);
-  vector<Move> expected_moves = {{field_before, 31, Piece::left_piece},
-                                 {field_before, 30, Piece::left_piece}};
+  vector<Move> expected_moves = {{field_before, 23, Piece::left_piece},
+                                 {field_before, 22, Piece::left_piece}};
 
   ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
 }

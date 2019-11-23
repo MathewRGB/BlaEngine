@@ -33,13 +33,13 @@ class MoveGenerator {
   Move bestMove;
 
  private:
-  ushort moveForward(ushort field_index, ushort number);
+  short moveForward(short field_index, short number);
 
-  ushort moveBackward(ushort field_index, ushort number);
+  short moveBackward(short field_index, short number);
 
-  ushort moveRight(ushort field_index, ushort number);
+  short moveRight(short field_index, short number);
 
-  ushort moveLeft(ushort field_index, ushort number);
+  short moveLeft(short field_index, short number);
 
   bool isWhite(Piece piece);
 };
