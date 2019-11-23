@@ -136,9 +136,6 @@ vector<string> Uci::extractMoves(string command_line) {
     moves.push_back(current_token);
     moves_extraction.erase(0, moves_extraction.find(" ") + 1);
   }
-  if (!moves_extraction.empty()) {
-    moves.push_back(moves_extraction);
-  }
 
   return moves;
 }
