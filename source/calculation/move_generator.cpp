@@ -47,7 +47,7 @@ bool MoveGenerator::isWhite(Piece piece) {
 
 vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
                                          ushort field_index) {
-  auto possible_moves = vector<Move>();
+  auto all_moves = vector<Move>();
   auto piece = (Piece)game_state.board.fields[field_index];
   bool is_white = (piece == Piece::white_pawn) ? true : false;
   short piece_direction = is_white ? 1 : -1;
@@ -62,72 +62,53 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
   auto fr_piece = (Piece)game_state.board.fields[fr_field];
   auto fl_piece = (Piece)game_state.board.fields[fl_field];
 
+  auto promo_bishop = is_white ? Piece::white_bishop : Piece::black_bishop;
+  auto promo_queen = is_white ? Piece::white_queen : Piece::black_queen;
+  auto promo_knight = is_white ? Piece::white_knight : Piece::black_knight;
+  auto promo_rook = is_white ? Piece::white_rook : Piece::black_rook;
+
   if (f_piece == Piece::left_piece) {
     if (f_field < (short)(36 + 28 * piece_direction) &&
         f_field > (short)(27 + 28 * piece_direction)) {
-      possible_moves.push_back(
-          {field_index, f_field,
-           is_white ? Piece::white_bishop : Piece::black_bishop});
-      possible_moves.push_back(
-          {field_index, f_field,
-           is_white ? Piece::white_knight : Piece::black_knight});
-      possible_moves.push_back(
-          {field_index, f_field,
-           is_white ? Piece::white_queen : Piece::black_queen});
-      possible_moves.push_back(
-          {field_index, f_field,
-           is_white ? Piece::white_rook : Piece::black_rook});
+      all_moves.push_back({field_index, (ushort)f_field, promo_bishop});
+      all_moves.push_back({field_index, (ushort)f_field, promo_knight});
+      all_moves.push_back({field_index, (ushort)f_field, promo_queen});
+      all_moves.push_back({field_index, (ushort)f_field, promo_rook});
     } else {
-      possible_moves.push_back({field_index, f_field, Piece::left_piece});
+      all_moves.push_back({field_index, (ushort)f_field, Piece::left_piece});
     }
     if (ff_piece == Piece::left_piece &&
         field_index > (27 - 20 * piece_direction) &&
         field_index < (36 - 20 * piece_direction)) {
-      possible_moves.push_back({field_index, ff_field, Piece::left_piece});
+      all_moves.push_back({field_index, (ushort)ff_field, Piece::left_piece});
     }
   }
   if ((is_white && (field_index + 1) % 8 != 0 && !isWhite(fr_piece)) ||
       (!is_white && field_index % 8 != 0 && isWhite(fr_piece))) {
     if (fr_field < (short)(36 + 28 * piece_direction) &&
         fr_field > (short)(27 + 28 * piece_direction)) {
-      possible_moves.push_back(
-          {field_index, fr_field,
-           is_white ? Piece::white_bishop : Piece::black_bishop});
-      possible_moves.push_back(
-          {field_index, fr_field,
-           is_white ? Piece::white_knight : Piece::black_knight});
-      possible_moves.push_back(
-          {field_index, fr_field,
-           is_white ? Piece::white_queen : Piece::black_queen});
-      possible_moves.push_back(
-          {field_index, fr_field,
-           is_white ? Piece::white_rook : Piece::black_rook});
+      all_moves.push_back({field_index, (ushort)fr_field, promo_bishop});
+      all_moves.push_back({field_index, (ushort)fr_field, promo_knight});
+      all_moves.push_back({field_index, (ushort)fr_field, promo_queen});
+      all_moves.push_back({field_index, (ushort)fr_field, promo_rook});
     } else {
-      possible_moves.push_back({field_index, fr_field, Piece::left_piece});
+      all_moves.push_back({field_index, (ushort)fr_field, Piece::left_piece});
     }
   }
   if ((is_white && field_index % 8 != 0 && !isWhite(fl_piece)) ||
       (!is_white && (field_index + 1) % 8 != 0 && isWhite(fl_piece))) {
     if (fl_field < (short)(36 + 28 * piece_direction) &&
         fl_field > (short)(27 + 28 * piece_direction)) {
-      possible_moves.push_back(
-          {field_index, fl_field,
-           is_white ? Piece::white_bishop : Piece::black_bishop});
-      possible_moves.push_back(
-          {field_index, fl_field,
-           is_white ? Piece::white_knight : Piece::black_knight});
-      possible_moves.push_back(
-          {field_index, fl_field,
-           is_white ? Piece::white_queen : Piece::black_queen});
-      possible_moves.push_back(
-          {field_index, fl_field,
-           is_white ? Piece::white_rook : Piece::black_rook});
+      all_moves.push_back({field_index, (ushort)fl_field, promo_bishop});
+      all_moves.push_back({field_index, (ushort)fl_field, promo_knight});
+      all_moves.push_back({field_index, (ushort)fl_field, promo_queen});
+      all_moves.push_back({field_index, (ushort)fl_field, promo_rook});
     } else {
-      possible_moves.push_back({field_index, fl_field, Piece::left_piece});
+      all_moves.push_back({field_index, (ushort)fl_field, Piece::left_piece});
     }
   }
 
-  return possible_moves;
+  return all_moves;
 }
 
 }  // namespace blaengine::calculation
