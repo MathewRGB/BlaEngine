@@ -9,8 +9,11 @@ void MoveGenerator::startSearching(GameState game_state) {
   auto possible_moves = vector<Move>();
 
   for (int i = 0; i < FIELD_NUMBER; i++) {
-    if (game_state.board.fields[i] == Piece::black_pawn ||
-        game_state.board.fields[i] == Piece::white_pawn) {
+    auto current_piece = game_state.board.fields[i];
+    if ((current_piece == Piece::black_pawn ||
+         current_piece == Piece::white_pawn) &&
+        isWhite((Piece)current_piece) ==
+            (game_state.next_turn == NextTurn::white)) {
       auto pawn_moves = this->getPawnMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), pawn_moves.begin(),
                             pawn_moves.end());
@@ -60,7 +63,23 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
   auto fl_piece = (Piece)game_state.board.fields[fl_field];
 
   if (f_piece == Piece::left_piece) {
-    possible_moves.push_back({field_index, f_field, Piece::left_piece});
+    if (f_field < (short)(36 + 28 * piece_direction) &&
+        f_field > (short)(27 + 28 * piece_direction)) {
+      possible_moves.push_back(
+          {field_index, f_field,
+           is_white ? Piece::white_bishop : Piece::black_bishop});
+      possible_moves.push_back(
+          {field_index, f_field,
+           is_white ? Piece::white_knight : Piece::black_knight});
+      possible_moves.push_back(
+          {field_index, f_field,
+           is_white ? Piece::white_queen : Piece::black_queen});
+      possible_moves.push_back(
+          {field_index, f_field,
+           is_white ? Piece::white_rook : Piece::black_rook});
+    } else {
+      possible_moves.push_back({field_index, f_field, Piece::left_piece});
+    }
     if (ff_piece == Piece::left_piece &&
         field_index > (27 - 20 * piece_direction) &&
         field_index < (36 - 20 * piece_direction)) {
@@ -69,11 +88,43 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
   }
   if ((is_white && (field_index + 1) % 8 != 0 && !isWhite(fr_piece)) ||
       (!is_white && field_index % 8 != 0 && isWhite(fr_piece))) {
-    possible_moves.push_back({field_index, fr_field, Piece::left_piece});
+    if (fr_field < (short)(36 + 28 * piece_direction) &&
+        fr_field > (short)(27 + 28 * piece_direction)) {
+      possible_moves.push_back(
+          {field_index, fr_field,
+           is_white ? Piece::white_bishop : Piece::black_bishop});
+      possible_moves.push_back(
+          {field_index, fr_field,
+           is_white ? Piece::white_knight : Piece::black_knight});
+      possible_moves.push_back(
+          {field_index, fr_field,
+           is_white ? Piece::white_queen : Piece::black_queen});
+      possible_moves.push_back(
+          {field_index, fr_field,
+           is_white ? Piece::white_rook : Piece::black_rook});
+    } else {
+      possible_moves.push_back({field_index, fr_field, Piece::left_piece});
+    }
   }
   if ((is_white && field_index % 8 != 0 && !isWhite(fl_piece)) ||
       (!is_white && (field_index + 1) % 8 != 0 && isWhite(fl_piece))) {
-    possible_moves.push_back({field_index, fl_field, Piece::left_piece});
+    if (fl_field < (short)(36 + 28 * piece_direction) &&
+        fl_field > (short)(27 + 28 * piece_direction)) {
+      possible_moves.push_back(
+          {field_index, fl_field,
+           is_white ? Piece::white_bishop : Piece::black_bishop});
+      possible_moves.push_back(
+          {field_index, fl_field,
+           is_white ? Piece::white_knight : Piece::black_knight});
+      possible_moves.push_back(
+          {field_index, fl_field,
+           is_white ? Piece::white_queen : Piece::black_queen});
+      possible_moves.push_back(
+          {field_index, fl_field,
+           is_white ? Piece::white_rook : Piece::black_rook});
+    } else {
+      possible_moves.push_back({field_index, fl_field, Piece::left_piece});
+    }
   }
 
   return possible_moves;
