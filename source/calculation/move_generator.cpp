@@ -6,21 +6,22 @@ MoveGenerator::MoveGenerator() {}
 MoveGenerator::~MoveGenerator() {}
 
 void MoveGenerator::startSearching(GameState game_state) {
-  auto possible_moves = vector<Move>();
+  auto all_moves = vector<Move>();
+  auto next_turn = game_state.next_turn;
 
   for (int i = 0; i < FIELD_NUMBER; i++) {
-    auto current_piece = game_state.board.fields[i];
-    if ((current_piece == Piece::black_pawn ||
-         current_piece == Piece::white_pawn) &&
-        isWhite((Piece)current_piece) ==
-            (game_state.next_turn == NextTurn::white)) {
+    auto curr_piece = game_state.board.fields[i];
+    if (isWhite((Piece)curr_piece) == (next_turn == NextTurn::white)) {
+      continue;
+    }
+
+    if (curr_piece == Piece::black_pawn || curr_piece == Piece::white_pawn) {
       auto pawn_moves = this->getPawnMoves(game_state, i);
-      possible_moves.insert(possible_moves.end(), pawn_moves.begin(),
-                            pawn_moves.end());
+      all_moves.insert(all_moves.end(), pawn_moves.begin(), pawn_moves.end());
     }
   }
 
-  this->bestMove = possible_moves[0];
+  this->bestMove = all_moves[0];
 }
 
 void MoveGenerator::stopSearching() {}
