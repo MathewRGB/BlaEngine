@@ -128,6 +128,8 @@ vector<string> Uci::extractMoves(string command_line) {
 
   string moves_extraction = command_line.substr(command_line.find("moves") + 6,
                                                 command_line.length());
+  moves_extraction.append(" ");
+
   string current_token;
   while (current_token.empty() || moves_extraction.find(" ") != string::npos) {
     current_token = moves_extraction.substr(0, moves_extraction.find(" "));

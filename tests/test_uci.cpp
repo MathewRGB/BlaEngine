@@ -13,7 +13,7 @@ using namespace blaengine::communication;
 TEST(Uci, test_quit_call) {
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
-  
+
   auto response = uci_module.translateInput("quit");
 
   ASSERT_NE(response[0].find("byebye"), string::npos);
@@ -74,6 +74,21 @@ TEST(Uci, test_position_cmd) {
   response = uci_module.translateInput("position startpos");
 
   ASSERT_NE(response[0].find("position was set"), string::npos);
+}
+
+// #####################################################
+TEST(Uci, test_position_cmd_black_bug) {
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+  auto response = vector<string>();
+
+  response = uci_module.translateInput("position startpos moves e2e3");
+  response =
+      uci_module.translateInput("go wtime 300000 btime 300000 winc 0 binc 0");
+
+  ASSERT_EQ(blaengine->engine_calculator.game_state_controller
+                .current_game_state.next_turn,
+            NextTurn::black);
 }
 
 TEST(Uci, test_extract_game_state) {
