@@ -42,6 +42,8 @@ class MoveGenerator {
   short moveLeft(short field_index, short number);
 
   bool isWhite(Piece piece);
+
+  Move chooseBestMove(vector<Move> moves);
 };
 
 }  // namespace blaengine::calculation

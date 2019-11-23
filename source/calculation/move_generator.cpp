@@ -1,4 +1,5 @@
 #include "move_generator.h"
+#include <random>
 
 namespace blaengine::calculation {
 
@@ -6,12 +7,12 @@ MoveGenerator::MoveGenerator() {}
 MoveGenerator::~MoveGenerator() {}
 
 void MoveGenerator::startSearching(GameState game_state) {
-  auto all_moves = vector<Move>();
   auto next_turn = game_state.next_turn;
+  auto all_moves = vector<Move>();
 
   for (int i = 0; i < FIELD_NUMBER; i++) {
     auto curr_piece = game_state.board.fields[i];
-    if (isWhite((Piece)curr_piece) == (next_turn == NextTurn::white)) {
+    if (isWhite((Piece)curr_piece) != (next_turn == NextTurn::white)) {
       continue;
     }
 
@@ -21,10 +22,19 @@ void MoveGenerator::startSearching(GameState game_state) {
     }
   }
 
-  this->bestMove = all_moves[0];
+  this->bestMove = this->chooseBestMove(all_moves);
 }
 
 void MoveGenerator::stopSearching() {}
+
+Move MoveGenerator::chooseBestMove(vector<Move> moves) {
+  random_device rd;
+  mt19937 gen(rd());
+  uniform_int_distribution<> dist(0, moves.size() - 1);
+  ushort rnd_idx = dist(gen);
+
+  return moves[rnd_idx];
+}
 
 short MoveGenerator::moveForward(short field_index, short number) {
   return field_index + 8 * number;

@@ -63,6 +63,11 @@ void teardown_std_mock_io() {
 
 bool expectedMovesInMoves(vector<Move> moves, vector<Move> expected_moves) {
   bool expected_move_present = false;
+
+  if (moves.size() != expected_moves.size()){
+    return false;
+  }
+
   for (uint em_idx = 0; em_idx < expected_moves.size(); em_idx++) {
     for (uint m_idx = 0; m_idx < moves.size(); m_idx++) {
       if (moves[m_idx] == expected_moves[em_idx]) {
