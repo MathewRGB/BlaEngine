@@ -6,6 +6,7 @@
 #include "test_uci_cin(disabled).cpp"
 #include "test_calculator.cpp"
 #include "test_movegenerator.cpp"
+#include "test_gamestates.cpp"
 
 using namespace std;
 

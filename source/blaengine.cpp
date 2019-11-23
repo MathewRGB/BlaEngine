@@ -1,44 +1,34 @@
 #include "blaengine.h"
+#include "calculation/move_generator.h"
 
 namespace blaengine {
 
 int dummy_counter = 1;
 
+BlaEngine::BlaEngine() { this->engine_calculator = Calculator(); }
 
-BlaEngine::BlaEngine() {
-  this->engine_calculator = Calculator();
-}
-
-BlaEngine::~BlaEngine() {
-}
+BlaEngine::~BlaEngine() {}
 
 void BlaEngine::startEngine() {}
 
-void BlaEngine::shutdownEngine() {
-  this->~BlaEngine();
-}
+void BlaEngine::shutdownEngine() { this->~BlaEngine(); }
 
-void BlaEngine::interpretAndSetFen(string fen){
+void BlaEngine::interpretAndSetFen(string fen) {
   this->engine_calculator.interpretAndSetFen(fen);
 }
 
-void BlaEngine::makeMovesFromFieldStrings(vector<string> moves){
+void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
   this->engine_calculator.makeMovesFromFieldStrings(moves);
 }
 
 string BlaEngine::getBestMove() {
-  string bestmove;
-  bestmove += (char(105-dummy_counter));
-  bestmove += "7";
-  bestmove += (char(105-dummy_counter));
-  bestmove += "6";
-  dummy_counter++;
+  //auto move_generator = MoveGenerator();
+  //move_generator.startSearching(
+  //    this->engine_calculator.game_state_controller.current_game_state);
 
-  return bestmove;
+  return "b2b3"; //move_generator.bestMove.toString();
 }
 
-BlaEngineInfo BlaEngine::getEngineInfo() { 
-  return BlaEngineInfo(); 
-}
+BlaEngineInfo BlaEngine::getEngineInfo() { return BlaEngineInfo(); }
 
 }  // namespace blaengine

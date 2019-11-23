@@ -47,8 +47,17 @@ struct Move {
   Piece promotion;
   bool operator==(const Move& _move) {
     return field_before == _move.field_before &&
-           field_after == _move.field_after &&
-           promotion == _move.promotion;
+           field_after == _move.field_after && promotion == _move.promotion;
+  }
+  string toString() {
+    string response = {
+        (char)('a' + (field_before % 8)), (char)('1' + (field_before / 8)),
+        (char)('a' + (field_after % 8)), (char)('1' + (field_after / 8))};
+
+    if (promotion != Piece::left_piece) {
+      response += promotion;
+    }
+    return response;
   }
 };
 
