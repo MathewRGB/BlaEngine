@@ -188,6 +188,36 @@ TEST(MoveGenerator, test_w_pawn_moves_promotion) {
   ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
 }
 
+TEST(MoveGenerator, test_w_pawn_moves_en_passant_right) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 34;
+  game_state.board.fields[field_before] = Piece::white_pawn;
+  game_state.board.fields[35] = Piece::black_pawn;
+  game_state.en_passant_field = 43;
+
+  auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);
+  vector<Move> expected_moves = {{field_before, 42, Piece::left_piece},
+                                 {field_before, 43, Piece::left_piece}};
+
+  ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
+}
+
+TEST(MoveGenerator, test_w_pawn_moves_en_passant_left) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 34;
+  game_state.board.fields[field_before] = Piece::white_pawn;
+  game_state.board.fields[33] = Piece::black_pawn;
+  game_state.en_passant_field = 41;
+
+  auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);
+  vector<Move> expected_moves = {{field_before, 42, Piece::left_piece},
+                                 {field_before, 41, Piece::left_piece}};
+
+  ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
+}
+
 // ----------------------- black pawn tests ------------------------------------
 
 TEST(MoveGenerator, test_b_pawn_moves_ground_free) {
@@ -312,6 +342,36 @@ TEST(MoveGenerator, test_b_pawn_moves_promotion) {
                                  {field_before, 1, Piece::black_queen},
                                  {field_before, 1, Piece::black_rook},
                                  {field_before, 1, Piece::black_knight}};
+
+  ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
+}
+
+TEST(MoveGenerator, test_b_pawn_moves_en_passant_right) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 26;
+  game_state.board.fields[field_before] = Piece::white_pawn;
+  game_state.board.fields[25] = Piece::black_pawn;
+  game_state.en_passant_field = 17;
+
+  auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);
+  vector<Move> expected_moves = {{field_before, 18, Piece::left_piece},
+                                 {field_before, 17, Piece::left_piece}};
+
+  ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
+}
+
+TEST(MoveGenerator, test_b_pawn_moves_en_passant_left) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 24;
+  game_state.board.fields[field_before] = Piece::white_pawn;
+  game_state.board.fields[25] = Piece::black_pawn;
+  game_state.en_passant_field = 17;
+
+  auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);
+  vector<Move> expected_moves = {{field_before, 16, Piece::left_piece},
+                                 {field_before, 17, Piece::left_piece}};
 
   ASSERT_TRUE(expectedMovesInMoves(pawn_moves, expected_moves));
 }
