@@ -22,11 +22,11 @@ void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
 }
 
 string BlaEngine::getBestMove() {
-  //auto move_generator = MoveGenerator();
-  //move_generator.startSearching(
-  //    this->engine_calculator.game_state_controller.current_game_state);
+  auto move_generator = MoveGenerator();
+  move_generator.startSearching(
+     this->engine_calculator.game_state_controller.current_game_state);
 
-  return "b2b3"; //move_generator.bestMove.toString();
+  return move_generator.bestMove.toString();
 }
 
 BlaEngineInfo BlaEngine::getEngineInfo() { return BlaEngineInfo(); }

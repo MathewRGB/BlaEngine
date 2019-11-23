@@ -49,6 +49,7 @@ TEST(Uci, test_go_move) {
   auto uci_module = Uci(blaengine);
   auto response = vector<string>();
 
+  uci_module.translateInput("position startpos");
   response = uci_module.translateInput("go ");
 
   ASSERT_NE(response[0].find("bestmove"), string::npos);
@@ -59,6 +60,7 @@ TEST(Uci, test_go_thinking_info) {
   auto uci_module = Uci(blaengine);
   auto response = vector<string>();
 
+  uci_module.translateInput("position startpos");
   response = uci_module.translateInput("go infinite");
 
   ASSERT_NE(response[0].find("info currmove"), string::npos);
