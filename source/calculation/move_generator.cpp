@@ -28,6 +28,12 @@ void MoveGenerator::startSearching(GameState game_state) {
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
+    if (current_piece == Piece::black_rook ||
+        current_piece == Piece::white_rook) {
+      auto knight_moves = this->getRookMoves(game_state, i);
+      possible_moves.insert(possible_moves.end(), knight_moves.begin(),
+                            knight_moves.end());
+    }
   }
 
   this->bestMove = this->chooseBestMove(possible_moves);
