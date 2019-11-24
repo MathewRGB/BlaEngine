@@ -78,6 +78,7 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
   auto promo_knight = is_white ? Piece::white_knight : Piece::black_knight;
   auto promo_rook = is_white ? Piece::white_rook : Piece::black_rook;
 
+  // general moves
   if (f_piece == Piece::left_piece) {
     if (f_field < (short)(36 + 28 * piece_direction) &&
         f_field > (short)(27 + 28 * piece_direction)) {
@@ -94,6 +95,7 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
       all_moves.push_back({field_index, (ushort)ff_field, Piece::left_piece});
     }
   }
+  // piece taking
   if ((is_white && (field_index + 1) % 8 != 0 && !isWhite(fr_piece) &&
        fr_piece != Piece::left_piece) ||
       (!is_white && field_index % 8 != 0 && isWhite(fr_piece) &&
@@ -121,6 +123,19 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
     } else {
       all_moves.push_back({field_index, (ushort)fl_field, Piece::left_piece});
     }
+  }
+  // en passant
+  if ((is_white && (field_index + 1) % 8 != 0 &&
+       fr_field == game_state.en_passant_field) ||
+      (!is_white && field_index % 8 != 0 &&
+       fr_field == game_state.en_passant_field)) {
+    all_moves.push_back({field_index, (ushort)fr_field, Piece::left_piece});
+  }
+  if ((is_white && field_index % 8 != 0 &&
+       fl_field == game_state.en_passant_field) ||
+      (!is_white && (field_index + 1) % 8 != 0 &&
+       fl_field == game_state.en_passant_field)) {
+    all_moves.push_back({field_index, (ushort)fl_field, Piece::left_piece});
   }
 
   return all_moves;

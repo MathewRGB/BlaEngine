@@ -350,8 +350,8 @@ TEST(MoveGenerator, test_b_pawn_moves_en_passant_right) {
   auto move_generator = MoveGenerator();
   auto game_state = GameState();
   ushort field_before = 26;
-  game_state.board.fields[field_before] = Piece::white_pawn;
-  game_state.board.fields[25] = Piece::black_pawn;
+  game_state.board.fields[field_before] = Piece::black_pawn;
+  game_state.board.fields[25] = Piece::white_pawn;
   game_state.en_passant_field = 17;
 
   auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);
@@ -365,8 +365,8 @@ TEST(MoveGenerator, test_b_pawn_moves_en_passant_left) {
   auto move_generator = MoveGenerator();
   auto game_state = GameState();
   ushort field_before = 24;
-  game_state.board.fields[field_before] = Piece::white_pawn;
-  game_state.board.fields[25] = Piece::black_pawn;
+  game_state.board.fields[field_before] = Piece::black_pawn;
+  game_state.board.fields[25] = Piece::white_pawn;
   game_state.en_passant_field = 17;
 
   auto pawn_moves = move_generator.getPawnMoves(game_state, field_before);

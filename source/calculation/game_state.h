@@ -35,10 +35,10 @@ enum class NextTurn : ushort { white, black };
 
 struct GameState {
   Board board;
-  NextTurn next_turn;
-  short en_passant_field;
-  ushort next_half_move;
-  ushort half_moves_for_draw;
+  NextTurn next_turn = NextTurn::white;
+  short en_passant_field = -1;
+  ushort next_half_move = 1;
+  ushort half_moves_for_draw = 0;
 };
 
 struct Move {
