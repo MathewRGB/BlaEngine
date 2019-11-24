@@ -212,4 +212,9 @@ vector<Move> MoveGenerator::getKnightMoves(GameState game_state,
   return all_moves;
 }
 
+vector<Move> MoveGenerator::getRookMoves(GameState game_state,
+                                         ushort field_index) {
+  return vector<Move>();
+}
+
 }  // namespace blaengine::calculation

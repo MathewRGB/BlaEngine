@@ -11,6 +11,8 @@ bool compare_game_states(GameState state1, GameState state2);
 void setup_std_mock_io();
 void teardown_std_mock_io();
 bool expectedMovesInMoves(vector<Move> moves, vector<Move> expected_moves);
+vector<Move> createMovesFromFieldList(ushort start_field,
+                                      vector<ushort> possible_fields);
 
 std::stringstream mock_cin, mock_cout;
 std::streambuf *cin_backup, *cout_backup;
@@ -64,7 +66,7 @@ void teardown_std_mock_io() {
 bool expectedMovesInMoves(vector<Move> moves, vector<Move> expected_moves) {
   bool expected_move_present = false;
 
-  if (moves.size() != expected_moves.size()){
+  if (moves.size() != expected_moves.size()) {
     return false;
   }
 
@@ -83,6 +85,17 @@ bool expectedMovesInMoves(vector<Move> moves, vector<Move> expected_moves) {
   }
 
   return true;
+}
+
+vector<Move> createMovesFromFieldList(ushort start_field,
+                                      vector<ushort> possible_fields) {
+  auto possible_moves = vector<Move>();
+  for (uint i = 0; i < possible_fields.size(); i++) {
+    possible_moves.push_back(
+        {start_field, possible_fields[i], Piece::left_piece});
+  }
+
+  return possible_moves;
 }
 
 #endif  // HELPERFORTESTS_H_

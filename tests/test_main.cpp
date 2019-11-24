@@ -9,6 +9,7 @@
 #include "test_gamestates.cpp"
 #include "test_moves_pawn.cpp"
 #include "test_moves_knight.cpp"
+#include "test_moves_rook.cpp"
 
 using namespace std;
 
