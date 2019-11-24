@@ -2,7 +2,11 @@
 
 namespace blaengine::calculation {
 
-GameStateController::GameStateController() {
+GameStateController::GameStateController() { this->initializeGameSate(); }
+
+GameStateController::~GameStateController() {}
+
+void GameStateController::initializeGameSate() {
   current_game_state = GameState();
   current_game_state.board = Board();
   current_game_state.next_turn = NextTurn::white;
@@ -10,8 +14,6 @@ GameStateController::GameStateController() {
   current_game_state.half_moves_for_draw = 0;
   current_game_state.en_passant_field = -1;
 }
-
-GameStateController::~GameStateController() {}
 
 void GameStateController::extractFenCastling(string fen_castling) {
   for (uint i = 0; i < fen_castling.size(); i++) {
@@ -22,6 +24,8 @@ void GameStateController::extractFenCastling(string fen_castling) {
 void GameStateController::extractFenPosition(string fen_position) {
   uint field_idx = 0;
   auto fields = this->current_game_state.board.fields;
+
+  this->initializeGameSate();
 
   for (uint fen_idx = 0; fen_idx < fen_position.length(); fen_idx++) {
     if (fen_position[fen_idx] == FEN_POS_SEPARATOR) {

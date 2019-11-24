@@ -19,6 +19,8 @@ class GameStateController {
 
   GameState current_game_state;
 
+  void initializeGameSate();
+
   void extractFenPosition(string fen_position);
 
   void makeMove(ushort field_before, ushort field_after,

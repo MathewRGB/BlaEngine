@@ -162,3 +162,29 @@ TEST(Uci, test_position_full_game) {
       cmp_blaengine->engine_calculator.game_state_controller.current_game_state,
       blaengine->engine_calculator.game_state_controller.current_game_state));
 }
+
+TEST(Uci, test_game_state_reset_after_new_pos) {
+  // get position strings for testing from file
+  ifstream file;
+  file.open("mock_data/test_gamestates.txt");
+  string test_position;
+  string reset_position = "position startpos";
+  string comparison_position;
+
+  for (int i = 0; i < 6 && file.is_open(); i++) {
+    getline(file, test_position);
+  }
+  file.close();
+
+  auto blaengine = make_shared<BlaEngine>();
+  auto uci_module = Uci(blaengine);
+  auto& game_state = blaengine->engine_calculator.game_state_controller.current_game_state;
+
+  uci_module.translateInput(test_position);
+  uci_module.translateInput(reset_position);
+
+  ASSERT_EQ(game_state.en_passant_field, -1);
+  ASSERT_EQ(game_state.half_moves_for_draw, 0);
+  ASSERT_EQ(game_state.next_half_move, 1);
+  ASSERT_EQ(game_state.next_turn, NextTurn::white);
+}
