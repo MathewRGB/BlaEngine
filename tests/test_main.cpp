@@ -8,6 +8,7 @@
 #include "test_movegenerator.cpp"
 #include "test_gamestates.cpp"
 #include "test_moves_pawn.cpp"
+#include "test_moves_knight.cpp"
 
 using namespace std;
 
