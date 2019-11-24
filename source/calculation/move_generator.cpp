@@ -214,7 +214,107 @@ vector<Move> MoveGenerator::getKnightMoves(GameState game_state,
 
 vector<Move> MoveGenerator::getRookMoves(GameState game_state,
                                          ushort field_index) {
-  return vector<Move>();
+  auto all_moves = vector<Move>();
+  auto possible_moves = vector<short>();
+  auto piece = (Piece)game_state.board.fields[field_index];
+  bool piece_blocked = false;
+
+  // right direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto current_field = moveRight(field_index, i);
+
+    if (((field_index + 1) % 8 == 0) || current_field > 63 ||
+        current_field % 8 == 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+  // left direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto current_field = moveLeft(field_index, i);
+
+    if ((field_index % 8 == 0) || current_field < 0 ||
+        (current_field + 1) % 8 == 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+  // forward direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto current_field = moveForward(field_index, i);
+
+    if (current_field > 63) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+  // backward direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto current_field = moveBackward(field_index, i);
+
+    if (current_field < 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+
+  return all_moves;
 }
 
 }  // namespace blaengine::calculation
