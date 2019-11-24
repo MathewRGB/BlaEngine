@@ -152,9 +152,62 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
 vector<Move> MoveGenerator::getKnightMoves(GameState game_state,
                                            ushort field_index) {
   auto all_moves = vector<Move>();
+  auto possible_moves = vector<short>();
   auto piece = (Piece)game_state.board.fields[field_index];
-  bool is_white = (piece == Piece::white_pawn) ? true : false;
-  short piece_direction = is_white ? 1 : -1;
+
+  auto ff_field = moveForward(field_index, 2);
+  auto bb_field = moveBackward(field_index, 2);
+  auto ll_field = moveLeft(field_index, 2);
+  auto rr_field = moveRight(field_index, 2);
+
+  possible_moves.push_back(moveLeft(ff_field, 1));
+  possible_moves.push_back(moveRight(ff_field, 1));
+  possible_moves.push_back(moveLeft(bb_field, 1));
+  possible_moves.push_back(moveRight(bb_field, 1));
+
+  possible_moves.push_back(moveForward(ll_field, 1));
+  possible_moves.push_back(moveBackward(ll_field, 1));
+  possible_moves.push_back(moveForward(rr_field, 1));
+  possible_moves.push_back(moveBackward(rr_field, 1));
+
+  for (uint i = 0; i < possible_moves.size(); i++) {
+    if (possible_moves[i] > 63 || possible_moves[i] < 0) {
+      continue;
+    }
+    if ((field_index - 1) % 8 == 0 && (field_index + 6 == possible_moves[i] ||
+                                       field_index - 10 == possible_moves[i])) {
+      continue;
+    }
+    if (field_index % 8 == 0 && (field_index + 6 == possible_moves[i] ||
+                                 field_index - 10 == possible_moves[i] ||
+                                 field_index + 15 == possible_moves[i] ||
+                                 field_index - 17 == possible_moves[i])) {
+      continue;
+    }
+    if ((field_index + 2) % 8 == 0 && (field_index + 10 == possible_moves[i] ||
+                                       field_index - 6 == possible_moves[i])) {
+      continue;
+    }
+    if ((field_index + 1) % 8 == 0 && (field_index + 10 == possible_moves[i] ||
+                                       field_index - 6 == possible_moves[i] ||
+                                       field_index + 17 == possible_moves[i] ||
+                                       field_index - 15 == possible_moves[i])) {
+      continue;
+    }
+
+    auto taking_piece = (Piece)game_state.board.fields[possible_moves[i]];
+    if (isWhite(taking_piece) && isWhite(piece) &&
+        taking_piece != Piece::left_piece) {
+      continue;
+    }
+    if (!isWhite(taking_piece) && !isWhite(piece) &&
+        taking_piece != Piece::left_piece) {
+      continue;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)possible_moves[i], Piece::left_piece});
+  }
 
   return all_moves;
 }
