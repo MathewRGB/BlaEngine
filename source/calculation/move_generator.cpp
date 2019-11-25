@@ -330,6 +330,107 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
   auto piece = (Piece)game_state.board.fields[field_index];
   bool piece_blocked = false;
 
+  // right forward direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto r_field = moveRight(field_index, i);
+    auto current_field = moveForward(r_field, i);
+
+    if (((field_index + 1) % 8 == 0) || current_field > 63 ||
+        current_field % 8 == 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+  // right backward direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto r_field = moveRight(field_index, i);
+    auto current_field = moveBackward(r_field, i);
+
+    if (((field_index + 1) % 8 == 0) || current_field < 0 ||
+        current_field % 8 == 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+  // left forward direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto l_field = moveLeft(field_index, i);
+    auto current_field = moveForward(l_field, i);
+
+    if ((field_index % 8 == 0) || current_field > 63 ||
+        (current_field + 1) % 8 == 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+  // left backward direction
+  for (uint i = 1; !piece_blocked; i++) {
+    auto l_field = moveLeft(field_index, i);
+    auto current_field = moveBackward(l_field, i);
+
+    if ((field_index % 8 == 0) || current_field < 0 ||
+        (current_field + 1) % 8 == 0) {
+      break;
+    }
+
+    auto current_piece = (Piece)game_state.board.fields[current_field];
+    if (isWhite(current_piece) == isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      break;
+    }
+    if (isWhite(current_piece) != isWhite(piece) &&
+        current_piece != Piece::left_piece) {
+      all_moves.push_back(
+          {field_index, (ushort)current_field, Piece::left_piece});
+      break;
+    }
+
+    all_moves.push_back(
+        {field_index, (ushort)current_field, Piece::left_piece});
+  }
+
   return all_moves;
 }
 
