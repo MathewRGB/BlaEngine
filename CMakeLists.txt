@@ -8,8 +8,9 @@ project(BlaEngine VERSION 0.0.0)
 #
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
 if(EXISTS "${LOC_PATH}")
-    message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file).\
-        Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
+    message(FATAL_ERROR "You cannot build in a source directory (or any \
+      directory with a CMakeLists.txt file). Please create a build \ 
+      subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
 endif()
 
 #-------------------------------------------------------------------------------
@@ -17,7 +18,8 @@ endif()
 #-------------------------------------------------------------------------------
 #
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
-    message(WARNING "No different architecture than x86_64 are currently supported.")
+    message(WARNING "No different architecture than x86_64 are currently \
+      supported, yet.")
 endif()
 
 if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Linux")

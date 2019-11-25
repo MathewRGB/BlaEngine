@@ -10,6 +10,7 @@
 #include "test_moves_pawn.cpp"
 #include "test_moves_knight.cpp"
 #include "test_moves_rook.cpp"
+#include "test_moves_bishop.cpp"
 
 using namespace std;
 

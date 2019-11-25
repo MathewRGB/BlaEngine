@@ -323,4 +323,14 @@ vector<Move> MoveGenerator::getRookMoves(GameState game_state,
   return all_moves;
 }
 
+vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
+                                           ushort field_index) {
+  auto all_moves = vector<Move>();
+  auto possible_moves = vector<short>();
+  auto piece = (Piece)game_state.board.fields[field_index];
+  bool piece_blocked = false;
+
+  return all_moves;
+}
+
 }  // namespace blaengine::calculation
