@@ -34,6 +34,12 @@ void MoveGenerator::startSearching(GameState game_state) {
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
+    if (current_piece == Piece::black_bishop ||
+        current_piece == Piece::white_bishop) {
+      auto knight_moves = this->getBishopMoves(game_state, i);
+      possible_moves.insert(possible_moves.end(), knight_moves.begin(),
+                            knight_moves.end());
+    }
   }
 
   this->bestMove = this->chooseBestMove(possible_moves);
