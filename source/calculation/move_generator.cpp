@@ -40,6 +40,12 @@ void MoveGenerator::startSearching(GameState game_state) {
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
+    if (current_piece == Piece::black_queen ||
+        current_piece == Piece::white_queen) {
+      auto knight_moves = this->getQueenMoves(game_state, i);
+      possible_moves.insert(possible_moves.end(), knight_moves.begin(),
+                            knight_moves.end());
+    }
   }
 
   this->bestMove = this->chooseBestMove(possible_moves);
@@ -436,6 +442,22 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
     all_moves.push_back(
         {field_index, (ushort)current_field, Piece::left_piece});
   }
+
+  return all_moves;
+}
+
+vector<Move> MoveGenerator::getQueenMoves(GameState game_state,
+                                          ushort field_index) {
+  auto all_moves = this->getRookMoves(game_state, field_index);
+  auto bishop_moves = this->getBishopMoves(game_state, field_index);
+  all_moves.insert(end(all_moves), begin(bishop_moves), end(bishop_moves));
+
+  return all_moves;
+}
+
+vector<Move> MoveGenerator::getKingMoves(GameState game_state,
+                                         ushort field_index) {
+  auto all_moves = vector<Move>();
 
   return all_moves;
 }
