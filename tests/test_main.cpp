@@ -12,6 +12,7 @@
 #include "test_moves_rook.cpp"
 #include "test_moves_bishop.cpp"
 #include "test_moves_queen.cpp"
+#include "test_moves_king.cpp"
 
 using namespace std;
 
