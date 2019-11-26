@@ -109,3 +109,159 @@ TEST(KingMoves, test_general_moves_pos25) {
 
   ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
 }
+
+TEST(KingMoves, test_castling_w_all) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 4;
+  game_state.board.fields[field_before] = Piece::white_king;
+  game_state.board.fields[8] = Piece::white_pawn;
+  game_state.board.fields[9] = Piece::white_pawn;
+  game_state.board.fields[10] = Piece::white_pawn;
+  game_state.board.fields[11] = Piece::white_pawn;
+  game_state.board.fields[12] = Piece::white_pawn;
+  game_state.board.fields[13] = Piece::white_pawn;
+  game_state.board.fields[14] = Piece::white_pawn;
+  game_state.board.fields[15] = Piece::white_pawn;
+  game_state.board.fields[0] = Piece::white_rook;
+  game_state.board.fields[7] = Piece::white_rook;
+  game_state.board.castling[0] = Piece::white_king;
+  game_state.board.castling[1] = Piece::white_queen;
+  game_state.board.castling[2] = Piece::black_king;
+  game_state.board.castling[3] = Piece::black_queen;
+
+  vector<ushort> possible_fields = {6, 2, 5, 3};
+
+  auto knight_moves = move_generator.getKingMoves(game_state, field_before);
+  auto expected_moves = createMovesFromFieldList(field_before, possible_fields);
+
+  ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
+}
+
+TEST(KingMoves, test_castling_w_only_k) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 4;
+  game_state.board.fields[field_before] = Piece::white_king;
+  game_state.board.fields[8] = Piece::white_pawn;
+  game_state.board.fields[9] = Piece::white_pawn;
+  game_state.board.fields[10] = Piece::white_pawn;
+  game_state.board.fields[11] = Piece::white_pawn;
+  game_state.board.fields[12] = Piece::white_pawn;
+  game_state.board.fields[13] = Piece::white_pawn;
+  game_state.board.fields[14] = Piece::white_pawn;
+  game_state.board.fields[15] = Piece::white_pawn;
+  game_state.board.fields[0] = Piece::white_rook;
+  game_state.board.fields[7] = Piece::white_rook;
+  game_state.board.castling[0] = Piece::white_king;
+
+  vector<ushort> possible_fields = {5, 6, 3};
+
+  auto knight_moves = move_generator.getKingMoves(game_state, field_before);
+  auto expected_moves = createMovesFromFieldList(field_before, possible_fields);
+
+  ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
+}
+
+TEST(KingMoves, test_castling_w_only_q) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 4;
+  game_state.board.fields[field_before] = Piece::white_king;
+  game_state.board.fields[8] = Piece::white_pawn;
+  game_state.board.fields[9] = Piece::white_pawn;
+  game_state.board.fields[10] = Piece::white_pawn;
+  game_state.board.fields[11] = Piece::white_pawn;
+  game_state.board.fields[12] = Piece::white_pawn;
+  game_state.board.fields[13] = Piece::white_pawn;
+  game_state.board.fields[14] = Piece::white_pawn;
+  game_state.board.fields[15] = Piece::white_pawn;
+  game_state.board.fields[0] = Piece::white_rook;
+  game_state.board.fields[7] = Piece::white_rook;
+  game_state.board.castling[1] = Piece::white_queen;
+
+  vector<ushort> possible_fields = {2, 3, 5};
+
+  auto knight_moves = move_generator.getKingMoves(game_state, field_before);
+  auto expected_moves = createMovesFromFieldList(field_before, possible_fields);
+
+  ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
+}
+
+TEST(KingMoves, test_castling_b_all) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 60;
+  game_state.board.fields[field_before] = Piece::black_knight;
+  game_state.board.fields[48] = Piece::black_pawn;
+  game_state.board.fields[49] = Piece::black_pawn;
+  game_state.board.fields[50] = Piece::black_pawn;
+  game_state.board.fields[51] = Piece::black_pawn;
+  game_state.board.fields[52] = Piece::black_pawn;
+  game_state.board.fields[53] = Piece::black_pawn;
+  game_state.board.fields[54] = Piece::black_pawn;
+  game_state.board.fields[55] = Piece::black_pawn;
+  game_state.board.fields[56] = Piece::black_rook;
+  game_state.board.fields[63] = Piece::black_rook;
+  game_state.board.castling[0] = Piece::white_king;
+  game_state.board.castling[1] = Piece::white_queen;
+  game_state.board.castling[2] = Piece::black_king;
+  game_state.board.castling[3] = Piece::black_queen;
+
+  vector<ushort> possible_fields = {61, 62, 59, 58};
+
+  auto knight_moves = move_generator.getKingMoves(game_state, field_before);
+  auto expected_moves = createMovesFromFieldList(field_before, possible_fields);
+
+  ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
+}
+
+TEST(KingMoves, test_castling_b_only_k) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 60;
+  game_state.board.fields[field_before] = Piece::black_knight;
+  game_state.board.fields[48] = Piece::black_pawn;
+  game_state.board.fields[49] = Piece::black_pawn;
+  game_state.board.fields[50] = Piece::black_pawn;
+  game_state.board.fields[51] = Piece::black_pawn;
+  game_state.board.fields[52] = Piece::black_pawn;
+  game_state.board.fields[53] = Piece::black_pawn;
+  game_state.board.fields[54] = Piece::black_pawn;
+  game_state.board.fields[55] = Piece::black_pawn;
+  game_state.board.fields[56] = Piece::black_rook;
+  game_state.board.fields[63] = Piece::black_rook;
+  game_state.board.castling[2] = Piece::black_king;
+
+  vector<ushort> possible_fields = {61, 62, 59};
+
+  auto knight_moves = move_generator.getKingMoves(game_state, field_before);
+  auto expected_moves = createMovesFromFieldList(field_before, possible_fields);
+
+  ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
+}
+
+TEST(KingMoves, test_castling_b_only_q) {
+  auto move_generator = MoveGenerator();
+  auto game_state = GameState();
+  ushort field_before = 60;
+  game_state.board.fields[field_before] = Piece::black_knight;
+  game_state.board.fields[48] = Piece::black_pawn;
+  game_state.board.fields[49] = Piece::black_pawn;
+  game_state.board.fields[50] = Piece::black_pawn;
+  game_state.board.fields[51] = Piece::black_pawn;
+  game_state.board.fields[52] = Piece::black_pawn;
+  game_state.board.fields[53] = Piece::black_pawn;
+  game_state.board.fields[54] = Piece::black_pawn;
+  game_state.board.fields[55] = Piece::black_pawn;
+  game_state.board.fields[56] = Piece::black_rook;
+  game_state.board.fields[63] = Piece::black_rook;
+  game_state.board.castling[2] = Piece::black_queen;
+
+  vector<ushort> possible_fields = {61, 58, 59};
+
+  auto knight_moves = move_generator.getKingMoves(game_state, field_before);
+  auto expected_moves = createMovesFromFieldList(field_before, possible_fields);
+
+  ASSERT_TRUE(expectedMovesInMoves(knight_moves, expected_moves));
+}
