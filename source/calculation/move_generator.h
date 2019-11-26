@@ -18,6 +18,8 @@ class MoveGenerator {
 
   void stopSearching();
 
+  vector<Move> getAllMightPossibleMoves(GameState game_state);
+
   vector<Move> getPawnMoves(GameState game_state, ushort field_index);
 
   vector<Move> getRookMoves(GameState game_state, ushort field_index);

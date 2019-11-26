@@ -7,6 +7,13 @@ MoveGenerator::MoveGenerator() {}
 MoveGenerator::~MoveGenerator() {}
 
 void MoveGenerator::startSearching(GameState game_state) {
+  auto possible_moves = this->getAllMightPossibleMoves(game_state);
+  this->bestMove = this->chooseBestMove(possible_moves);
+}
+
+void MoveGenerator::stopSearching() {}
+
+vector<Move> MoveGenerator::getAllMightPossibleMoves(GameState game_state) {
   auto next_turn = game_state.next_turn;
   auto possible_moves = vector<Move>();
 
@@ -54,10 +61,8 @@ void MoveGenerator::startSearching(GameState game_state) {
     }
   }
 
-  this->bestMove = this->chooseBestMove(possible_moves);
+  return possible_moves;
 }
-
-void MoveGenerator::stopSearching() {}
 
 Move MoveGenerator::chooseBestMove(vector<Move> moves) {
   random_device rd;
