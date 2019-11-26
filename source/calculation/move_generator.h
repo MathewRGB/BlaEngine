@@ -43,6 +43,8 @@ class MoveGenerator {
 
   bool isWhite(Piece piece);
 
+  Color getPieceColor(Piece piece);
+
   Move chooseBestMove(vector<Move> moves);
 };
 

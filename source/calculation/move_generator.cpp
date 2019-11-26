@@ -46,6 +46,12 @@ void MoveGenerator::startSearching(GameState game_state) {
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
+    if (current_piece == Piece::black_king ||
+        current_piece == Piece::white_king) {
+      auto knight_moves = this->getKingMoves(game_state, i);
+      possible_moves.insert(possible_moves.end(), knight_moves.begin(),
+                            knight_moves.end());
+    }
   }
 
   this->bestMove = this->chooseBestMove(possible_moves);
@@ -80,6 +86,16 @@ short MoveGenerator::moveLeft(short field_index, short number) {
 
 bool MoveGenerator::isWhite(Piece piece) {
   return (piece > 'A' && piece < 'Z');
+}
+
+Color MoveGenerator::getPieceColor(Piece piece) {
+  if (piece > 'A' && piece < 'Z') {
+    return Color::white;
+  } else if (piece > 'a' && piece < 'z') {
+    return Color::black;
+  }
+
+  return Color::none;
 }
 
 vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
@@ -458,6 +474,58 @@ vector<Move> MoveGenerator::getQueenMoves(GameState game_state,
 vector<Move> MoveGenerator::getKingMoves(GameState game_state,
                                          ushort field_index) {
   auto all_moves = vector<Move>();
+  auto piece = (Piece)game_state.board.fields[field_index];
+
+  auto r_field = moveRight(field_index, 1);
+  auto l_field = moveLeft(field_index, 1);
+  auto f_field = moveForward(field_index, 1);
+  auto b_field = moveBackward(field_index, 1);
+  auto rf_field = moveForward(r_field, 1);
+  auto lf_field = moveForward(l_field, 1);
+  auto rb_field = moveBackward(r_field, 1);
+  auto lb_field = moveBackward(l_field, 1);
+
+  auto r_piece = (Piece)game_state.board.fields[r_field];
+  auto l_piece = (Piece)game_state.board.fields[l_field];
+  auto f_piece = (Piece)game_state.board.fields[f_field];
+  auto b_piece = (Piece)game_state.board.fields[b_field];
+  auto rf_piece = (Piece)game_state.board.fields[rf_field];
+  auto lf_piece = (Piece)game_state.board.fields[lf_field];
+  auto rb_piece = (Piece)game_state.board.fields[rb_field];
+  auto lb_piece = (Piece)game_state.board.fields[lb_field];
+
+  if ((field_index + 1) % 8 != 0 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(r_piece))) {
+    all_moves.push_back({field_index, (ushort)r_field, Piece::left_piece});
+  }
+  if ((field_index + 1) % 8 != 0 && rf_field < 64 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(rf_piece))) {
+    all_moves.push_back({field_index, (ushort)rf_field, Piece::left_piece});
+  }
+  if ((field_index + 1) % 8 != 0 && rb_field > -1 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(rb_piece))) {
+    all_moves.push_back({field_index, (ushort)rb_field, Piece::left_piece});
+  }
+  if (f_field < 64 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(f_piece))) {
+    all_moves.push_back({field_index, (ushort)f_field, Piece::left_piece});
+  }
+  if (b_field > -1 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(b_piece))) {
+    all_moves.push_back({field_index, (ushort)b_field, Piece::left_piece});
+  }
+  if (field_index % 8 != 0 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(l_piece))) {
+    all_moves.push_back({field_index, (ushort)l_field, Piece::left_piece});
+  }
+  if (field_index % 8 != 0 && lf_field < 64 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(lf_piece))) {
+    all_moves.push_back({field_index, (ushort)lf_field, Piece::left_piece});
+  }
+  if (field_index % 8 != 0 && lb_field > -1 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(lb_piece))) {
+    all_moves.push_back({field_index, (ushort)lb_field, Piece::left_piece});
+  }
 
   return all_moves;
 }

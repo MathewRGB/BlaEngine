@@ -31,7 +31,7 @@ enum Piece : char {
   left_piece = 0
 };
 
-enum class Color : ushort { white, black };
+enum class Color : ushort { white, black, none };
 
 struct GameState {
   Board board;
