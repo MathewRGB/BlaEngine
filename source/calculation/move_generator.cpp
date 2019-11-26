@@ -12,7 +12,7 @@ void MoveGenerator::startSearching(GameState game_state) {
 
   for (int i = 0; i < FIELD_NUMBER; i++) {
     auto current_piece = game_state.board.fields[i];
-    if (isWhite((Piece)current_piece) != (next_turn == Player::white)) {
+    if (isWhite((Piece)current_piece) != (next_turn == Color::white)) {
       continue;
     }
 

@@ -31,11 +31,11 @@ enum Piece : char {
   left_piece = 0
 };
 
-enum class Player : ushort { white, black };
+enum class Color : ushort { white, black };
 
 struct GameState {
   Board board;
-  Player next_turn = Player::white;
+  Color next_turn = Color::white;
   short en_passant_field = -1;
   ushort next_half_move = 1;
   ushort half_moves_for_draw = 0;

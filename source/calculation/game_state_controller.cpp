@@ -9,7 +9,7 @@ GameStateController::~GameStateController() {}
 void GameStateController::initializeGameSate() {
   current_game_state = GameState();
   current_game_state.board = Board();
-  current_game_state.next_turn = Player::white;
+  current_game_state.next_turn = Color::white;
   current_game_state.next_half_move = 0;
   current_game_state.half_moves_for_draw = 0;
   current_game_state.en_passant_field = -1;
@@ -67,19 +67,19 @@ Piece GameStateController::transformPiece(string move) {
   Piece piece_got =
       (move.length() == 5) ? (Piece)(move.at(4)) : Piece::left_piece;
   if (piece_got == Piece::black_queen &&
-      this->current_game_state.next_turn == Player::white) {
+      this->current_game_state.next_turn == Color::white) {
     piece_got = Piece::white_queen;
   }
   if (piece_got == Piece::black_knight &&
-      this->current_game_state.next_turn == Player::white) {
+      this->current_game_state.next_turn == Color::white) {
     piece_got = Piece::white_knight;
   }
   if (piece_got == Piece::black_rook &&
-      this->current_game_state.next_turn == Player::white) {
+      this->current_game_state.next_turn == Color::white) {
     piece_got = Piece::white_rook;
   }
   if (piece_got == Piece::black_bishop &&
-      this->current_game_state.next_turn == Player::white) {
+      this->current_game_state.next_turn == Color::white) {
     piece_got = Piece::white_bishop;
   }
 
