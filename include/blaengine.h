@@ -91,7 +91,15 @@ class BlaEngine {
   ///
   BlaEngineInfo getEngineInfo();
 
+  void startSearching(GameState game_state);
+
+  void stopSearching();
+
+  Move chooseBestMove(vector<Move> moves);
+
   Calculator engine_calculator;
+
+  Move bestMove;
 };
 
 }  // namespace blaengine

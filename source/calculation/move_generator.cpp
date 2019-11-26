@@ -1,17 +1,6 @@
 #include "move_generator.h"
-#include <random>
 
 namespace blaengine::calculation {
-
-MoveGenerator::MoveGenerator() {}
-MoveGenerator::~MoveGenerator() {}
-
-void MoveGenerator::startSearching(GameState game_state) {
-  auto possible_moves = this->getAllMightPossibleMoves(game_state);
-  this->bestMove = this->chooseBestMove(possible_moves);
-}
-
-void MoveGenerator::stopSearching() {}
 
 vector<Move> MoveGenerator::getAllMightPossibleMoves(GameState game_state) {
   auto next_turn = game_state.next_turn;
@@ -25,52 +14,43 @@ vector<Move> MoveGenerator::getAllMightPossibleMoves(GameState game_state) {
 
     if (current_piece == Piece::black_pawn ||
         current_piece == Piece::white_pawn) {
-      auto pawn_moves = this->getPawnMoves(game_state, i);
+      auto pawn_moves = getPawnMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), pawn_moves.begin(),
                             pawn_moves.end());
     }
     if (current_piece == Piece::black_knight ||
         current_piece == Piece::white_knight) {
-      auto knight_moves = this->getKnightMoves(game_state, i);
+      auto knight_moves = getKnightMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
     if (current_piece == Piece::black_rook ||
         current_piece == Piece::white_rook) {
-      auto knight_moves = this->getRookMoves(game_state, i);
+      auto knight_moves = getRookMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
     if (current_piece == Piece::black_bishop ||
         current_piece == Piece::white_bishop) {
-      auto knight_moves = this->getBishopMoves(game_state, i);
+      auto knight_moves = getBishopMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
     if (current_piece == Piece::black_queen ||
         current_piece == Piece::white_queen) {
-      auto knight_moves = this->getQueenMoves(game_state, i);
+      auto knight_moves = getQueenMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
     if (current_piece == Piece::black_king ||
         current_piece == Piece::white_king) {
-      auto knight_moves = this->getKingMoves(game_state, i);
+      auto knight_moves = getKingMoves(game_state, i);
       possible_moves.insert(possible_moves.end(), knight_moves.begin(),
                             knight_moves.end());
     }
   }
 
   return possible_moves;
-}
-
-Move MoveGenerator::chooseBestMove(vector<Move> moves) {
-  random_device rd;
-  mt19937 gen(rd());
-  uniform_int_distribution<> dist(0, moves.size() - 1);
-  ushort rnd_idx = dist(gen);
-
-  return moves[rnd_idx];
 }
 
 short MoveGenerator::moveForward(short field_index, short number) {
@@ -469,8 +449,8 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
 
 vector<Move> MoveGenerator::getQueenMoves(GameState game_state,
                                           ushort field_index) {
-  auto all_moves = this->getRookMoves(game_state, field_index);
-  auto bishop_moves = this->getBishopMoves(game_state, field_index);
+  auto all_moves = getRookMoves(game_state, field_index);
+  auto bishop_moves = getBishopMoves(game_state, field_index);
   all_moves.insert(end(all_moves), begin(bishop_moves), end(bishop_moves));
 
   return all_moves;

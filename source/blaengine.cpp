@@ -1,3 +1,5 @@
+#include <random>
+
 #include "blaengine.h"
 #include "calculation/move_generator.h"
 
@@ -22,11 +24,26 @@ void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
 }
 
 string BlaEngine::getBestMove() {
-  auto move_generator = MoveGenerator();
-  move_generator.startSearching(
-     this->engine_calculator.game_state_controller.current_game_state);
+  this->startSearching(
+      this->engine_calculator.game_state_controller.current_game_state);
 
-  return move_generator.bestMove.toString();
+  return this->bestMove.toString();
+}
+
+void BlaEngine::startSearching(GameState game_state) {
+  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
+  this->bestMove = this->chooseBestMove(possible_moves);
+}
+
+void BlaEngine::stopSearching() {}
+
+Move BlaEngine::chooseBestMove(vector<Move> moves) {
+  random_device rd;
+  mt19937 gen(rd());
+  uniform_int_distribution<> dist(0, moves.size() - 1);
+  ushort rnd_idx = dist(gen);
+
+  return moves[rnd_idx];
 }
 
 BlaEngineInfo BlaEngine::getEngineInfo() { return BlaEngineInfo(); }
