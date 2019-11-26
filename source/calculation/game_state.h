@@ -31,11 +31,11 @@ enum Piece : char {
   left_piece = 0
 };
 
-enum class NextTurn : ushort { white, black };
+enum class Player : ushort { white, black };
 
 struct GameState {
   Board board;
-  NextTurn next_turn = NextTurn::white;
+  Player next_turn = Player::white;
   short en_passant_field = -1;
   ushort next_half_move = 1;
   ushort half_moves_for_draw = 0;
@@ -45,10 +45,12 @@ struct Move {
   ushort field_before;
   ushort field_after;
   Piece promotion;
+
   bool operator==(const Move& _move) {
     return field_before == _move.field_before &&
            field_after == _move.field_after && promotion == _move.promotion;
   }
+
   string toString() {
     string response = {
         (char)('a' + (field_before % 8)), (char)('1' + (field_before / 8)),

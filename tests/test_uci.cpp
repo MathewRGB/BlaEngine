@@ -86,7 +86,7 @@ TEST(Uci, test_position_cmd_black_bug) {
 
   ASSERT_EQ(blaengine->engine_calculator.game_state_controller
                 .current_game_state.next_turn,
-            NextTurn::black);
+            Player::black);
   ASSERT_EQ(response[0].find("bestmove b2c3"), string::npos);
 }
 
@@ -186,5 +186,5 @@ TEST(Uci, test_game_state_reset_after_new_pos) {
   ASSERT_EQ(game_state.en_passant_field, -1);
   ASSERT_EQ(game_state.half_moves_for_draw, 0);
   ASSERT_EQ(game_state.next_half_move, 1);
-  ASSERT_EQ(game_state.next_turn, NextTurn::white);
+  ASSERT_EQ(game_state.next_turn, Player::white);
 }

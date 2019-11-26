@@ -46,7 +46,7 @@ TEST(Calculator, test_set_fen_string) {
   comp_game_state.board.fields[62] = 'k';
   comp_game_state.en_passant_field = 17;
   comp_game_state.half_moves_for_draw = 0;
-  comp_game_state.next_turn = NextTurn::black;
+  comp_game_state.next_turn = Player::black;
   comp_game_state.next_half_move = 30;
 
   ASSERT_TRUE(compare_game_states(current_game_state, comp_game_state));

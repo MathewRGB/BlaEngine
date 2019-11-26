@@ -19,7 +19,7 @@ void Calculator::interpretAndSetFen(string fen) {
 
   fen.erase(0, fen.find(WHITE_SPACE) + 1);
   current_gstate.next_turn =
-      (fen[0] == W_FOR_WHITE) ? NextTurn::white : NextTurn::black;
+      (fen[0] == W_FOR_WHITE) ? Player::white : Player::black;
 
   fen.erase(0, fen.find(WHITE_SPACE) + 1);
   string castling_info = fen.substr(0, fen.find(WHITE_SPACE));
@@ -41,7 +41,7 @@ void Calculator::interpretAndSetFen(string fen) {
   fen.erase(0, fen.find(WHITE_SPACE) + 1);
   string next_full_move = fen.substr(0, fen.find(WHITE_SPACE));
   current_gstate.next_half_move += std::stoi(next_full_move) * 2;
-  if (current_gstate.next_turn == NextTurn::white) {
+  if (current_gstate.next_turn == Player::white) {
     current_gstate.next_half_move--;
   }
 }
@@ -63,9 +63,9 @@ void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
     gstate_controller.makeMove(field_before, field_after, piece_got);
 
     current_gstate.next_half_move++;
-    current_gstate.next_turn = (current_gstate.next_turn == NextTurn::white)
-                                   ? NextTurn::black
-                                   : NextTurn::white;
+    current_gstate.next_turn = (current_gstate.next_turn == Player::white)
+                                   ? Player::black
+                                   : Player::white;
   }
 }
 
