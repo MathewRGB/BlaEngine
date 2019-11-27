@@ -192,7 +192,7 @@ TEST(KingMoves, test_castling_b_all) {
   auto move_generator = MoveGenerator();
   auto game_state = GameState();
   ushort field_before = 60;
-  game_state.board.fields[field_before] = Piece::black_knight;
+  game_state.board.fields[field_before] = Piece::black_king;
   game_state.board.fields[48] = Piece::black_pawn;
   game_state.board.fields[49] = Piece::black_pawn;
   game_state.board.fields[50] = Piece::black_pawn;
@@ -220,7 +220,7 @@ TEST(KingMoves, test_castling_b_only_k) {
   auto move_generator = MoveGenerator();
   auto game_state = GameState();
   ushort field_before = 60;
-  game_state.board.fields[field_before] = Piece::black_knight;
+  game_state.board.fields[field_before] = Piece::black_king;
   game_state.board.fields[48] = Piece::black_pawn;
   game_state.board.fields[49] = Piece::black_pawn;
   game_state.board.fields[50] = Piece::black_pawn;
@@ -245,7 +245,7 @@ TEST(KingMoves, test_castling_b_only_q) {
   auto move_generator = MoveGenerator();
   auto game_state = GameState();
   ushort field_before = 60;
-  game_state.board.fields[field_before] = Piece::black_knight;
+  game_state.board.fields[field_before] = Piece::black_king;
   game_state.board.fields[48] = Piece::black_pawn;
   game_state.board.fields[49] = Piece::black_pawn;
   game_state.board.fields[50] = Piece::black_pawn;
@@ -256,7 +256,7 @@ TEST(KingMoves, test_castling_b_only_q) {
   game_state.board.fields[55] = Piece::black_pawn;
   game_state.board.fields[56] = Piece::black_rook;
   game_state.board.fields[63] = Piece::black_rook;
-  game_state.board.castling[2] = Piece::black_queen;
+  game_state.board.castling[3] = Piece::black_queen;
 
   vector<ushort> possible_fields = {61, 58, 59};
 

@@ -460,6 +460,23 @@ vector<Move> MoveGenerator::getKingMoves(GameState game_state,
                                          ushort field_index) {
   auto all_moves = vector<Move>();
   auto piece = (Piece)game_state.board.fields[field_index];
+  bool castling_king =
+      (field_index == 4 || field_index == 60) &&
+      ((Piece)game_state.board.fields[field_index + 1] == Piece::left_piece) &&
+      ((Piece)game_state.board.fields[field_index + 2] == Piece::left_piece) &&
+      (((Piece)game_state.board.fields[field_index + 3] == Piece::black_rook &&
+        piece == Piece::black_king && game_state.board.castling[2] == 'k') ||
+       ((Piece)game_state.board.fields[field_index + 3] == Piece::white_rook &&
+        piece == Piece::white_king && game_state.board.castling[0] == 'K'));
+  bool castling_queen =
+      (field_index == 4 || field_index == 60) &&
+      ((Piece)game_state.board.fields[field_index - 1] == Piece::left_piece) &&
+      ((Piece)game_state.board.fields[field_index - 2] == Piece::left_piece) &&
+      ((Piece)game_state.board.fields[field_index - 3] == Piece::left_piece) &&
+      (((Piece)game_state.board.fields[field_index - 4] == Piece::black_rook &&
+        piece == Piece::black_king && game_state.board.castling[3] == 'q') ||
+       ((Piece)game_state.board.fields[field_index - 4] == Piece::white_rook &&
+        piece == Piece::white_king && game_state.board.castling[1] == 'Q'));
 
   auto r_field = moveRight(field_index, 1);
   auto l_field = moveLeft(field_index, 1);
@@ -510,6 +527,12 @@ vector<Move> MoveGenerator::getKingMoves(GameState game_state,
   if (field_index % 8 != 0 && lb_field > -1 &&
       (Piece::left_piece || getPieceColor(piece) != getPieceColor(lb_piece))) {
     all_moves.push_back({field_index, (ushort)lb_field, Piece::left_piece});
+  }
+  if (castling_king) {
+    all_moves.push_back({field_index, field_index + 2, Piece::left_piece});
+  }
+  if (castling_queen) {
+    all_moves.push_back({field_index, field_index - 2, Piece::left_piece});
   }
 
   return all_moves;
