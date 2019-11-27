@@ -178,7 +178,7 @@ TEST(KingMoves, test_castling_w_only_q) {
   game_state.board[15] = Piece::white_pawn;
   game_state.board[0] = Piece::white_rook;
   game_state.board[7] = Piece::white_rook;
-  game_state.castling[1] = Piece::white_queen;
+  game_state.castling[0] = Piece::white_queen;
 
   vector<ushort> possible_fields = {2, 3, 5};
 
@@ -231,7 +231,7 @@ TEST(KingMoves, test_castling_b_only_k) {
   game_state.board[55] = Piece::black_pawn;
   game_state.board[56] = Piece::black_rook;
   game_state.board[63] = Piece::black_rook;
-  game_state.castling[2] = Piece::black_king;
+  game_state.castling[0] = Piece::black_king;
 
   vector<ushort> possible_fields = {61, 62, 59};
 
@@ -256,7 +256,7 @@ TEST(KingMoves, test_castling_b_only_q) {
   game_state.board[55] = Piece::black_pawn;
   game_state.board[56] = Piece::black_rook;
   game_state.board[63] = Piece::black_rook;
-  game_state.castling[3] = Piece::black_queen;
+  game_state.castling[0] = Piece::black_queen;
 
   vector<ushort> possible_fields = {61, 58, 59};
 

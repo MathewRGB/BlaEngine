@@ -35,6 +35,8 @@ class MoveGenerator {
 
   static bool isWhite(Piece piece);
 
+  static bool isCastlingSide(GameState game_state, Piece piece);
+
   static Color getPieceColor(Piece piece);
 };
 

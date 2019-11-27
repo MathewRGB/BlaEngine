@@ -83,6 +83,16 @@ Color MoveGenerator::getPieceColor(Piece piece) {
   return Color::none;
 }
 
+bool MoveGenerator::isCastlingSide(GameState game_state, Piece piece) {
+  for (int i = 0; i < CASTLING_NUMBER; i++) {
+    if (piece == (Piece)game_state.castling[i]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
                                          ushort field_index) {
   auto all_moves = vector<Move>();
@@ -465,18 +475,22 @@ vector<Move> MoveGenerator::getKingMoves(GameState game_state,
       ((Piece)game_state.board[field_index + 1] == Piece::left_piece) &&
       ((Piece)game_state.board[field_index + 2] == Piece::left_piece) &&
       (((Piece)game_state.board[field_index + 3] == Piece::black_rook &&
-        piece == Piece::black_king && game_state.castling[2] == 'k') ||
+        piece == Piece::black_king &&
+        isCastlingSide(game_state, Piece::black_king)) ||
        ((Piece)game_state.board[field_index + 3] == Piece::white_rook &&
-        piece == Piece::white_king && game_state.castling[0] == 'K'));
+        piece == Piece::white_king &&
+        isCastlingSide(game_state, Piece::white_king)));
   bool castling_queen =
       (field_index == 4 || field_index == 60) &&
       ((Piece)game_state.board[field_index - 1] == Piece::left_piece) &&
       ((Piece)game_state.board[field_index - 2] == Piece::left_piece) &&
       ((Piece)game_state.board[field_index - 3] == Piece::left_piece) &&
       (((Piece)game_state.board[field_index - 4] == Piece::black_rook &&
-        piece == Piece::black_king && game_state.castling[3] == 'q') ||
+        piece == Piece::black_king &&
+        isCastlingSide(game_state, Piece::black_queen)) ||
        ((Piece)game_state.board[field_index - 4] == Piece::white_rook &&
-        piece == Piece::white_king && game_state.castling[1] == 'Q'));
+        piece == Piece::white_king &&
+        isCastlingSide(game_state, Piece::white_queen)));
 
   auto r_field = moveRight(field_index, 1);
   auto l_field = moveLeft(field_index, 1);
