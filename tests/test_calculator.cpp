@@ -1,10 +1,9 @@
 #include "gtest/gtest.h"
 
-#include "source/calculation/calculator.h"
 #include "helper_for_tests.h"
+#include "source/calculation/calculator.h"
 
 using namespace blaengine::calculation;
-
 
 TEST(Calculator, test_set_fen_string) {
   auto calc_module = Calculator();
@@ -16,34 +15,34 @@ TEST(Calculator, test_set_fen_string) {
   auto comp_calc_module = Calculator();
   GameState& comp_game_state =
       comp_calc_module.game_state_controller.current_game_state;
-  comp_game_state.board.fields[3] = 'R';
-  comp_game_state.board.fields[5] = 'R';
-  comp_game_state.board.fields[6] = 'K';
-  comp_game_state.board.fields[12] = 'Q';
-  comp_game_state.board.fields[13] = 'P';
-  comp_game_state.board.fields[14] = 'P';
-  comp_game_state.board.fields[15] = 'P';
-  comp_game_state.board.fields[16] = 'P';
-  comp_game_state.board.fields[20] = 'B';
-  comp_game_state.board.fields[21] = 'N';
-  comp_game_state.board.fields[25] = 'P';
-  comp_game_state.board.fields[26] = 'P';
-  comp_game_state.board.fields[27] = 'P';
-  comp_game_state.board.fields[28] = 'N';
-  comp_game_state.board.fields[41] = 'n';
-  comp_game_state.board.fields[42] = 'n';
-  comp_game_state.board.fields[44] = 'p';
-  comp_game_state.board.fields[48] = 'p';
-  comp_game_state.board.fields[49] = 'p';
-  comp_game_state.board.fields[50] = 'p';
-  comp_game_state.board.fields[51] = 'q';
-  comp_game_state.board.fields[52] = 'b';
-  comp_game_state.board.fields[53] = 'p';
-  comp_game_state.board.fields[54] = 'p';
-  comp_game_state.board.fields[55] = 'p';
-  comp_game_state.board.fields[56] = 'r';
-  comp_game_state.board.fields[59] = 'r';
-  comp_game_state.board.fields[62] = 'k';
+  comp_game_state.board[3] = 'R';
+  comp_game_state.board[5] = 'R';
+  comp_game_state.board[6] = 'K';
+  comp_game_state.board[12] = 'Q';
+  comp_game_state.board[13] = 'P';
+  comp_game_state.board[14] = 'P';
+  comp_game_state.board[15] = 'P';
+  comp_game_state.board[16] = 'P';
+  comp_game_state.board[20] = 'B';
+  comp_game_state.board[21] = 'N';
+  comp_game_state.board[25] = 'P';
+  comp_game_state.board[26] = 'P';
+  comp_game_state.board[27] = 'P';
+  comp_game_state.board[28] = 'N';
+  comp_game_state.board[41] = 'n';
+  comp_game_state.board[42] = 'n';
+  comp_game_state.board[44] = 'p';
+  comp_game_state.board[48] = 'p';
+  comp_game_state.board[49] = 'p';
+  comp_game_state.board[50] = 'p';
+  comp_game_state.board[51] = 'q';
+  comp_game_state.board[52] = 'b';
+  comp_game_state.board[53] = 'p';
+  comp_game_state.board[54] = 'p';
+  comp_game_state.board[55] = 'p';
+  comp_game_state.board[56] = 'r';
+  comp_game_state.board[59] = 'r';
+  comp_game_state.board[62] = 'k';
   comp_game_state.en_passant_field = 17;
   comp_game_state.half_moves_for_draw = 0;
   comp_game_state.next_turn = Color::black;

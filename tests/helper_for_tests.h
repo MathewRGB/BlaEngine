@@ -19,13 +19,13 @@ std::streambuf *cin_backup, *cout_backup;
 
 bool compare_game_states(GameState state1, GameState state2) {
   for (int i = 0; i < FIELD_NUMBER; i++) {
-    if (state1.board.fields[i] != state2.board.fields[i]) {
+    if (state1.board[i] != state2.board[i]) {
       cout << "board comparison failed" << endl;
       return false;
     }
   }
   for (int i = 0; i < CASTLING_NUMBER; i++) {
-    if (state1.board.castling[i] != state2.board.castling[i]) {
+    if (state1.castling[i] != state2.castling[i]) {
       cout << "castling comparison failed" << endl;
       return false;
     }

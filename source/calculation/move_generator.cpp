@@ -7,7 +7,7 @@ vector<Move> MoveGenerator::getAllMightPossibleMoves(GameState game_state) {
   auto possible_moves = vector<Move>();
 
   for (int i = 0; i < FIELD_NUMBER; i++) {
-    auto current_piece = game_state.board.fields[i];
+    auto current_piece = game_state.board[i];
     if (isWhite((Piece)current_piece) != (next_turn == Color::white)) {
       continue;
     }
@@ -86,7 +86,7 @@ Color MoveGenerator::getPieceColor(Piece piece) {
 vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
                                          ushort field_index) {
   auto all_moves = vector<Move>();
-  auto piece = (Piece)game_state.board.fields[field_index];
+  auto piece = (Piece)game_state.board[field_index];
   bool is_white = (piece == Piece::white_pawn) ? true : false;
   short piece_direction = is_white ? 1 : -1;
 
@@ -95,10 +95,10 @@ vector<Move> MoveGenerator::getPawnMoves(GameState game_state,
   auto fr_field = moveRight(f_field, 1 * piece_direction);
   auto fl_field = moveLeft(f_field, 1 * piece_direction);
 
-  auto f_piece = (Piece)game_state.board.fields[f_field];
-  auto ff_piece = (Piece)game_state.board.fields[ff_field];
-  auto fr_piece = (Piece)game_state.board.fields[fr_field];
-  auto fl_piece = (Piece)game_state.board.fields[fl_field];
+  auto f_piece = (Piece)game_state.board[f_field];
+  auto ff_piece = (Piece)game_state.board[ff_field];
+  auto fr_piece = (Piece)game_state.board[fr_field];
+  auto fl_piece = (Piece)game_state.board[fl_field];
 
   auto promo_bishop = is_white ? Piece::white_bishop : Piece::black_bishop;
   auto promo_queen = is_white ? Piece::white_queen : Piece::black_queen;
@@ -172,7 +172,7 @@ vector<Move> MoveGenerator::getKnightMoves(GameState game_state,
                                            ushort field_index) {
   auto all_moves = vector<Move>();
   auto possible_moves = vector<short>();
-  auto piece = (Piece)game_state.board.fields[field_index];
+  auto piece = (Piece)game_state.board[field_index];
 
   auto ff_field = moveForward(field_index, 2);
   auto bb_field = moveBackward(field_index, 2);
@@ -214,7 +214,7 @@ vector<Move> MoveGenerator::getKnightMoves(GameState game_state,
       continue;
     }
 
-    auto taking_piece = (Piece)game_state.board.fields[possible_moves[i]];
+    auto taking_piece = (Piece)game_state.board[possible_moves[i]];
     if (isWhite(taking_piece) && isWhite(piece) &&
         taking_piece != Piece::left_piece) {
       continue;
@@ -235,7 +235,7 @@ vector<Move> MoveGenerator::getRookMoves(GameState game_state,
                                          ushort field_index) {
   auto all_moves = vector<Move>();
   auto possible_moves = vector<short>();
-  auto piece = (Piece)game_state.board.fields[field_index];
+  auto piece = (Piece)game_state.board[field_index];
   bool piece_blocked = false;
 
   // right direction
@@ -247,7 +247,7 @@ vector<Move> MoveGenerator::getRookMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -271,7 +271,7 @@ vector<Move> MoveGenerator::getRookMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -294,7 +294,7 @@ vector<Move> MoveGenerator::getRookMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -317,7 +317,7 @@ vector<Move> MoveGenerator::getRookMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -340,7 +340,7 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
                                            ushort field_index) {
   auto all_moves = vector<Move>();
   auto possible_moves = vector<short>();
-  auto piece = (Piece)game_state.board.fields[field_index];
+  auto piece = (Piece)game_state.board[field_index];
   bool piece_blocked = false;
 
   // right forward direction
@@ -353,7 +353,7 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -378,7 +378,7 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -403,7 +403,7 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -428,7 +428,7 @@ vector<Move> MoveGenerator::getBishopMoves(GameState game_state,
       break;
     }
 
-    auto current_piece = (Piece)game_state.board.fields[current_field];
+    auto current_piece = (Piece)game_state.board[current_field];
     if (isWhite(current_piece) == isWhite(piece) &&
         current_piece != Piece::left_piece) {
       break;
@@ -459,24 +459,24 @@ vector<Move> MoveGenerator::getQueenMoves(GameState game_state,
 vector<Move> MoveGenerator::getKingMoves(GameState game_state,
                                          ushort field_index) {
   auto all_moves = vector<Move>();
-  auto piece = (Piece)game_state.board.fields[field_index];
+  auto piece = (Piece)game_state.board[field_index];
   bool castling_king =
       (field_index == 4 || field_index == 60) &&
-      ((Piece)game_state.board.fields[field_index + 1] == Piece::left_piece) &&
-      ((Piece)game_state.board.fields[field_index + 2] == Piece::left_piece) &&
-      (((Piece)game_state.board.fields[field_index + 3] == Piece::black_rook &&
-        piece == Piece::black_king && game_state.board.castling[2] == 'k') ||
-       ((Piece)game_state.board.fields[field_index + 3] == Piece::white_rook &&
-        piece == Piece::white_king && game_state.board.castling[0] == 'K'));
+      ((Piece)game_state.board[field_index + 1] == Piece::left_piece) &&
+      ((Piece)game_state.board[field_index + 2] == Piece::left_piece) &&
+      (((Piece)game_state.board[field_index + 3] == Piece::black_rook &&
+        piece == Piece::black_king && game_state.castling[2] == 'k') ||
+       ((Piece)game_state.board[field_index + 3] == Piece::white_rook &&
+        piece == Piece::white_king && game_state.castling[0] == 'K'));
   bool castling_queen =
       (field_index == 4 || field_index == 60) &&
-      ((Piece)game_state.board.fields[field_index - 1] == Piece::left_piece) &&
-      ((Piece)game_state.board.fields[field_index - 2] == Piece::left_piece) &&
-      ((Piece)game_state.board.fields[field_index - 3] == Piece::left_piece) &&
-      (((Piece)game_state.board.fields[field_index - 4] == Piece::black_rook &&
-        piece == Piece::black_king && game_state.board.castling[3] == 'q') ||
-       ((Piece)game_state.board.fields[field_index - 4] == Piece::white_rook &&
-        piece == Piece::white_king && game_state.board.castling[1] == 'Q'));
+      ((Piece)game_state.board[field_index - 1] == Piece::left_piece) &&
+      ((Piece)game_state.board[field_index - 2] == Piece::left_piece) &&
+      ((Piece)game_state.board[field_index - 3] == Piece::left_piece) &&
+      (((Piece)game_state.board[field_index - 4] == Piece::black_rook &&
+        piece == Piece::black_king && game_state.castling[3] == 'q') ||
+       ((Piece)game_state.board[field_index - 4] == Piece::white_rook &&
+        piece == Piece::white_king && game_state.castling[1] == 'Q'));
 
   auto r_field = moveRight(field_index, 1);
   auto l_field = moveLeft(field_index, 1);
@@ -487,14 +487,14 @@ vector<Move> MoveGenerator::getKingMoves(GameState game_state,
   auto rb_field = moveBackward(r_field, 1);
   auto lb_field = moveBackward(l_field, 1);
 
-  auto r_piece = (Piece)game_state.board.fields[r_field];
-  auto l_piece = (Piece)game_state.board.fields[l_field];
-  auto f_piece = (Piece)game_state.board.fields[f_field];
-  auto b_piece = (Piece)game_state.board.fields[b_field];
-  auto rf_piece = (Piece)game_state.board.fields[rf_field];
-  auto lf_piece = (Piece)game_state.board.fields[lf_field];
-  auto rb_piece = (Piece)game_state.board.fields[rb_field];
-  auto lb_piece = (Piece)game_state.board.fields[lb_field];
+  auto r_piece = (Piece)game_state.board[r_field];
+  auto l_piece = (Piece)game_state.board[l_field];
+  auto f_piece = (Piece)game_state.board[f_field];
+  auto b_piece = (Piece)game_state.board[b_field];
+  auto rf_piece = (Piece)game_state.board[rf_field];
+  auto lf_piece = (Piece)game_state.board[lf_field];
+  auto rb_piece = (Piece)game_state.board[rb_field];
+  auto lb_piece = (Piece)game_state.board[lb_field];
 
   if ((field_index + 1) % 8 != 0 &&
       (Piece::left_piece || getPieceColor(piece) != getPieceColor(r_piece))) {

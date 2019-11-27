@@ -8,7 +8,6 @@ GameStateController::~GameStateController() {}
 
 void GameStateController::initializeGameSate() {
   current_game_state = GameState();
-  current_game_state.board = Board();
   current_game_state.next_turn = Color::white;
   current_game_state.next_half_move = 0;
   current_game_state.half_moves_for_draw = 0;
@@ -17,13 +16,13 @@ void GameStateController::initializeGameSate() {
 
 void GameStateController::extractFenCastling(string fen_castling) {
   for (uint i = 0; i < fen_castling.size(); i++) {
-    this->current_game_state.board.castling[i] = fen_castling[i];
+    this->current_game_state.castling[i] = fen_castling[i];
   }
 }
 
 void GameStateController::extractFenPosition(string fen_position) {
   uint field_idx = 0;
-  auto fields = this->current_game_state.board.fields;
+  auto fields = this->current_game_state.board;
 
   this->initializeGameSate();
 
@@ -43,13 +42,12 @@ void GameStateController::extractFenPosition(string fen_position) {
 
 void GameStateController::makeMove(ushort field_before, ushort field_after,
                                    Piece piece_change) {
-  Piece moving_piece =
-      (Piece)this->current_game_state.board.fields[field_before];
+  Piece moving_piece = (Piece)this->current_game_state.board[field_before];
 
   this->changeMovesForDraw(moving_piece, field_after);
 
-  this->current_game_state.board.fields[field_after] = moving_piece;
-  this->current_game_state.board.fields[field_before] = Piece::left_piece;
+  this->current_game_state.board[field_after] = moving_piece;
+  this->current_game_state.board[field_before] = Piece::left_piece;
 
   this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
   this->checkAndPerformEnPassant(field_before, field_after, moving_piece);
@@ -89,7 +87,7 @@ Piece GameStateController::transformPiece(string move) {
 void GameStateController::changeMovesForDraw(Piece moving_piece,
                                              ushort field_after) {
   if (moving_piece != Piece::black_pawn && moving_piece != Piece::white_pawn &&
-      this->current_game_state.board.fields[field_after] == Piece::left_piece) {
+      this->current_game_state.board[field_after] == Piece::left_piece) {
     this->current_game_state.half_moves_for_draw++;
   } else {
     this->current_game_state.half_moves_for_draw = 0;
@@ -116,19 +114,19 @@ void GameStateController::checkAndPerformCastling(ushort field_before,
     this->makeMove(63, 61);
   }
   if (castling && moving_piece == Piece::white_king) {
-    this->current_game_state.board.castling[0] = Piece::left_piece;
-    this->current_game_state.board.castling[1] = Piece::left_piece;
+    this->current_game_state.castling[0] = Piece::left_piece;
+    this->current_game_state.castling[1] = Piece::left_piece;
   }
   if (castling && moving_piece == Piece::black_king) {
-    this->current_game_state.board.castling[2] = Piece::left_piece;
-    this->current_game_state.board.castling[3] = Piece::left_piece;
+    this->current_game_state.castling[2] = Piece::left_piece;
+    this->current_game_state.castling[3] = Piece::left_piece;
   }
 }
 
 void GameStateController::checkAndPerformEnPassant(ushort field_before,
                                                    ushort field_after,
                                                    Piece moving_piece) {
-  auto fields = this->current_game_state.board.fields;
+  auto fields = this->current_game_state.board;
   ushort& en_passant_field = (ushort&)this->current_game_state.en_passant_field;
   bool en_passant = (moving_piece == Piece::black_pawn ||
                      moving_piece == Piece::white_pawn) &&
@@ -158,7 +156,7 @@ void GameStateController::checkAndPerformEnPassant(ushort field_before,
 void GameStateController::checkAndTransformPiece(ushort field_after,
                                                  Piece piece_change) {
   if (piece_change != Piece::left_piece) {
-    this->current_game_state.board.fields[field_after] = piece_change;
+    this->current_game_state.board[field_after] = piece_change;
   }
 }
 

@@ -10,11 +10,6 @@ using namespace std;
 
 namespace blaengine::calculation {
 
-struct Board {
-  char fields[FIELD_NUMBER]{0};
-  char castling[CASTLING_NUMBER]{0};
-};
-
 enum Piece : char {
   white_king = 'K',
   black_king = 'k',
@@ -32,14 +27,6 @@ enum Piece : char {
 };
 
 enum class Color : ushort { white, black, none };
-
-struct GameState {
-  Board board;
-  Color next_turn = Color::white;
-  short en_passant_field = -1;
-  ushort next_half_move = 1;
-  ushort half_moves_for_draw = 0;
-};
 
 struct Move {
   ushort field_before;
@@ -61,6 +48,15 @@ struct Move {
     }
     return response;
   }
+};
+
+struct GameState {
+  char board[FIELD_NUMBER]{0};
+  char castling[CASTLING_NUMBER]{0};
+  Color next_turn = Color::white;
+  short en_passant_field = -1;
+  ushort next_half_move = 1;
+  ushort half_moves_for_draw = 0;
 };
 
 }  // namespace blaengine::calculation
