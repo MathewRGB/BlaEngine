@@ -4,7 +4,7 @@
 #include "test_blaengine.cpp"
 #include "test_uci.cpp"
 #include "test_uci_cin(disabled).cpp"
-#include "test_calculator.cpp"
+#include "test_gstate_translator.cpp"
 #include "test_movegenerator.cpp"
 #include "test_gamestates.cpp"
 #include "test_moves_pawn.cpp"
