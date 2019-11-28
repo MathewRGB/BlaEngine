@@ -112,7 +112,8 @@ add_library(libblaengine SHARED
     source/communication/uci.cpp
     source/calculation/gstate_translator.cpp
     source/calculation/gstate_controller.cpp
-    source/calculation/move_generator.cpp)
+    source/calculation/move_generator.cpp
+    source/calculation/evaluator.cpp)
 
 target_link_libraries(libblaengine
     ${GTEST_LIBRARIES}

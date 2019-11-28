@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "source/calculation/gstate_translator.h"
+#include "source/calculation/evaluator.h"
 
 #ifdef _PROJECT_VERSION
 #define VERSION _PROJECT_VERSION
@@ -91,15 +92,9 @@ class BlaEngine {
   ///
   BlaEngineInfo getEngineInfo();
 
-  void startSearching(GameState game_state);
+  GSateTranslator gstate_translator;
 
-  void stopSearching();
-
-  Move chooseBestMove(vector<Move> moves);
-
-  GSateTranslator engine_calculator;
-
-  Move bestMove;
+  Evaluator evaluator;
 };
 
 }  // namespace blaengine

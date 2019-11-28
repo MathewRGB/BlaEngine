@@ -1,11 +1,11 @@
-#include <random>
-
 #include "blaengine.h"
-#include "calculation/move_generator.h"
 
 namespace blaengine {
 
-BlaEngine::BlaEngine() { this->engine_calculator = GSateTranslator(); }
+BlaEngine::BlaEngine() { 
+  this->gstate_translator = GSateTranslator(); 
+  this->evaluator = Evaluator();  
+}
 
 BlaEngine::~BlaEngine() {}
 
@@ -14,34 +14,18 @@ void BlaEngine::startEngine() {}
 void BlaEngine::shutdownEngine() { this->~BlaEngine(); }
 
 void BlaEngine::interpretAndSetFen(string fen) {
-  this->engine_calculator.interpretAndSetFen(fen);
+  this->gstate_translator.interpretAndSetFen(fen);
 }
 
 void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
-  this->engine_calculator.makeMovesFromFieldStrings(moves);
+  this->gstate_translator.makeMovesFromFieldStrings(moves);
 }
 
 string BlaEngine::getBestMove() {
-  this->startSearching(
-      this->engine_calculator.gstate_controller.current_game_state);
+  this->evaluator.startSearching(
+      this->gstate_translator.gstate_controller.current_game_state);
 
-  return this->bestMove.toString();
-}
-
-void BlaEngine::startSearching(GameState game_state) {
-  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
-  this->bestMove = this->chooseBestMove(possible_moves);
-}
-
-void BlaEngine::stopSearching() {}
-
-Move BlaEngine::chooseBestMove(vector<Move> moves) {
-  random_device rd;
-  mt19937 gen(rd());
-  uniform_int_distribution<> dist(0, moves.size() - 1);
-  ushort rnd_idx = dist(gen);
-
-  return moves[rnd_idx];
+  return this->evaluator.bestMove.toString();
 }
 
 BlaEngineInfo BlaEngine::getEngineInfo() { return BlaEngineInfo(); }
