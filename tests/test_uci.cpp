@@ -82,10 +82,11 @@ TEST(Uci, test_position_cmd_black_bug) {
   auto response = vector<string>();
 
   response = uci_module.translateInput("position startpos moves e2e3");
-  response = uci_module.translateInput("go wtime 300000 btime 300000 winc 0 binc 0");
+  response =
+      uci_module.translateInput("go wtime 300000 btime 300000 winc 0 binc 0");
 
-  ASSERT_EQ(blaengine->engine_calculator.game_state_controller
-                .current_game_state.next_turn,
+  ASSERT_EQ(blaengine->engine_calculator.gstate_controller.current_game_state
+                .next_turn,
             Color::black);
   ASSERT_EQ(response[0].find("bestmove b2c3"), string::npos);
 }
@@ -159,8 +160,8 @@ TEST(Uci, test_position_full_game) {
 
   ASSERT_NE(cmp_response[0].find("position was set"), string::npos);
   ASSERT_TRUE(compare_game_states(
-      cmp_blaengine->engine_calculator.game_state_controller.current_game_state,
-      blaengine->engine_calculator.game_state_controller.current_game_state));
+      cmp_blaengine->engine_calculator.gstate_controller.current_game_state,
+      blaengine->engine_calculator.gstate_controller.current_game_state));
 }
 
 TEST(Uci, test_game_state_reset_after_new_pos) {
@@ -178,7 +179,8 @@ TEST(Uci, test_game_state_reset_after_new_pos) {
 
   auto blaengine = make_shared<BlaEngine>();
   auto uci_module = Uci(blaengine);
-  auto& game_state = blaengine->engine_calculator.game_state_controller.current_game_state;
+  auto& game_state =
+      blaengine->engine_calculator.gstate_controller.current_game_state;
 
   uci_module.translateInput(test_position);
   uci_module.translateInput(reset_position);

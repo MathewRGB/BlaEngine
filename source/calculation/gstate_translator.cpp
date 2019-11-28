@@ -3,15 +3,15 @@
 namespace blaengine::calculation {
 
 GSateTranslator::GSateTranslator() {
-  this->game_state_controller = GameStateController();
+  this->gstate_controller = GameStateController();
 }
 
 GSateTranslator::~GSateTranslator() {}
 
 void GSateTranslator::interpretAndSetFen(string fen) {
-  GameStateController& gstate_controller = this->game_state_controller;
-  GameState& current_gstate = this->game_state_controller.current_game_state;
-  
+  GameStateController& gstate_controller = this->gstate_controller;
+  GameState& current_gstate = this->gstate_controller.current_game_state;
+
   this->validateFenString(fen);
 
   string fen_position = fen.substr(0, fen.find(WHITE_SPACE));
@@ -47,8 +47,8 @@ void GSateTranslator::interpretAndSetFen(string fen) {
 }
 
 void GSateTranslator::makeMovesFromFieldStrings(vector<string> moves) {
-  GameStateController& gstate_controller = this->game_state_controller;
-  GameState& current_gstate = this->game_state_controller.current_game_state;
+  GameStateController& gstate_controller = this->gstate_controller;
+  GameState& current_gstate = this->gstate_controller.current_game_state;
 
   for (uint i = 0; i < moves.size(); i++) {
     this->validateMoveString(moves[i]);
@@ -59,7 +59,7 @@ void GSateTranslator::makeMovesFromFieldStrings(vector<string> moves) {
     ushort field_before = gstate_controller.getFieldIndex(field_string_before);
     ushort field_after = gstate_controller.getFieldIndex(field_string_after);
 
-    Piece piece_got = this->game_state_controller.transformPiece(moves[i]);
+    Piece piece_got = this->gstate_controller.transformPiece(moves[i]);
     gstate_controller.makeMove(field_before, field_after, piece_got);
 
     current_gstate.next_half_move++;

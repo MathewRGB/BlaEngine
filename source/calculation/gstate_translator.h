@@ -20,7 +20,7 @@ class GSateTranslator {
 
   void makeMovesFromFieldStrings(vector<string> moves);
 
-  GameStateController game_state_controller;
+  GameStateController gstate_controller;
 
   void validateFenString(string fen);
 

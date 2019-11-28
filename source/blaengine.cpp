@@ -23,7 +23,7 @@ void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
 
 string BlaEngine::getBestMove() {
   this->startSearching(
-      this->engine_calculator.game_state_controller.current_game_state);
+      this->engine_calculator.gstate_controller.current_game_state);
 
   return this->bestMove.toString();
 }

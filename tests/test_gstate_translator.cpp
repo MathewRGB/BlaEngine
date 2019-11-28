@@ -8,13 +8,13 @@ using namespace blaengine::calculation;
 TEST(Calculator, test_set_fen_string) {
   auto calc_module = GSateTranslator();
   GameState& current_game_state =
-      calc_module.game_state_controller.current_game_state;
+      calc_module.gstate_controller.current_game_state;
   auto fen = "r2r2k1/pppqbppp/1nn1p3/8/1PPPN3/P3BN2/4QPPP/3R1RK1 b - b3 0 15";
   calc_module.interpretAndSetFen(fen);
 
   auto comp_calc_module = GSateTranslator();
   GameState& comp_game_state =
-      comp_calc_module.game_state_controller.current_game_state;
+      comp_calc_module.gstate_controller.current_game_state;
   comp_game_state.board[3] = 'R';
   comp_game_state.board[5] = 'R';
   comp_game_state.board[6] = 'K';
@@ -65,8 +65,8 @@ TEST(Calculator, test_set_game_state_2_moves) {
   calc_module.makeMovesFromFieldStrings(moves);
 
   ASSERT_TRUE(compare_game_states(
-      calc_module.game_state_controller.current_game_state,
-      comp_calc_module.game_state_controller.current_game_state));
+      calc_module.gstate_controller.current_game_state,
+      comp_calc_module.gstate_controller.current_game_state));
 }
 
 TEST(GSateTranslator, test_set_game_state_29_moves) {
@@ -87,8 +87,8 @@ TEST(GSateTranslator, test_set_game_state_29_moves) {
   calc_module.makeMovesFromFieldStrings(moves);
 
   ASSERT_TRUE(compare_game_states(
-      calc_module.game_state_controller.current_game_state,
-      comp_calc_module.game_state_controller.current_game_state));
+      calc_module.gstate_controller.current_game_state,
+      comp_calc_module.gstate_controller.current_game_state));
 }
 
 TEST(Calculator, test_en_passant_move_black) {
@@ -104,8 +104,8 @@ TEST(Calculator, test_en_passant_move_black) {
   calc_module.makeMovesFromFieldStrings(moves);
 
   ASSERT_TRUE(compare_game_states(
-      calc_module.game_state_controller.current_game_state,
-      comp_calc_module.game_state_controller.current_game_state));
+      calc_module.gstate_controller.current_game_state,
+      comp_calc_module.gstate_controller.current_game_state));
 }
 
 TEST(Calculator, test_piece_transformation_white_Q) {
@@ -122,8 +122,8 @@ TEST(Calculator, test_piece_transformation_white_Q) {
   calc_module.makeMovesFromFieldStrings(moves);
 
   ASSERT_TRUE(compare_game_states(
-      calc_module.game_state_controller.current_game_state,
-      comp_calc_module.game_state_controller.current_game_state));
+      calc_module.gstate_controller.current_game_state,
+      comp_calc_module.gstate_controller.current_game_state));
 }
 
 TEST(Calculator, test_piece_transformation_black_q) {
@@ -140,6 +140,6 @@ TEST(Calculator, test_piece_transformation_black_q) {
   calc_module.makeMovesFromFieldStrings(moves);
 
   ASSERT_TRUE(compare_game_states(
-      calc_module.game_state_controller.current_game_state,
-      comp_calc_module.game_state_controller.current_game_state));
+      calc_module.gstate_controller.current_game_state,
+      comp_calc_module.gstate_controller.current_game_state));
 }
