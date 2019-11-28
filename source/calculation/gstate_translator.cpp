@@ -2,13 +2,13 @@
 
 namespace blaengine::calculation {
 
-Calculator::Calculator() {
+GSateTranslator::GSateTranslator() {
   this->game_state_controller = GameStateController();
 }
 
-Calculator::~Calculator() {}
+GSateTranslator::~GSateTranslator() {}
 
-void Calculator::interpretAndSetFen(string fen) {
+void GSateTranslator::interpretAndSetFen(string fen) {
   GameStateController& gstate_controller = this->game_state_controller;
   GameState& current_gstate = this->game_state_controller.current_game_state;
   
@@ -46,7 +46,7 @@ void Calculator::interpretAndSetFen(string fen) {
   }
 }
 
-void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
+void GSateTranslator::makeMovesFromFieldStrings(vector<string> moves) {
   GameStateController& gstate_controller = this->game_state_controller;
   GameState& current_gstate = this->game_state_controller.current_game_state;
 
@@ -69,13 +69,13 @@ void Calculator::makeMovesFromFieldStrings(vector<string> moves) {
   }
 }
 
-void Calculator::validateFenString(string fen) {
+void GSateTranslator::validateFenString(string fen) {
   if (fen.empty()) {
     throw("FEN string was not in the right format or even empty.");
   }
 }
 
-void Calculator::validateMoveString(string move) {
+void GSateTranslator::validateMoveString(string move) {
   if (move.empty() || move.size() < 4) {
     throw("move was in a wrong format. It has to be e.g. e2e3");
   }

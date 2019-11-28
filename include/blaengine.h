@@ -97,7 +97,7 @@ class BlaEngine {
 
   Move chooseBestMove(vector<Move> moves);
 
-  Calculator engine_calculator;
+  GSateTranslator engine_calculator;
 
   Move bestMove;
 };

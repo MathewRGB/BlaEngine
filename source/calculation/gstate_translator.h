@@ -11,10 +11,10 @@ using namespace std;
 
 namespace blaengine::calculation {
 
-class Calculator {
+class GSateTranslator {
  public:
-  Calculator();
-  ~Calculator();
+  GSateTranslator();
+  ~GSateTranslator();
 
   void interpretAndSetFen(string fen);
 

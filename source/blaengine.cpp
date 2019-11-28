@@ -5,7 +5,7 @@
 
 namespace blaengine {
 
-BlaEngine::BlaEngine() { this->engine_calculator = Calculator(); }
+BlaEngine::BlaEngine() { this->engine_calculator = GSateTranslator(); }
 
 BlaEngine::~BlaEngine() {}
 
