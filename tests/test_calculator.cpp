@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "helper_for_tests.h"
-#include "source/calculation/calculator.h"
+#include "source/calculation/gstate_translator.h"
 
 using namespace blaengine::calculation;
 

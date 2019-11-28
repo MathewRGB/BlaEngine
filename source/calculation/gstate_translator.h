@@ -1,7 +1,7 @@
-#ifndef CALCULATOR_H_
-#define CALCULATOR_H_
+#ifndef GAME_STATE_TRANSLATOR_H_
+#define GAME_STATE_TRANSLATOR_H_
 
-#include "game_state_controller.h"
+#include "gstate_controller.h"
 
 #define WHITE_SPACE " "
 #define DEFAULT_HYPHEN "-"
@@ -29,4 +29,4 @@ class Calculator {
 
 }  // namespace blaengine::calculation
 
-#endif  // CALCULATOR_H_
+#endif  // GAME_STATE_TRANSLATOR_H_

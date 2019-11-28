@@ -1,7 +1,8 @@
 #ifndef HELPERFORTESTS_H_
 #define HELPERFORTESTS_H_
 
-#include "source/calculation/calculator.h"
+#include "source/calculation/gstate_translator.h"
+#include "source/calculation/gstate_controller.h"
 
 using namespace std;
 using namespace blaengine;

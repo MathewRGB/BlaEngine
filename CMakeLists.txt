@@ -110,8 +110,8 @@ add_definitions(-D_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}")
 add_library(libblaengine SHARED
     source/blaengine.cpp
     source/communication/uci.cpp
-    source/calculation/calculator.cpp
-    source/calculation/game_state_controller.cpp
+    source/calculation/gstate_translator.cpp
+    source/calculation/gstate_controller.cpp
     source/calculation/move_generator.cpp)
 
 target_link_libraries(libblaengine

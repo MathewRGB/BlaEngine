@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "gstate_translator.h"
 
 namespace blaengine::calculation {
 

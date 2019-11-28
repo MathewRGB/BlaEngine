@@ -5,8 +5,6 @@
 
 namespace blaengine {
 
-int dummy_counter = 1;
-
 BlaEngine::BlaEngine() { this->engine_calculator = Calculator(); }
 
 BlaEngine::~BlaEngine() {}

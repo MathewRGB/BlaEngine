@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "source/calculation/calculator.h"
+#include "source/calculation/gstate_translator.h"
 
 #ifdef _PROJECT_VERSION
 #define VERSION _PROJECT_VERSION
