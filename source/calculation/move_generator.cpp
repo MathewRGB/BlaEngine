@@ -543,10 +543,12 @@ vector<Move> MoveGenerator::getKingMoves(GameState game_state,
     all_moves.push_back({field_index, (ushort)lb_field, Piece::left_piece});
   }
   if (castling_king) {
-    all_moves.push_back({field_index, field_index + 2, Piece::left_piece});
+    all_moves.push_back(
+        {field_index, (ushort)(field_index + 2), Piece::left_piece});
   }
   if (castling_queen) {
-    all_moves.push_back({field_index, field_index - 2, Piece::left_piece});
+    all_moves.push_back(
+        {field_index, (ushort)(field_index - 2), Piece::left_piece});
   }
 
   return all_moves;
