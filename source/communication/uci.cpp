@@ -18,7 +18,7 @@ vector<string> Uci::translateInput(string input) {
     response = this->quit();
   } else if (input.substr(0, 7) == "isready") {
     response = this->isReady();
-  } else if (input.substr(0, 3) == "go ") {
+  } else if (input.substr(0, 2) == "go") {
     response = this->go(input);
   } else if (input.substr(0, 9) == "position ") {
     response = this->position(input);
