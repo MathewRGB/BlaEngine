@@ -5,7 +5,7 @@ Chess engine to improve someone, somehow.
 
 ## Manual Build
 
-This project uses CMake as its build engine. Follow the steps to build the system manually.
+This project uses CMake as its build engine. Follow the steps for building manually.
 
 ### Linux
 
