@@ -57,6 +57,7 @@ struct GameState {
   short en_passant_field = -1;
   ushort next_half_move = 1;
   ushort half_moves_for_draw = 0;
+  int rating = 0;
 };
 
 
