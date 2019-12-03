@@ -59,6 +59,17 @@ struct GameState {
   ushort half_moves_for_draw = 0;
 };
 
+
+struct PieceValue {
+  int pawn_value = 100;
+  int knight_value = 320;
+  int bishop_value = 333;
+  int rook_value = 510;
+  int queen_value = 880;
+  int king_value = 100000;
+};
+
+
 }  // namespace blaengine::calculation
 
 #endif  // GAMESTATE_H_
