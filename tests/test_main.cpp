@@ -13,6 +13,7 @@
 #include "test_moves_bishop.cpp"
 #include "test_moves_queen.cpp"
 #include "test_moves_king.cpp"
+#include "test_evaluator.cpp"
 
 using namespace std;
 

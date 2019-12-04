@@ -14,6 +14,8 @@ class Evaluator {
 
   void startSearching(GameState game_state);
 
+  int evaluateGameState(GameState game_state);
+
   Move chooseBestMove(vector<Move> moves);
 
   Move bestMove;

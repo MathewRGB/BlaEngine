@@ -13,6 +13,10 @@ void Evaluator::startSearching(GameState game_state) {
   this->bestMove = this->chooseBestMove(possible_moves);
 }
 
+int Evaluator::evaluateGameState(GameState game_state){
+  return 0;
+}
+
 Move Evaluator::chooseBestMove(vector<Move> moves) {
   random_device rd;
   mt19937 gen(rd());
