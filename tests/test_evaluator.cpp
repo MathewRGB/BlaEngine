@@ -52,7 +52,7 @@ TEST(Evaluator, test_evaluate_game_state_4)
   gstate_translator.interpretAndSetFen(fen);
   int rating = evaluator.evaluateGameState(game_state);
 
-  ASSERT_LT(rating, 0);
+  ASSERT_GT(rating, 0);
 }
 
 TEST(Evaluator, test_evaluate_game_state_5)
@@ -65,5 +65,5 @@ TEST(Evaluator, test_evaluate_game_state_5)
   gstate_translator.interpretAndSetFen(fen);
   int rating = evaluator.evaluateGameState(game_state);
 
-  ASSERT_GT(rating, 0);
+  ASSERT_LT(rating, 0);
 }
