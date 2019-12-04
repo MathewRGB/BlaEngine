@@ -21,42 +21,42 @@ int Evaluator::evaluateGameState(GameState game_state) {
     switch (game_state.board[i]) {
       case Piece::white_pawn:
         rating += piece_value.pawn_value;
-        continue;
+        break;
       case Piece::black_pawn:
         rating -= piece_value.pawn_value;
-        continue;
+        break;
       case Piece::white_knight:
         rating += piece_value.knight_value;
-        continue;
+        break;
       case Piece::black_knight:
         rating -= piece_value.knight_value;
-        continue;
+        break;
       case Piece::white_bishop:
         rating += piece_value.bishop_value;
-        continue;
+        break;
       case Piece::black_bishop:
         rating -= piece_value.bishop_value;
-        continue;
+        break;
       case Piece::white_rook:
         rating += piece_value.rook_value;
-        continue;
+        break;
       case Piece::black_rook:
         rating -= piece_value.rook_value;
-        continue;
+        break;
       case Piece::white_queen:
         rating += piece_value.queen_value;
-        continue;
+        break;
       case Piece::black_queen:
         rating -= piece_value.queen_value;
-        continue;
+        break;
       case Piece::white_king:
         rating += piece_value.king_value;
-        continue;
+        break;
       case Piece::black_king:
         rating -= piece_value.king_value;
-        continue;
+        break;
       default:
-        continue;
+        break;
     }
   }
   return rating;
