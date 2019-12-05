@@ -9,7 +9,7 @@ namespace blaengine::calculation {
 
 class Evaluator {
  public:
-  ushort searching_depth = 3;
+  ushort searching_depth = 2;
 
   void startSearching(GameState game_state);
 

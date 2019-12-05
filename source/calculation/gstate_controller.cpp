@@ -47,12 +47,19 @@ void GameStateController::makeMove(ushort field_before, ushort field_after,
   this->current_game_state.board[field_after] = moving_piece;
   this->current_game_state.board[field_before] = Piece::left_piece;
 
-  this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
   this->checkAndPerformEnPassant(field_before, field_after, moving_piece);
   this->checkAndTransformPiece(field_after, promotion);
+
+  if (!this->checkAndPerformCastling(field_before, field_after,
+                                    (Piece)moving_piece)) {
+    this->current_game_state.next_half_move++;
+    this->current_game_state.next_turn =
+        (current_game_state.next_turn == Color::white) ? Color::black
+                                                       : Color::white;
+  }
 }
 
-void GameStateController::makeMove(Move move){
+void GameStateController::makeMove(Move move) {
   this->makeMove(move.field_before, move.field_after, move.promotion);
 }
 
@@ -96,7 +103,7 @@ void GameStateController::changeMovesForDraw(Piece moving_piece,
   }
 }
 
-void GameStateController::checkAndPerformCastling(ushort field_before,
+bool GameStateController::checkAndPerformCastling(ushort field_before,
                                                   ushort field_after,
                                                   Piece moving_piece) {
   bool castling = (moving_piece == Piece::black_king ||
@@ -123,6 +130,8 @@ void GameStateController::checkAndPerformCastling(ushort field_before,
     this->current_game_state.castling[2] = Piece::left_piece;
     this->current_game_state.castling[3] = Piece::left_piece;
   }
+
+  return castling;
 }
 
 void GameStateController::checkAndPerformEnPassant(ushort field_before,

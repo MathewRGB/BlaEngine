@@ -6,8 +6,7 @@
 namespace blaengine::calculation {
 
 void Evaluator::startSearching(GameState game_state) {
-  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
-  this->bestMove = this->chooseBestMove(possible_moves);
+  this->miniMax(game_state, this->searching_depth);
 }
 
 int Evaluator::evaluateGameState(GameState game_state) {
@@ -61,7 +60,8 @@ int Evaluator::evaluateGameState(GameState game_state) {
 
 int Evaluator::miniMax(GameState game_state, ushort depth) {
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
-  int maxWert = -INT32_MAX;
+  int maximized_value =
+      game_state.next_turn == Color::white ? -INT32_MAX : INT32_MAX;
 
   if (depth == 0 || possible_moves.size() == 0) {
     return this->evaluateGameState(game_state);
@@ -72,14 +72,15 @@ int Evaluator::miniMax(GameState game_state, ushort depth) {
     gstate_controller.current_game_state = game_state;
     gstate_controller.makeMove(possible_moves[i]);
 
-    int wert = -miniMax(gstate_controller.current_game_state, depth - 1);
+    int rating = miniMax(gstate_controller.current_game_state, depth - 1);
 
-    if (wert > maxWert) {
-      maxWert = wert;
+    if ((rating > maximized_value && game_state.next_turn == Color::white) ||
+        (rating < maximized_value && game_state.next_turn == Color::black)) {
+      maximized_value = rating;
       if (depth == this->searching_depth) this->bestMove = possible_moves[i];
     }
   }
-  return maxWert;
+  return maximized_value;
 }
 
 Move Evaluator::chooseBestMove(vector<Move> moves) {

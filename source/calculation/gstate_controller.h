@@ -31,7 +31,7 @@ class GameStateController {
 
   void changeMovesForDraw(Piece moving_piece, ushort field_after);
 
-  void checkAndPerformCastling(ushort field_before, ushort field_after,
+  bool checkAndPerformCastling(ushort field_before, ushort field_after,
                                Piece moving_piece);
 
   void checkAndPerformEnPassant(ushort field_before, ushort field_after,
