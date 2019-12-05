@@ -46,12 +46,6 @@ class BlaEngine {
 
   ///
   ///@brief
-  /// Destructing the object.
-  ///
-  ~BlaEngine();
-
-  ///
-  ///@brief
   /// Starting the engine by starting the communication module, which is UCI as
   /// default, as well as starting the calculation unit.
   ///

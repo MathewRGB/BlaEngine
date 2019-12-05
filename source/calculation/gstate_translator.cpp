@@ -6,8 +6,6 @@ GSateTranslator::GSateTranslator() {
   this->gstate_controller = GameStateController();
 }
 
-GSateTranslator::~GSateTranslator() {}
-
 void GSateTranslator::interpretAndSetFen(string fen) {
   GameStateController& gstate_controller = this->gstate_controller;
   GameState& current_gstate = this->gstate_controller.current_game_state;

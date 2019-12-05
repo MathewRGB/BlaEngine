@@ -4,8 +4,6 @@ namespace blaengine::calculation {
 
 GameStateController::GameStateController() { this->initializeGameSate(); }
 
-GameStateController::~GameStateController() {}
-
 void GameStateController::initializeGameSate() {
   current_game_state = GameState();
   current_game_state.next_turn = Color::white;
@@ -41,7 +39,7 @@ void GameStateController::extractFenPosition(string fen_position) {
 }
 
 void GameStateController::makeMove(ushort field_before, ushort field_after,
-                                   Piece piece_change) {
+                                   Piece promotion) {
   Piece moving_piece = (Piece)this->current_game_state.board[field_before];
 
   this->changeMovesForDraw(moving_piece, field_after);
@@ -51,7 +49,11 @@ void GameStateController::makeMove(ushort field_before, ushort field_after,
 
   this->checkAndPerformCastling(field_before, field_after, (Piece)moving_piece);
   this->checkAndPerformEnPassant(field_before, field_after, moving_piece);
-  this->checkAndTransformPiece(field_after, piece_change);
+  this->checkAndTransformPiece(field_after, promotion);
+}
+
+void GameStateController::makeMove(Move move){
+  this->makeMove(move.field_before, move.field_after, move.promotion);
 }
 
 ushort GameStateController::getFieldIndex(string field) {

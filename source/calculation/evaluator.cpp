@@ -5,9 +5,6 @@
 
 namespace blaengine::calculation {
 
-Evaluator::Evaluator() {}
-Evaluator::~Evaluator() {}
-
 void Evaluator::startSearching(GameState game_state) {
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
   this->bestMove = this->chooseBestMove(possible_moves);
@@ -60,6 +57,29 @@ int Evaluator::evaluateGameState(GameState game_state) {
     }
   }
   return rating;
+}
+
+int Evaluator::miniMax(GameState game_state, ushort depth) {
+  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
+  int maxWert = -INT32_MAX;
+
+  if (depth == 0 || possible_moves.size() == 0) {
+    return this->evaluateGameState(game_state);
+  }
+
+  for (uint i = 0; i < possible_moves.size(); i++) {
+    auto gstate_controller = GameStateController();
+    gstate_controller.current_game_state = game_state;
+    gstate_controller.makeMove(possible_moves[i]);
+
+    int wert = -miniMax(gstate_controller.current_game_state, depth - 1);
+
+    if (wert > maxWert) {
+      maxWert = wert;
+      if (depth == this->searching_depth) this->bestMove = possible_moves[i];
+    }
+  }
+  return maxWert;
 }
 
 Move Evaluator::chooseBestMove(vector<Move> moves) {

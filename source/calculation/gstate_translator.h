@@ -14,7 +14,6 @@ namespace blaengine::calculation {
 class GSateTranslator {
  public:
   GSateTranslator();
-  ~GSateTranslator();
 
   void interpretAndSetFen(string fen);
 
