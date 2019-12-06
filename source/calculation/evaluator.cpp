@@ -55,7 +55,13 @@ int Evaluator::evaluateGameState(GameState game_state) {
         break;
     }
   }
-  return rating;
+
+  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
+  auto positional_guess = game_state.next_turn == Color::white
+                              ? possible_moves.size()
+                              : -possible_moves.size();
+
+  return rating + positional_guess;
 }
 
 int Evaluator::miniMax(GameState game_state, ushort depth) {
