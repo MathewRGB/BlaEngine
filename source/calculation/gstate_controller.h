@@ -15,7 +15,6 @@ namespace blaengine::calculation {
 class GameStateController {
  public:
   GameStateController();
-  ~GameStateController();
 
   GameState current_game_state;
 
@@ -23,14 +22,16 @@ class GameStateController {
 
   void extractFenPosition(string fen_position);
 
+  void makeMove(Move move);
+
   void makeMove(ushort field_before, ushort field_after,
-                Piece piece_change = Piece::left_piece);
+                Piece promotion = Piece::left_piece);
 
   void extractFenCastling(string fen_castling);
 
   void changeMovesForDraw(Piece moving_piece, ushort field_after);
 
-  void checkAndPerformCastling(ushort field_before, ushort field_after,
+  bool checkAndPerformCastling(ushort field_before, ushort field_after,
                                Piece moving_piece);
 
   void checkAndPerformEnPassant(ushort field_before, ushort field_after,

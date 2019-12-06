@@ -6,8 +6,6 @@ GSateTranslator::GSateTranslator() {
   this->gstate_controller = GameStateController();
 }
 
-GSateTranslator::~GSateTranslator() {}
-
 void GSateTranslator::interpretAndSetFen(string fen) {
   GameStateController& gstate_controller = this->gstate_controller;
   GameState& current_gstate = this->gstate_controller.current_game_state;
@@ -61,11 +59,6 @@ void GSateTranslator::makeMovesFromFieldStrings(vector<string> moves) {
 
     Piece piece_got = this->gstate_controller.transformPiece(moves[i]);
     gstate_controller.makeMove(field_before, field_after, piece_got);
-
-    current_gstate.next_half_move++;
-    current_gstate.next_turn = (current_gstate.next_turn == Color::white)
-                                   ? Color::black
-                                   : Color::white;
   }
 }
 

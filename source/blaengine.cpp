@@ -7,8 +7,6 @@ BlaEngine::BlaEngine() {
   this->evaluator = Evaluator();  
 }
 
-BlaEngine::~BlaEngine() {}
-
 void BlaEngine::startEngine() {}
 
 void BlaEngine::shutdownEngine() { this->~BlaEngine(); }
