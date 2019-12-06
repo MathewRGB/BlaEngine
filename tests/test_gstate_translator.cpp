@@ -6,11 +6,11 @@
 using namespace blaengine::calculation;
 
 TEST(Calculator, test_set_fen_string) {
-  auto calc_module = GSateTranslator();
+  auto translator = GSateTranslator();
   auto gstate_controller = GameStateController();
   GameState& current_game_state = gstate_controller.current_game_state;
   auto fen = "r2r2k1/pppqbppp/1nn1p3/8/1PPPN3/P3BN2/4QPPP/3R1RK1 b - b3 0 15";
-  current_game_state = calc_module.interpretAndSetFen(fen);
+  current_game_state = translator.interpretAndSetFen(fen);
 
   auto comp_gstate_controller = GameStateController();
   GameState& comp_game_state = comp_gstate_controller.current_game_state;
@@ -56,16 +56,16 @@ TEST(Calculator, test_set_game_state_2_moves) {
   auto fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   vector<string> moves{"e2e4", "e7e6"};
 
-  auto comp_calc_module = GSateTranslator();
+  auto comp_translator = GSateTranslator();
   auto comp_gstate_controller = GameStateController();
   auto& comp_game_state = comp_gstate_controller.current_game_state;
-  comp_game_state = comp_calc_module.interpretAndSetFen(comparison_fen);
+  comp_game_state = comp_translator.interpretAndSetFen(comparison_fen);
 
-  auto calc_module = GSateTranslator();
+  auto translator = GSateTranslator();
   auto gstate_controller = GameStateController();
   auto& game_state = gstate_controller.current_game_state;
-  game_state = calc_module.interpretAndSetFen(fen);
-  game_state = calc_module.makeMovesFromFieldStrings(game_state, moves);
+  game_state = translator.interpretAndSetFen(fen);
+  game_state = translator.makeMovesFromFieldStrings(game_state, moves);
 
   ASSERT_TRUE(compare_game_states(game_state, comp_game_state));
 }
@@ -80,16 +80,16 @@ TEST(GSateTranslator, test_set_game_state_29_moves) {
                        "c1e3", "e8g8", "b1c3", "e7b4", "c3e4", "b4e7",
                        "a1d1", "d8d7", "a2a3", "f8d8", "b2b4"};
 
-  auto comp_calc_module = GSateTranslator();
+  auto comp_translator = GSateTranslator();
   auto comp_gstate_controller = GameStateController();
   auto& comp_game_state = comp_gstate_controller.current_game_state;
-  comp_game_state = comp_calc_module.interpretAndSetFen(comparison_fen);
+  comp_game_state = comp_translator.interpretAndSetFen(comparison_fen);
 
-  auto calc_module = GSateTranslator();
+  auto translator = GSateTranslator();
   auto gstate_controller = GameStateController();
   auto& game_state = gstate_controller.current_game_state;
-  game_state = calc_module.interpretAndSetFen(fen);
-  game_state = calc_module.makeMovesFromFieldStrings(game_state, moves);
+  game_state = translator.interpretAndSetFen(fen);
+  game_state = translator.makeMovesFromFieldStrings(game_state, moves);
 
   ASSERT_TRUE(compare_game_states(game_state, comp_game_state));
 }
@@ -99,16 +99,16 @@ TEST(Calculator, test_en_passant_move_black) {
   auto fen = "7k/8/5p2/6p1/7p/8/6P1/1K6 w - - 0 1";
   vector<string> moves{"g2g4", "h4g3"};
 
-  auto comp_calc_module = GSateTranslator();
+  auto comp_translator = GSateTranslator();
   auto comp_gstate_controller = GameStateController();
   auto& comp_game_state = comp_gstate_controller.current_game_state;
-  comp_game_state = comp_calc_module.interpretAndSetFen(comparison_fen);
+  comp_game_state = comp_translator.interpretAndSetFen(comparison_fen);
 
-  auto calc_module = GSateTranslator();
+  auto translator = GSateTranslator();
   auto gstate_controller = GameStateController();
   auto& game_state = gstate_controller.current_game_state;
-  game_state = calc_module.interpretAndSetFen(fen);
-  game_state = calc_module.makeMovesFromFieldStrings(game_state, moves);
+  game_state = translator.interpretAndSetFen(fen);
+  game_state = translator.makeMovesFromFieldStrings(game_state, moves);
 
   ASSERT_TRUE(compare_game_states(game_state, comp_game_state));
 }
@@ -119,16 +119,16 @@ TEST(Calculator, test_piece_transformation_white_Q) {
   vector<string> moves{"a7a5", "b5a6",  "h7g7", "a6a7",
                        "g7f7", "a7a8q", "f7g6", "a8f8"};
 
-  auto comp_calc_module = GSateTranslator();
+  auto comp_translator = GSateTranslator();
   auto comp_gstate_controller = GameStateController();
   auto& comp_game_state = comp_gstate_controller.current_game_state;
-  comp_game_state = comp_calc_module.interpretAndSetFen(comparison_fen);
+  comp_game_state = comp_translator.interpretAndSetFen(comparison_fen);
 
-  auto calc_module = GSateTranslator();
+  auto translator = GSateTranslator();
   auto gstate_controller = GameStateController();
   auto& game_state = gstate_controller.current_game_state;
-  game_state = calc_module.interpretAndSetFen(fen);
-  game_state = calc_module.makeMovesFromFieldStrings(game_state, moves);
+  game_state = translator.interpretAndSetFen(fen);
+  game_state = translator.makeMovesFromFieldStrings(game_state, moves);
 
   ASSERT_TRUE(compare_game_states(game_state, comp_game_state));
 }
@@ -139,16 +139,16 @@ TEST(Calculator, test_piece_transformation_black_q) {
   vector<string> moves{"a2a4", "b4a3",  "g2g3", "a3a2",
                        "h1g2", "a2a1q", "g2h3", "a1f1"};
 
-  auto comp_calc_module = GSateTranslator();
+  auto comp_translator = GSateTranslator();
   auto comp_gstate_controller = GameStateController();
   auto& comp_game_state = comp_gstate_controller.current_game_state;
-  comp_game_state = comp_calc_module.interpretAndSetFen(comparison_fen);
+  comp_game_state = comp_translator.interpretAndSetFen(comparison_fen);
 
-  auto calc_module = GSateTranslator();
+  auto translator = GSateTranslator();
   auto gstate_controller = GameStateController();
   auto& game_state = gstate_controller.current_game_state;
-  game_state = calc_module.interpretAndSetFen(fen);
-  game_state = calc_module.makeMovesFromFieldStrings(game_state, moves);
+  game_state = translator.interpretAndSetFen(fen);
+  game_state = translator.makeMovesFromFieldStrings(game_state, moves);
 
   ASSERT_TRUE(compare_game_states(game_state, comp_game_state));
 }

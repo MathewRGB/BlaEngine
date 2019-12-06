@@ -16,7 +16,6 @@ void BlaEngine::interpretAndSetFen(string fen) {
 
 void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
   auto& current_gstate = this->gstate_controller.current_game_state;
-
   current_gstate =
       GSateTranslator::makeMovesFromFieldStrings(current_gstate, moves);
 }
