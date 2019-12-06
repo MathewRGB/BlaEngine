@@ -9,11 +9,12 @@ namespace blaengine::calculation {
 
 class Evaluator {
  public:
-  ushort searching_depth = 2;
+  ushort searching_depth = 4;
 
   void startSearching(GameState game_state);
 
-  int evaluateGameState(GameState game_state);
+  int evaluateGameState(GameState game_state,
+                        vector<Move> possible_moves = vector<Move>());
 
   Move chooseBestMove(vector<Move> moves);
 

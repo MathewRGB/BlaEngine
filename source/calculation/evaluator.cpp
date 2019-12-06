@@ -9,7 +9,8 @@ void Evaluator::startSearching(GameState game_state) {
   this->miniMax(game_state, this->searching_depth);
 }
 
-int Evaluator::evaluateGameState(GameState game_state) {
+int Evaluator::evaluateGameState(GameState game_state,
+                                 vector<Move> possible_moves) {
   int rating = 0;
   auto piece_value = PieceValue();
 
@@ -56,12 +57,10 @@ int Evaluator::evaluateGameState(GameState game_state) {
     }
   }
 
-  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
-  auto positional_guess = game_state.next_turn == Color::white
-                              ? possible_moves.size()
-                              : -possible_moves.size();
+  rating += game_state.next_turn == Color::white ? possible_moves.size()
+                                                 : -possible_moves.size();
 
-  return rating + positional_guess;
+  return rating;
 }
 
 int Evaluator::miniMax(GameState game_state, ushort depth) {
@@ -70,7 +69,7 @@ int Evaluator::miniMax(GameState game_state, ushort depth) {
       game_state.next_turn == Color::white ? -INT32_MAX : INT32_MAX;
 
   if (depth == 0 || possible_moves.size() == 0) {
-    return this->evaluateGameState(game_state);
+    return this->evaluateGameState(game_state, possible_moves);
   }
 
   for (uint i = 0; i < possible_moves.size(); i++) {
