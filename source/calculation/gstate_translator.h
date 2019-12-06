@@ -13,16 +13,14 @@ namespace blaengine::calculation {
 
 class GSateTranslator {
  public:
-  GSateTranslator();
+  static GameState interpretAndSetFen(string fen);
 
-  GameState interpretAndSetFen(string fen);
+  static GameState makeMovesFromFieldStrings(GameState game_state,
+                                             vector<string> moves);
 
-  GameState makeMovesFromFieldStrings(GameState game_state,
-                                      vector<string> moves);
+  static void validateFenString(string fen);
 
-  void validateFenString(string fen);
-
-  void validateMoveString(string move);
+  static void validateMoveString(string move);
 };
 
 }  // namespace blaengine::calculation

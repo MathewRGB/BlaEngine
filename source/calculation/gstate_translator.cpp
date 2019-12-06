@@ -2,13 +2,11 @@
 
 namespace blaengine::calculation {
 
-GSateTranslator::GSateTranslator() {}
-
 GameState GSateTranslator::interpretAndSetFen(string fen) {
   GameStateController gstate_controller = GameStateController();
   GameState& current_gstate = gstate_controller.current_game_state;
 
-  this->validateFenString(fen);
+  validateFenString(fen);
 
   string fen_position = fen.substr(0, fen.find(WHITE_SPACE));
   gstate_controller.extractFenPosition(fen_position);
@@ -50,7 +48,7 @@ GameState GSateTranslator::makeMovesFromFieldStrings(GameState game_state,
   gstate_controller.current_game_state = game_state;
 
   for (uint i = 0; i < moves.size(); i++) {
-    this->validateMoveString(moves[i]);
+    validateMoveString(moves[i]);
 
     string field_string_before = moves[i].substr(0, 2);
     string field_string_after = moves[i].substr(2, 3);

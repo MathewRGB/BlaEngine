@@ -10,17 +10,15 @@ BlaEngine::BlaEngine() {
 void BlaEngine::shutdownEngine() { this->~BlaEngine(); }
 
 void BlaEngine::interpretAndSetFen(string fen) {
-  auto gstate_translator = GSateTranslator();
   this->gstate_controller.current_game_state =
-      gstate_translator.interpretAndSetFen(fen);
+      GSateTranslator::interpretAndSetFen(fen);
 }
 
 void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
-  auto gstate_translator = GSateTranslator();
   auto& current_gstate = this->gstate_controller.current_game_state;
 
   current_gstate =
-      gstate_translator.makeMovesFromFieldStrings(current_gstate, moves);
+      GSateTranslator::makeMovesFromFieldStrings(current_gstate, moves);
 }
 
 string BlaEngine::getBestMove() {
