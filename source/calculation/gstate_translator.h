@@ -15,11 +15,10 @@ class GSateTranslator {
  public:
   GSateTranslator();
 
-  void interpretAndSetFen(string fen);
+  GameState interpretAndSetFen(string fen);
 
-  void makeMovesFromFieldStrings(vector<string> moves);
-
-  GameStateController gstate_controller;
+  GameState makeMovesFromFieldStrings(GameState game_state,
+                                      vector<string> moves);
 
   void validateFenString(string fen);
 

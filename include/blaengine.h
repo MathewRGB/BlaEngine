@@ -46,13 +46,6 @@ class BlaEngine {
 
   ///
   ///@brief
-  /// Starting the engine by starting the communication module, which is UCI as
-  /// default, as well as starting the calculation unit.
-  ///
-  void startEngine();
-
-  ///
-  ///@brief
   /// Shuts the engine completely down, means also destructing all connected
   /// objects and references
   ///
@@ -86,7 +79,7 @@ class BlaEngine {
   ///
   BlaEngineInfo getEngineInfo();
 
-  GSateTranslator gstate_translator;
+  GameStateController gstate_controller;
 
   Evaluator evaluator;
 };
