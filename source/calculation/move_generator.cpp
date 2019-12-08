@@ -510,25 +510,25 @@ vector<Move> MoveGenerator::getKingMoves(GameState game_state,
   auto rb_piece = (Piece)game_state.board[rb_field];
   auto lb_piece = (Piece)game_state.board[lb_field];
 
-  if (b_field > -1 &&
-      (Piece::left_piece || getPieceColor(piece) != getPieceColor(b_piece))) {
-    all_moves.push_back({field_index, (ushort)b_field, Piece::left_piece});
-  }
-  if ((field_index + 1) % 8 != 0 && rb_field > -1 &&
-      (Piece::left_piece || getPieceColor(piece) != getPieceColor(rb_piece))) {
-    all_moves.push_back({field_index, (ushort)rb_field, Piece::left_piece});
+  if ((field_index + 1) % 8 != 0 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(r_piece))) {
+    all_moves.push_back({field_index, (ushort)r_field, Piece::left_piece});
   }
   if ((field_index + 1) % 8 != 0 && rf_field < 64 &&
       (Piece::left_piece || getPieceColor(piece) != getPieceColor(rf_piece))) {
     all_moves.push_back({field_index, (ushort)rf_field, Piece::left_piece});
   }
-  if ((field_index + 1) % 8 != 0 &&
-      (Piece::left_piece || getPieceColor(piece) != getPieceColor(r_piece))) {
-    all_moves.push_back({field_index, (ushort)r_field, Piece::left_piece});
+  if ((field_index + 1) % 8 != 0 && rb_field > -1 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(rb_piece))) {
+    all_moves.push_back({field_index, (ushort)rb_field, Piece::left_piece});
   }
   if (f_field < 64 &&
       (Piece::left_piece || getPieceColor(piece) != getPieceColor(f_piece))) {
     all_moves.push_back({field_index, (ushort)f_field, Piece::left_piece});
+  }
+  if (b_field > -1 &&
+      (Piece::left_piece || getPieceColor(piece) != getPieceColor(b_piece))) {
+    all_moves.push_back({field_index, (ushort)b_field, Piece::left_piece});
   }
   if (field_index % 8 != 0 &&
       (Piece::left_piece || getPieceColor(piece) != getPieceColor(l_piece))) {
