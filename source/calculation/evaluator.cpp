@@ -7,10 +7,12 @@ namespace blaengine::calculation {
 
 void Evaluator::startSearching(GameState game_state) {
   this->miniMax(game_state, this->searching_depth);
+  // TODO alpha-beta, transposition tables, q-search, search selectivity,
+  // bitboards
 }
 
-int Evaluator::evaluateGameState(GameState game_state,
-                                 vector<Move> possible_moves) {
+int Evaluator::evaluateByPieceValues(GameState game_state,
+                                     vector<Move> possible_moves) {
   int rating = 0;
   auto piece_value = PieceValue();
 
@@ -57,8 +59,13 @@ int Evaluator::evaluateGameState(GameState game_state,
     }
   }
 
-  rating += game_state.next_turn == Color::white ? possible_moves.size()
-                                                 : -possible_moves.size();
+  return rating;
+}
+
+int Evaluator::evaluateGameState(GameState game_state,
+                                 vector<Move> possible_moves) {
+  int rating = this->evaluateByPieceValues(game_state, possible_moves);
+  rating += this->getRandomValue(10);
 
   return rating;
 }
@@ -88,13 +95,13 @@ int Evaluator::miniMax(GameState game_state, ushort depth) {
   return maximized_value;
 }
 
-Move Evaluator::chooseBestMove(vector<Move> moves) {
+int Evaluator::getRandomValue(int range) {
   random_device rd;
   mt19937 gen(rd());
-  uniform_int_distribution<> dist(0, moves.size() - 1);
-  ushort rnd_idx = dist(gen);
+  uniform_int_distribution<> dist(-range, range);
+  int random_value = dist(gen);
 
-  return moves[rnd_idx];
+  return random_value;
 }
 
 }  // namespace blaengine::calculation
