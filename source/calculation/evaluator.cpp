@@ -5,9 +5,7 @@
 
 namespace blaengine::calculation {
 
-Evaluator::Evaluator(ushort max_depth) {
-  this->searching_depth = max_depth;
-}
+Evaluator::Evaluator(ushort max_depth) { this->searching_depth = max_depth; }
 
 void Evaluator::startSearching(GameState game_state) {
   this->miniMax(game_state, this->searching_depth);
@@ -63,13 +61,14 @@ int Evaluator::evaluateByPieceValues(GameState game_state,
     }
   }
 
+  rating += (game_state.next_turn == Color::white) ? possible_moves.size()
+                                                   : -possible_moves.size();
   return rating;
 }
 
 int Evaluator::evaluateGameState(GameState game_state,
                                  vector<Move> possible_moves) {
   int rating = this->evaluateByPieceValues(game_state, possible_moves);
-
   return rating;
 }
 
