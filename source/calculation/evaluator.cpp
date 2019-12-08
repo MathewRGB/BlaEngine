@@ -5,6 +5,10 @@
 
 namespace blaengine::calculation {
 
+Evaluator::Evaluator(ushort max_depth) {
+  this->searching_depth = max_depth;
+}
+
 void Evaluator::startSearching(GameState game_state) {
   this->miniMax(game_state, this->searching_depth);
   // TODO alpha-beta, transposition tables, q-search, search selectivity,
@@ -65,7 +69,6 @@ int Evaluator::evaluateByPieceValues(GameState game_state,
 int Evaluator::evaluateGameState(GameState game_state,
                                  vector<Move> possible_moves) {
   int rating = this->evaluateByPieceValues(game_state, possible_moves);
-  rating += this->getRandomValue(10);
 
   return rating;
 }

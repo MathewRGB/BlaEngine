@@ -3,13 +3,17 @@
 
 #include "source/calculation/gstate_translator.h"
 
+#define MINIMUM_DEPTH 2
+
 using namespace std;
 
 namespace blaengine::calculation {
 
 class Evaluator {
  public:
-  ushort searching_depth = 2;
+  Evaluator(ushort max_depth = MINIMUM_DEPTH);
+
+  ushort searching_depth;
 
   void startSearching(GameState game_state);
 
