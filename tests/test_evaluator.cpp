@@ -86,3 +86,17 @@ TEST(Evaluator, test_check_move_away3) {
   ASSERT_EQ(evaluator.bestMove.field_before, 45);
   ASSERT_EQ(evaluator.bestMove.field_after, 46);
 }
+
+TEST(Evaluator, test_check_move_away4) {
+  auto gstate_translator = GSateTranslator();
+  auto gstate_controller = GameStateController();
+  auto evaluator =Evaluator(4);
+  auto& game_state = gstate_controller.current_game_state;
+
+  game_state = gstate_translator.interpretAndSetFen(
+      "4Bk2/N1n4p/1r1pp3/2p3p1/1pPb4/3PKP2/q3P1PP/1R5R w - - 1 23");
+  evaluator.startSearching(gstate_controller.current_game_state);
+
+  ASSERT_EQ(evaluator.bestMove.field_before, 20);
+  ASSERT_EQ(evaluator.bestMove.field_after, 28);
+}
