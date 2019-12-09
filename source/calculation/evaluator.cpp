@@ -74,11 +74,11 @@ int Evaluator::evaluateGameState(GameState game_state,
 
 int Evaluator::miniMax(GameState game_state, ushort depth) {
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
-  int maximized_value =
-      game_state.next_turn == Color::white ? -INT32_MAX : INT32_MAX;
+  int maximized_value = -INT32_MAX;
 
   if (depth == 0 || possible_moves.size() == 0) {
-    return this->evaluateGameState(game_state, possible_moves);
+    return game_state.next_turn *
+           this->evaluateGameState(game_state, possible_moves);
   }
 
   for (uint i = 0; i < possible_moves.size(); i++) {
@@ -86,10 +86,9 @@ int Evaluator::miniMax(GameState game_state, ushort depth) {
     gstate_controller.current_game_state = game_state;
     gstate_controller.makeMove(possible_moves[i]);
 
-    int rating = miniMax(gstate_controller.current_game_state, depth - 1);
+    int rating = -miniMax(gstate_controller.current_game_state, depth - 1);
 
-    if ((rating > maximized_value && game_state.next_turn == Color::white) ||
-        (rating < maximized_value && game_state.next_turn == Color::black)) {
+    if (rating > maximized_value) {
       maximized_value = rating;
       if (depth == this->searching_depth) this->bestMove = possible_moves[i];
     }
