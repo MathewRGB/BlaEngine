@@ -25,7 +25,7 @@ class Evaluator {
 
   int getRandomValue(int range);
 
-  int miniMax(GameState game_state, ushort depth);
+  int negamax(GameState game_state, ushort depth);
 
   Move bestMove;
 };

@@ -10,7 +10,7 @@ Evaluator::Evaluator(ushort searching_depth) {
 }
 
 void Evaluator::startSearching(GameState game_state) {
-  this->miniMax(game_state, this->searching_depth);
+  this->negamax(game_state, this->searching_depth);
   // TODO alpha-beta, transposition tables, q-search, search selectivity,
   // bitboards
 }
@@ -74,13 +74,18 @@ int Evaluator::evaluateGameState(GameState game_state,
   return rating;
 }
 
-int Evaluator::miniMax(GameState game_state, ushort depth) {
+int Evaluator::negamax(GameState game_state, ushort depth) {
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
   int maximized_value = -INT32_MAX;
   short negamax_sign = game_state.next_turn;
+  int current_rating =
+      negamax_sign * this->evaluateGameState(game_state, possible_moves);
 
+  if (-current_rating < MIN_SANITY_VALUE) {
+    return INT32_MAX;
+  }
   if (depth == 0 || possible_moves.size() == 0) {
-    return negamax_sign * this->evaluateGameState(game_state, possible_moves);
+    return current_rating;
   }
 
   for (uint i = 0; i < possible_moves.size(); i++) {
@@ -88,12 +93,7 @@ int Evaluator::miniMax(GameState game_state, ushort depth) {
     gstate_controller.current_game_state = game_state;
     gstate_controller.makeMove(possible_moves[i]);
 
-    if (negamax_sign * this->evaluateGameState(game_state, possible_moves) <
-        MIN_SANITY_VALUE) {
-      continue;
-    }
-
-    int rating = -miniMax(gstate_controller.current_game_state, depth - 1);
+    int rating = -negamax(gstate_controller.current_game_state, depth - 1);
 
     if (rating > maximized_value) {
       maximized_value = rating;
