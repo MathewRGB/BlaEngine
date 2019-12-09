@@ -75,16 +75,21 @@ int Evaluator::evaluateGameState(GameState game_state,
 int Evaluator::miniMax(GameState game_state, ushort depth) {
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
   int maximized_value = -INT32_MAX;
+  short negamax_sign = game_state.next_turn;
 
   if (depth == 0 || possible_moves.size() == 0) {
-    return game_state.next_turn *
-           this->evaluateGameState(game_state, possible_moves);
+    return negamax_sign * this->evaluateGameState(game_state, possible_moves);
   }
 
   for (uint i = 0; i < possible_moves.size(); i++) {
     auto gstate_controller = GameStateController();
     gstate_controller.current_game_state = game_state;
     gstate_controller.makeMove(possible_moves[i]);
+
+    if (negamax_sign * this->evaluateGameState(game_state, possible_moves) <
+        -10000) {
+      continue;
+    }
 
     int rating = -miniMax(gstate_controller.current_game_state, depth - 1);
 
