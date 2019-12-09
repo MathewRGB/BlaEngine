@@ -87,7 +87,7 @@ int Evaluator::miniMax(GameState game_state, ushort depth) {
     gstate_controller.makeMove(possible_moves[i]);
 
     if (negamax_sign * this->evaluateGameState(game_state, possible_moves) <
-        -10000) {
+        MIN_SANITY_VALUE) {
       continue;
     }
 

@@ -5,6 +5,7 @@
 
 #define FIELD_NUMBER 64
 #define CASTLING_NUMBER 4
+#define MIN_SANITY_VALUE -50000
 
 using namespace std;
 
