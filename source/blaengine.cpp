@@ -7,6 +7,11 @@ BlaEngine::BlaEngine() {
   this->evaluator = Evaluator();
 }
 
+BlaEngine::BlaEngine(ushort searching_depth) {
+  this->gstate_controller = GameStateController();
+  this->evaluator = Evaluator(searching_depth);
+}
+
 void BlaEngine::shutdownEngine() { this->~BlaEngine(); }
 
 void BlaEngine::interpretAndSetFen(string fen) {

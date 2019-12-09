@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "source/calculation/gstate_translator.h"
 #include "source/calculation/evaluator.h"
+#include "source/calculation/gstate_translator.h"
 
 #ifdef _PROJECT_VERSION
 #define VERSION _PROJECT_VERSION
@@ -43,6 +43,7 @@ class BlaEngine {
   /// Constructing the obejct.
   ///
   BlaEngine();
+  BlaEngine(ushort searching_depth);
 
   ///
   ///@brief
@@ -82,6 +83,9 @@ class BlaEngine {
   GameStateController gstate_controller;
 
   Evaluator evaluator;
+
+ private:
+  ushort searching_depth;
 };
 
 }  // namespace blaengine

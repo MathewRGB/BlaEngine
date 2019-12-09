@@ -5,7 +5,9 @@
 
 namespace blaengine::calculation {
 
-Evaluator::Evaluator(ushort max_depth) { this->searching_depth = max_depth; }
+Evaluator::Evaluator(ushort searching_depth) {
+  this->searching_depth = searching_depth;
+}
 
 void Evaluator::startSearching(GameState game_state) {
   this->miniMax(game_state, this->searching_depth);
