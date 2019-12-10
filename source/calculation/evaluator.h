@@ -25,8 +25,6 @@ class Evaluator {
 
   int getRandomValue(int range);
 
-  int negamax(GameState game_state, ushort depth);
-
   int negamaxAndAlphaBeta(GameState game_state, ushort depth,
                           int alpha = -INT32_MAX, int beta = INT32_MAX);
 
