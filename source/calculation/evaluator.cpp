@@ -103,6 +103,48 @@ int Evaluator::negamax(GameState game_state, ushort depth) {
   return maximized_value;
 }
 
+int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
+                                   int alpha, int beta) {
+  auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
+  int maximized_value = -INT32_MAX;
+  short negamax_sign = game_state.next_turn;
+  int current_rating =
+      negamax_sign * this->evaluateGameState(game_state, possible_moves);
+
+  if (-current_rating < MIN_SANITY_VALUE) {
+    return current_rating;
+  }
+  if (depth == 0 || possible_moves.size() == 0) {
+    return current_rating;
+  }
+
+  for (uint i = 0; i < possible_moves.size(); i++) {
+    auto gstate_controller = GameStateController();
+    gstate_controller.current_game_state = game_state;
+    gstate_controller.makeMove(possible_moves[i]);
+
+    int rating = -negamaxAndAlphaBeta(gstate_controller.current_game_state,
+                                      depth - 1, -beta, -alpha);
+
+    if (rating > maximized_value) {
+      maximized_value = rating;
+      if (depth == this->searching_depth) {
+        this->bestMove = possible_moves[i];
+      }
+    }
+    if (rating < MIN_SANITY_VALUE) {
+      continue;
+    }
+    if (rating > alpha) {
+      alpha = rating;
+    }
+    if (alpha >= beta) {
+      break;
+    }
+  }
+  return maximized_value;
+}
+
 int Evaluator::getRandomValue(int range) {
   random_device rd;
   mt19937 gen(rd());
