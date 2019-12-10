@@ -10,7 +10,14 @@ Evaluator::Evaluator(ushort searching_depth) {
 }
 
 void Evaluator::startSearching(GameState game_state) {
-  this->negamaxAndAlphaBeta(game_state, this->searching_depth);
+  int rating = this->negamaxAndAlphaBeta(game_state, this->searching_depth);
+
+  if (rating < MIN_SANITY_VALUE) {
+    int depth_backup = this->searching_depth;
+    this->searching_depth = 2;
+    this->negamaxAndAlphaBeta(game_state, this->searching_depth);
+    this->searching_depth = depth_backup;
+  }
   // TODO alpha-beta, transposition tables, q-search, search selectivity,
   // bitboards
 }
@@ -82,8 +89,8 @@ int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
   int current_rating =
       negamax_sign * this->evaluateGameState(game_state, possible_moves);
 
-  if (-current_rating < MIN_SANITY_VALUE) {
-    return current_rating;
+  if (current_rating > -MIN_SANITY_VALUE) {
+    return INT32_MAX;
   }
   if (depth == 0 || possible_moves.size() == 0) {
     return current_rating;
@@ -96,15 +103,11 @@ int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
 
     int rating = -negamaxAndAlphaBeta(gstate_controller.current_game_state,
                                       depth - 1, -beta, -alpha);
-
     if (rating > maximized_value) {
       maximized_value = rating;
       if (depth == this->searching_depth) {
         this->bestMove = possible_moves[i];
       }
-    }
-    if (rating < MIN_SANITY_VALUE) {
-      continue;
     }
     if (rating > alpha) {
       alpha = rating;
