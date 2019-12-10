@@ -82,8 +82,10 @@ int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
   int current_rating =
       negamax_sign * this->evaluateGameState(game_state, possible_moves);
 
-  if (depth == 0 || possible_moves.size() == 0 ||
-      -current_rating < MIN_SANITY_VALUE) {
+  if (-current_rating < MIN_SANITY_VALUE) {
+    return current_rating;
+  }
+  if (depth == 0 || possible_moves.size() == 0) {
     return current_rating;
   }
 
