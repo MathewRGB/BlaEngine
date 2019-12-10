@@ -14,7 +14,7 @@ void Evaluator::startSearching(GameState game_state) {
 
   if (rating < MIN_SANITY_VALUE) {
     int depth_backup = this->searching_depth;
-    this->searching_depth = 2;
+    this->searching_depth = MINIMUM_DEPTH;
     this->negamaxAndAlphaBeta(game_state, this->searching_depth);
     this->searching_depth = depth_backup;
   }
@@ -86,14 +86,9 @@ int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
   int maximized_value = -INT32_MAX;
   short negamax_sign = game_state.next_turn;
-  int current_rating =
-      negamax_sign * this->evaluateGameState(game_state, possible_moves);
 
-  if (current_rating > -MIN_SANITY_VALUE) {
-    return INT32_MAX;
-  }
   if (depth == 0 || possible_moves.size() == 0) {
-    return current_rating;
+    return negamax_sign * this->evaluateGameState(game_state, possible_moves);
   }
 
   for (uint i = 0; i < possible_moves.size(); i++) {
