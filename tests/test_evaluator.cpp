@@ -114,3 +114,17 @@ TEST(Evaluator, test_check_move_away5_alpha_beta_negamax) {
   ASSERT_EQ(evaluator.bestMove.field_before, 6);
   ASSERT_EQ(evaluator.bestMove.field_after, 5);
 }
+
+TEST(Evaluator, test_check_move_away6_alpha_beta_negamax) {
+  auto gstate_translator = GSateTranslator();
+  auto gstate_controller = GameStateController();
+  auto evaluator =Evaluator(5);
+  auto& game_state = gstate_controller.current_game_state;
+
+  game_state = gstate_translator.interpretAndSetFen(
+      "bb2r3/p2p2k1/1p6/2n4p/1P1R2nP/2P4Q/P3pPP1/1Bq1K1R1 w - - 2 20");
+  evaluator.startSearching(gstate_controller.current_game_state);
+
+  ASSERT_EQ(evaluator.bestMove.field_before, 27);
+  ASSERT_EQ(evaluator.bestMove.field_after, 3);
+}
