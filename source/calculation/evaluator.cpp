@@ -86,26 +86,19 @@ int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
   auto possible_moves = MoveGenerator::getAllMightPossibleMoves(game_state);
   int maximized_value = -INT32_MAX;
   short negamax_sign = game_state.next_turn;
+  int current_rating = this->evaluateGameState(game_state, possible_moves);
 
+  if (negamax_sign * current_rating < MIN_SANITY_VALUE) {
+    return -INT32_MAX;
+  }
   if (depth == 0 || possible_moves.size() == 0) {
-    return negamax_sign * this->evaluateGameState(game_state, possible_moves);
+    return negamax_sign * current_rating;
   }
 
   for (uint i = 0; i < possible_moves.size(); i++) {
     auto gstate_controller = GameStateController();
     gstate_controller.current_game_state = game_state;
     gstate_controller.makeMove(possible_moves[i]);
-
-    if (game_state.next_turn == Color::white &&
-        this->evaluateGameState(gstate_controller.current_game_state) >
-            -MIN_SANITY_VALUE) {
-      return INT32_MAX;
-    }
-    if (game_state.next_turn == Color::black &&
-        this->evaluateGameState(gstate_controller.current_game_state) <
-            MIN_SANITY_VALUE) {
-      return INT32_MAX;
-    }
 
     int rating = -negamaxAndAlphaBeta(gstate_controller.current_game_state,
                                       depth - 1, -beta, -alpha);
