@@ -168,7 +168,7 @@ endif()
 message(STATUS "Debug mode tests will be compiled!")
 enable_testing()
  
-# Link runTests with what we want to test and the GTest and pthread library
+# Link runTests with GTest main
 add_executable(runTests
     tests/test_main.cpp)
 

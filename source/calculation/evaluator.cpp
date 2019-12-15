@@ -95,17 +95,17 @@ int Evaluator::negamaxAndAlphaBeta(GameState game_state, ushort depth,
     return negamax_sign * current_rating;
   }
 
-  for (uint i = 0; i < possible_moves.size(); i++) {
+  for (auto& move : possible_moves) {
     auto gstate_controller = GameStateController();
     gstate_controller.current_game_state = game_state;
-    gstate_controller.makeMove(possible_moves[i]);
+    gstate_controller.makeMove(move);
 
     int rating = -negamaxAndAlphaBeta(gstate_controller.current_game_state,
                                       depth - 1, -beta, -alpha);
     if (rating > maximized_value) {
       maximized_value = rating;
       if (depth == this->searching_depth) {
-        this->bestMove = possible_moves[i];
+        this->bestMove = move;
       }
     }
     if (rating > alpha) {
