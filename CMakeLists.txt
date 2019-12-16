@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(BlaEngine VERSION 0.0.0)
+project(BlaEngine VERSION 0.1.0)
 
 #-------------------------------------------------------------------------------
 # Required preconditions
@@ -122,10 +122,10 @@ target_link_libraries(libblaengine
 set_target_properties(libblaengine
     PROPERTIES SUFFIX ".so")
 
-add_executable(BlaEngine
+add_executable(BlaEngine-${CMAKE_PROJECT_VERSION}
     source/main.cpp)
 
-target_link_libraries(BlaEngine 
+target_link_libraries(BlaEngine-${CMAKE_PROJECT_VERSION}
     libblaengine)
 
 #-------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ endif()
 message(STATUS "Debug mode tests will be compiled!")
 enable_testing()
  
-# Link runTests with what we want to test and the GTest and pthread library
+# Link runTests with GTest main
 add_executable(runTests
     tests/test_main.cpp)
 

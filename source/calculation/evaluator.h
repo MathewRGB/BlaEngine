@@ -3,21 +3,30 @@
 
 #include "source/calculation/gstate_translator.h"
 
+#define MINIMUM_DEPTH 2
+
 using namespace std;
 
 namespace blaengine::calculation {
 
 class Evaluator {
  public:
-  ushort searching_depth = 2;
+  Evaluator(ushort max_depth = MINIMUM_DEPTH);
+
+  ushort searching_depth;
 
   void startSearching(GameState game_state);
 
-  int evaluateGameState(GameState game_state);
+  int evaluateGameState(GameState game_state,
+                        vector<Move> possible_moves = vector<Move>());
 
-  Move chooseBestMove(vector<Move> moves);
+  int evaluateByPieceValues(GameState game_state,
+                            vector<Move> possible_moves = vector<Move>());
 
-  int miniMax(GameState game_state, ushort depth);
+  int getRandomValue(int range);
+
+  int negamaxAndAlphaBeta(GameState game_state, ushort depth,
+                          int alpha = -INT32_MAX, int beta = INT32_MAX);
 
   Move bestMove;
 };

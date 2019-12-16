@@ -2,26 +2,32 @@
 
 namespace blaengine {
 
-BlaEngine::BlaEngine() { 
-  this->gstate_translator = GSateTranslator(); 
-  this->evaluator = Evaluator();  
+BlaEngine::BlaEngine() {
+  this->gstate_controller = GameStateController();
+  this->evaluator = Evaluator();
 }
 
-void BlaEngine::startEngine() {}
+BlaEngine::BlaEngine(ushort searching_depth) {
+  this->gstate_controller = GameStateController();
+  this->evaluator = Evaluator(searching_depth);
+}
 
 void BlaEngine::shutdownEngine() { this->~BlaEngine(); }
 
 void BlaEngine::interpretAndSetFen(string fen) {
-  this->gstate_translator.interpretAndSetFen(fen);
+  this->gstate_controller.current_game_state =
+      GSateTranslator::interpretAndSetFen(fen);
 }
 
 void BlaEngine::makeMovesFromFieldStrings(vector<string> moves) {
-  this->gstate_translator.makeMovesFromFieldStrings(moves);
+  auto& current_gstate = this->gstate_controller.current_game_state;
+  current_gstate =
+      GSateTranslator::makeMovesFromFieldStrings(current_gstate, moves);
 }
 
 string BlaEngine::getBestMove() {
-  this->evaluator.startSearching(
-      this->gstate_translator.gstate_controller.current_game_state);
+  auto& current_gstate = this->gstate_controller.current_game_state;
+  this->evaluator.startSearching(current_gstate);
 
   return this->evaluator.bestMove.toString();
 }

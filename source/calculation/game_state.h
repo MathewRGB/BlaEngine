@@ -5,6 +5,7 @@
 
 #define FIELD_NUMBER 64
 #define CASTLING_NUMBER 4
+#define MIN_SANITY_VALUE -50000
 
 using namespace std;
 
@@ -26,7 +27,7 @@ enum Piece : char {
   left_piece = 0
 };
 
-enum class Color : ushort { white, black, none };
+enum Color : short { white = 1, black = -1, none = 0 };
 
 struct Move {
   ushort field_before;
@@ -60,7 +61,6 @@ struct GameState {
   int rating = 0;
 };
 
-
 struct PieceValue {
   int pawn_value = 100;
   int knight_value = 320;
@@ -69,7 +69,6 @@ struct PieceValue {
   int queen_value = 880;
   int king_value = 100000;
 };
-
 
 }  // namespace blaengine::calculation
 

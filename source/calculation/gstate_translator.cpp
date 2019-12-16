@@ -2,15 +2,11 @@
 
 namespace blaengine::calculation {
 
-GSateTranslator::GSateTranslator() {
-  this->gstate_controller = GameStateController();
-}
+GameState GSateTranslator::interpretAndSetFen(string fen) {
+  GameStateController gstate_controller = GameStateController();
+  GameState& current_gstate = gstate_controller.current_game_state;
 
-void GSateTranslator::interpretAndSetFen(string fen) {
-  GameStateController& gstate_controller = this->gstate_controller;
-  GameState& current_gstate = this->gstate_controller.current_game_state;
-
-  this->validateFenString(fen);
+  validateFenString(fen);
 
   string fen_position = fen.substr(0, fen.find(WHITE_SPACE));
   gstate_controller.extractFenPosition(fen_position);
@@ -42,14 +38,17 @@ void GSateTranslator::interpretAndSetFen(string fen) {
   if (current_gstate.next_turn == Color::white) {
     current_gstate.next_half_move--;
   }
+
+  return current_gstate;
 }
 
-void GSateTranslator::makeMovesFromFieldStrings(vector<string> moves) {
-  GameStateController& gstate_controller = this->gstate_controller;
-  GameState& current_gstate = this->gstate_controller.current_game_state;
+GameState GSateTranslator::makeMovesFromFieldStrings(GameState game_state,
+                                                     vector<string> moves) {
+  GameStateController gstate_controller = GameStateController();
+  gstate_controller.current_game_state = game_state;
 
   for (uint i = 0; i < moves.size(); i++) {
-    this->validateMoveString(moves[i]);
+    validateMoveString(moves[i]);
 
     string field_string_before = moves[i].substr(0, 2);
     string field_string_after = moves[i].substr(2, 3);
@@ -57,9 +56,11 @@ void GSateTranslator::makeMovesFromFieldStrings(vector<string> moves) {
     ushort field_before = gstate_controller.getFieldIndex(field_string_before);
     ushort field_after = gstate_controller.getFieldIndex(field_string_after);
 
-    Piece piece_got = this->gstate_controller.transformPiece(moves[i]);
+    Piece piece_got = gstate_controller.transformPiece(moves[i]);
     gstate_controller.makeMove(field_before, field_after, piece_got);
   }
+
+  return gstate_controller.current_game_state;
 }
 
 void GSateTranslator::validateFenString(string fen) {

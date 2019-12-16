@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "source/calculation/gstate_translator.h"
 #include "source/calculation/evaluator.h"
+#include "source/calculation/gstate_translator.h"
 
 #ifdef _PROJECT_VERSION
 #define VERSION _PROJECT_VERSION
@@ -43,13 +43,7 @@ class BlaEngine {
   /// Constructing the obejct.
   ///
   BlaEngine();
-
-  ///
-  ///@brief
-  /// Starting the engine by starting the communication module, which is UCI as
-  /// default, as well as starting the calculation unit.
-  ///
-  void startEngine();
+  BlaEngine(ushort searching_depth);
 
   ///
   ///@brief
@@ -86,9 +80,12 @@ class BlaEngine {
   ///
   BlaEngineInfo getEngineInfo();
 
-  GSateTranslator gstate_translator;
+  GameStateController gstate_controller;
 
   Evaluator evaluator;
+
+ private:
+  ushort searching_depth;
 };
 
 }  // namespace blaengine
