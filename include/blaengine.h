@@ -58,10 +58,15 @@ class BlaEngine {
   /// (Forsyth–Edwards Notation) and a given string out of moves
   /// @param fen
   /// Forsyth–Edwards Notation as string
+  ///
+  void interpretAndSetFen(string fen);
+
+  ///
+  ///@brief
+  /// Method to set the game state out of a list of moves as string
   /// @param moves
   /// vector<string> of additional moves like [g7g6, a2a3, ..]
   ///
-  void interpretAndSetFen(string fen);
   void makeMovesFromFieldStrings(vector<string> moves);
 
   ///
