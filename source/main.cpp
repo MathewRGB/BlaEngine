@@ -9,7 +9,7 @@ using Uci = blaengine::communication::Uci;
 
 int main(int argc, char *argv[])
 {
-  ushort searching_depth = (argc == 2) ? stoi(argv[1]) : 2;
+  ushort searching_depth = (argc == 2) ? stoi(argv[1]) : 4;
   auto blaengine = make_shared<BlaEngine>(searching_depth);
   auto uci_module = Uci(blaengine);
 

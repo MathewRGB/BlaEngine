@@ -59,3 +59,16 @@ describes how to build the doxygen documentation manually.
 There is also a Dockerfile that can be used for comiling the project and running all unittests.
 
     docker build -t blaengine .
+
+
+## How to use it
+
+This engine communicates via UCI protocol. For running the engine you need a GUI like `Arena Chess GUI`,
+after compiling this project. </br>
+You can also set the calcualtion depth by passing the depth as an argument (default depth 4).
+Keep in mind that a high calculation depth takes alot of time for calculating the moves.
+Running the engine from a terminal would look like this: </br>
+
+    $ ./BlaEngine-version 6
+
+.. where 6 is the calculation depth.
